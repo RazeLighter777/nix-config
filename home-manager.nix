@@ -8,7 +8,17 @@ in
     [
       (import "${home-manager}/nixos")
     ];
-
+  programs.home-manager.enable = true;
+  services.gpg-agent = {
+    enable = true;
+    defaultCacheTtl = 1800;
+    enableSshSupport = true;
+  };
+  programs.git = {
+    enable = true;
+    userName = "RazeLighter777";
+    userEmail = "gorgonballs@proton.me";
+  };
   users.users.eve.isNormalUser = true;
   home-manager.users.justin = { pkgs, ... }: {
     home.packages = [ pkgs.atool pkgs.httpie ];
