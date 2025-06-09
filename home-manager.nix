@@ -48,8 +48,6 @@ in
         "$mod, mouse:272, movewindow"
         "$mod, mouse:273, resizewindow"
         "$mod ALT, mouse:272, resizewindow"
-        "$mod, mouse_down, workspace, e+1"
-        "$mod, mouse_up, workspace, e-1"
       ];
       bind = [
         "CTRL ALT, T, exec, kitty"
