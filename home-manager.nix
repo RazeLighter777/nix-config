@@ -18,10 +18,10 @@ in
       userEmail = "gorgonballs@proton.me";
     }; 
     programs.kitty.enable = true;
+    programs.hyprland.withUWSM = true;
     wayland.windowManager.hyprland = {
       enable = true;
       xwayland.enable = true;
-      withUWSM = true;
     };
     wayland.windowManager.hyprland.settings = {
       "$mod" = "SUPER";
