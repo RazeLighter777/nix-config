@@ -16,12 +16,6 @@ in
       profiles.default = {
         id = 0;
 
-        userChrome = ''
-          toolbar#nav-bar, nav-bar-customization-target {
-            background: ${thm.base00} !important;
-          }
-        '';
-
         settings = {
           "extensions.autoDisableScopes" = 0;
 
