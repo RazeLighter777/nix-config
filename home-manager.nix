@@ -8,8 +8,14 @@ in
     [
       (import "${home-manager}/nixos")
     ];
-  programs.uwsm.enable = true;
-  programs.hyprland.withUWSM = true;
+  programs.uwsm = {
+    enable = true;
+    waylandCompositors = {
+      prettyName = "Hyprland";
+      comment = "Managed by UWSM";
+      binPath = "/home/justin/.nix-profile/bin/hyprland";
+    };
+  };
   home-manager.users.justin = { pkgs, ... }: {
     home.packages = [ pkgs.atool pkgs.httpie ];
     programs.bash.enable = true;
