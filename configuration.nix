@@ -82,7 +82,7 @@
     powerManagement.finegrained = false;
     open = true;
     nvidiaSettings = false;
-    package = linuxKernel.packages.linux_6_15.nvidia_x11_latest_open;
+    package = config.boot.kernelPackages.nvidiaPakages.stable
   };
 
   # Some programs need SUID wrappers, can be configured further or are
