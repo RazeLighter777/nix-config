@@ -17,7 +17,7 @@ in
       userName = "RazeLighter777";
       userEmail = "gorgonballs@proton.me";
     }; 
-    programs.kitty.enable = true
+    programs.kitty.enable = true;
     wayland.windowManager.hyprland.enable = true;
     services.gpg-agent = {
       enable = true;
