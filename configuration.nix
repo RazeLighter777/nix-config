@@ -72,7 +72,6 @@
     git
   ];
 
-  modules = [ arion.nixosModules.arion ];
 
 
   # Some programs need SUID wrappers, can be configured further or are
