@@ -24,4 +24,17 @@
   environment.systemPackages = with pkgs; [
     greetd.tuigreet
   ];
+  programs.uwsm.enable = true;
+  programs.uwsm.package = pkgs.uwsm;
+  programs.uwsm.waylandCompositors = {
+    hyprland = {
+      prettyName = "Hyprland";
+      comment = "Hyprland compositor managed by UWSM";
+      binPath = "/run/current-system/sw/bin/Hyprland";
+    };
+  };
+
+  # Run XDG autostart, this is needed for a DE-less setup like Hyprland
+  services.xserver.desktopManager.runXdgAutostartIfNone = true;
+
 }
