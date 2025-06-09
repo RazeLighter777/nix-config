@@ -34,6 +34,7 @@ in
       # Whether to enable XWayland
       xwayland.enable = true;
     };
+    programs.wofi.enable = true;
 
     wayland.windowManager.hyprland.settings = {
       decoration = {
@@ -50,7 +51,9 @@ in
         "$mod ALT, mouse:272, resizewindow"
       ];
       bind = [
-        "$mod, T, exec, kitty"
+        "CTRL ALT, T, exec, kitty"
+	"$mod, SHIFT, C, exec, hyprctl reload"
+	"$mod, D, exec, wofi --show drun --prompt 'Search...'"
       ];
     };
   };
