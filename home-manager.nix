@@ -8,6 +8,7 @@ in
     [
       (import "${home-manager}/nixos")
     ];
+  programs.hyprland.withUWSM = true;
   home-manager.users.justin = { pkgs, ... }: {
     home.packages = [ pkgs.atool pkgs.httpie ];
     programs.bash.enable = true;
@@ -18,7 +19,6 @@ in
       userEmail = "gorgonballs@proton.me";
     }; 
     programs.kitty.enable = true;
-    programs.hyprland.withUWSM = true;
     wayland.windowManager.hyprland = {
       enable = true;
       xwayland.enable = true;
