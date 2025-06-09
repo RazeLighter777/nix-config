@@ -46,7 +46,14 @@
     LC_TIME = "en_US.UTF-8";
   };
   # fonts
-  fonts.packages = with pkgs; [ nerdfonts ];
+  fonts.packages = with pkgs; [
+    dejavu_fonts
+    emacs-all-the-icons-fonts
+    jetbrains-mono
+    font-awesome
+    noto-fonts
+    noto-fonts-emoji
+  ];
 
   # Configure keymap in X11
   services.xserver.xkb = {
