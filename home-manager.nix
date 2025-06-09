@@ -48,6 +48,8 @@ in
         "$mod, mouse:272, movewindow"
         "$mod, mouse:273, resizewindow"
         "$mod ALT, mouse:272, resizewindow"
+        # programs
+        "$mod, T, exec, kitty"
       ];
     };
   };
