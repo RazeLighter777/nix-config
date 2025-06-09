@@ -8,7 +8,6 @@ in
     [
       (import "${home-manager}/nixos")
     ];
-  programs.hyprland.withUWSM  = true;
   home-manager.users.justin = { pkgs, ... }: {
     home.packages = [ pkgs.atool pkgs.httpie ];
     programs.bash.enable = true;

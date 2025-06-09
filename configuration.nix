@@ -116,6 +116,7 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
+  programs.hyprland.withUWSM  = true;
 
   # List services that you want to enable:
 
