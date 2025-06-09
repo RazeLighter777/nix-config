@@ -55,7 +55,7 @@
   users.users.justin = {
     isNormalUser = true;
     description = "Justin";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker"];
     packages = with pkgs; [];
   };
 
@@ -99,4 +99,8 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  
+  # docker install
+  virtualisation.docker.enable = true;
+
 }
