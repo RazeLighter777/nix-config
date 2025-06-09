@@ -8,12 +8,6 @@ in
     [
       (import "${home-manager}/nixos")
     ];
-  services.gpg-agent = {
-    enable = true;
-    defaultCacheTtl = 1800;
-    enableSshSupport = true;
-  };
-  users.users.eve.isNormalUser = true;
   home-manager.users.justin = { pkgs, ... }: {
     home.packages = [ pkgs.atool pkgs.httpie ];
     programs.bash.enable = true;
@@ -23,6 +17,11 @@ in
       userName = "RazeLighter777";
       userEmail = "gorgonballs@proton.me";
     }; 
+    services.gpg-agent = {
+      enable = true;
+      defaultCacheTtl = 1800;
+      enableSshSupport = true;
+    };
     # The state version is required and should stay at the version you
     # originally installed.
     home.stateVersion = "25.05";
