@@ -35,10 +35,6 @@ in
       xwayland.enable = true;
     };
     programs.wofi.enable = true;
-    programs.hyprland = {
-      enable = true;
-      withUWSM = true;
-    };
     wayland.windowManager.hyprland.settings = {
       decoration = {
         shadow_offset = "0 5";
