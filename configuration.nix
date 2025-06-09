@@ -53,7 +53,7 @@
     variant = "";
   };
 
-  services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.justin = {
@@ -65,7 +65,14 @@
   # polkit 
   security.polkit.enable = true;
 
-  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.initrd.kernelModules = [ "nvidia" ];
+
+  # nvidia
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
