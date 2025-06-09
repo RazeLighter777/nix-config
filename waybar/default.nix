@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  programs.waybar = {
+  home-manager.users.justin.programs.waybar = {
     enable = true;
     systemd.enable = true;
     style = ''
