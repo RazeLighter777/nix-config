@@ -11,6 +11,7 @@ in
   home-manager.users.justin = { pkgs, ... }: {
     home.packages = [ pkgs.atool pkgs.httpie ];
     programs.bash.enable = true;
+    programs.firefox.enable = true;
     programs.home-manager.enable = true;
     programs.git = {
       enable = true;

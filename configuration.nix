@@ -86,6 +86,7 @@
     htop
     git
     arion
+    kitty
   ];
   # graphics
   hardware.graphics = {
