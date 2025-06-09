@@ -8,14 +8,6 @@ in
     [
       (import "${home-manager}/nixos")
     ];
-  programs.uwsm = {
-    enable = true;
-    waylandCompositors = {
-      prettyName = "Hyprland";
-      comment = "Managed by UWSM";
-      binPath = "/home/justin/.nix-profile/bin/hyprland";
-    };
-  };
   home-manager.users.justin = { pkgs, ... }: {
     home.packages = [ pkgs.atool pkgs.httpie ];
     programs.bash.enable = true;
@@ -25,30 +17,6 @@ in
       userName = "RazeLighter777";
       userEmail = "gorgonballs@proton.me";
     }; 
-    programs.kitty.enable = true;
-    wayland.windowManager.hyprland = {
-      enable = true;
-      xwayland.enable = true;
-    };
-    wayland.windowManager.hyprland.settings = {
-      "$mod" = "SUPER";
-      bind =
-      [
-      ]
-      ++ (
-        # workspaces
-        # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
-        builtins.concatLists (builtins.genList (i:
-            let ws = i + 1;
-            in [
-              "$mod, code:1${toString i}, workspace, ${toString ws}"
-              "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-            ]
-          )
-          9)
-      );
-    };
-
     services.gpg-agent = {
       enable = true;
       defaultCacheTtl = 1800;
