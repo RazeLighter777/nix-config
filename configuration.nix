@@ -60,6 +60,8 @@
     packages = with pkgs; [];
   };
 
+  boot.initrd.kernelModules = [ "amdgpu" ];
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate = (pkg: true);
