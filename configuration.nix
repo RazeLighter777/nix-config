@@ -120,7 +120,7 @@
       # but this makes the private key world-readable; thus, using privateKeyFile is
       # recommended.
       privateKeyFile = "/home/justin/Keys/peer_zenbox.key";
-
+      presharedKeyFile = "/home/justin/Keys/peer_A-peer_zenbox.psk"
       peers = [
         # For a client configuration, one peer entry for the server will suffice.
 
