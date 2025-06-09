@@ -7,7 +7,7 @@
     nixosConfigurations = {
       hostName = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./configuration.nix arion.nixosModules.arion ];
+        modules = [ ./configuration.nix ];
       };
     };
   };

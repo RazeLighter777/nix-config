@@ -70,6 +70,7 @@
     screen
     htop
     git
+    arion
   ];
 
 
