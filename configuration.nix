@@ -20,9 +20,8 @@
   boot.kernelPackages = pkgs.linuxPackages;
   boot.kernelParams = [ "quiet" "splash" "rd.systemd.show_status=auto" "udev.log_level=3" "boot.shell_on_fail"];
   boot.consoleLogLevel = 0;
-  loader.timeout = 0;
-  initrd.verbose = false;
-
+  boot.loader.timeout = 0;
+  boot.initrd.verbose = false;
 
   networking.hostName = "zenbox"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
