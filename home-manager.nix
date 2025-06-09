@@ -21,6 +21,7 @@ in
     wayland.windowManager.hyprland = {
       enable = true;
       xwayland.enable = true;
+      withUWSM = true;
     };
     wayland.windowManager.hyprland.settings = {
       "$mod" = "SUPER";
