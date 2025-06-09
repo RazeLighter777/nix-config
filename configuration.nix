@@ -105,6 +105,7 @@
     mpv
     zathura
     uwsm
+    waybar
   ];
   # graphics
   hardware.graphics = {
