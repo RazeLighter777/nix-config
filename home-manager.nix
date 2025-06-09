@@ -26,6 +26,15 @@ in
     # The state version is required and should stay at the version you
     # originally installed.
     home.stateVersion = "25.05";
+    wayland.windowManager.hyprland = {
+      # Whether to enable Hyprland wayland compositor
+      enable = true;
+      # The hyprland package to use
+      package = pkgs.hyprland;
+      # Whether to enable XWayland
+      xwayland.enable = true;
+    };
+
     wayland.windowManager.hyprland.settings = {
       decoration = {
         shadow_offset = "0 5";
