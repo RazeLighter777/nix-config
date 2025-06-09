@@ -13,11 +13,7 @@
       }
 
       * {
-        ${if config.hostId == "yoga" then ''
-        font-size: 18px;
-      '' else ''
 
-        ''}
       }
     '';
     settings = [{
@@ -33,8 +29,6 @@
         "cpu"
         "memory"
         "temperature"
-      ] ++ (if config.hostId == "yoga" then [ "battery" ] else [ ])
-      ++ [
         "clock"
         "tray"
       ];
