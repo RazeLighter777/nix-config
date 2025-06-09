@@ -45,6 +45,8 @@
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
+  # fonts
+  fonts.packages = with pkgs; [ nerdfonts ];
 
   # Configure keymap in X11
   services.xserver.xkb = {
