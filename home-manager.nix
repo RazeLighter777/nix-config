@@ -10,7 +10,7 @@ in
     ];
 
   users.users.eve.isNormalUser = true;
-  home-manager.users.eve = { pkgs, ... }: {
+  home-manager.users.justin = { pkgs, ... }: {
     home.packages = [ pkgs.atool pkgs.httpie ];
     programs.bash.enable = true;
   
