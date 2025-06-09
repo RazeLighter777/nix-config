@@ -59,9 +59,11 @@
   users.users.justin = {
     isNormalUser = true;
     description = "Justin";
-    extraGroups = [ "networkmanager" "wheel" "docker"];
+    extraGroups = [ "networkmanager" "wheel" "docker" "video"];
     packages = with pkgs; [];
   };
+  # polkit 
+  security.polkit.enable = true;
 
   boot.initrd.kernelModules = [ "amdgpu" ];
 
