@@ -35,9 +35,9 @@ in
       xwayland.enable = true;
     };
     programs.wofi.enable = true;
-    programs.hyprlock = {
+    programs.hyprland = {
       enable = true;
-      withUWSM = true; 
+      withUWSM = true;
     };
     wayland.windowManager.hyprland.settings = {
       decoration = {
