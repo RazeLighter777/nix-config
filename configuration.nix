@@ -99,6 +99,7 @@
     hyprlock
     mpv
     zathura
+    uwsm
   ];
   # graphics
   hardware.graphics = {
