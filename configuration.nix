@@ -21,7 +21,6 @@
   boot.kernelParams = [ "quiet" "splash" "rd.systemd.show_status=auto" "udev.log_level=3" "boot.shell_on_fail"];
   boot.consoleLogLevel = 0;
   loader.timeout = 0;
-  consoleLogLevel = 3;
   initrd.verbose = false;
 
 
