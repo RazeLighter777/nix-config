@@ -95,6 +95,9 @@
     git
     arion
     kitty
+    hyprlock
+    mpv
+    zathura
   ];
   # graphics
   hardware.graphics = {

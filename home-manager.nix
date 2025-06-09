@@ -35,7 +35,7 @@ in
       xwayland.enable = true;
     };
     programs.wofi.enable = true;
-
+    programs.hyprlock.enable = true;
     wayland.windowManager.hyprland.settings = {
       decoration = {
         shadow_offset = "0 5";
@@ -54,6 +54,7 @@ in
         "CTRL ALT, T, exec, kitty"
 	"CTRL ALT, C, exec, hyprctl reload"
 	"$mod, D, exec, wofi --show drun --prompt 'Search...'"
+        "$mod, L, hyprlock"
       ];
     };
   };
