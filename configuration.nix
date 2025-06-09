@@ -120,7 +120,6 @@
       # but this makes the private key world-readable; thus, using privateKeyFile is
       # recommended.
       privateKeyFile = "/home/justin/Keys/peer_zenbox.key";
-      presharedKeyFile = "/home/justin/Keys/peer_A-peer_zenbox.psk"
       peers = [
         # For a client configuration, one peer entry for the server will suffice.
 
@@ -128,6 +127,7 @@
           # Public key of the server (not a file path).
           publicKey = "VzQMzZcTBQYrARnefqraQJuc6CVFf15ifUNsDuTV2wY=";
 
+          presharedKeyFile = "/home/justin/Keys/peer_A-peer_zenbox.psk"
           # Forward all the traffic via VPN.
           allowedIPs = [ "192.168.87.0/24" "192.168.88.0/24" ];
           # Or forward only particular subnets
