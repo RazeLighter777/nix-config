@@ -34,10 +34,6 @@ in
           "browser.search.openintab" = true;
           "xpinstall.signatures.required" = false;
 
-          "font.name.monospace.x-western" = "${fonts.mono.family}";
-          "font.name.sans-serif.x-western" = "${fonts.main.family}";
-          "font.name.serif.x-western" = "${fonts.serif.family}";
-
           "browser.newtabpage.activity-stream.feeds.telemetry" = false;
           "browser.newtabpage.activity-stream.telemetry" = false;
           "browser.ping-centre.telemetry" = false;
