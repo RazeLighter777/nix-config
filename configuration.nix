@@ -16,8 +16,12 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.plymouth.enable = true;
-  # Use latest kernel.
+  # Use LTS kernel.
   boot.kernelPackages = pkgs.linuxPackages;
+  boot.kernelParams = [ "quiet" "splash" "rd.systemd.show_status=auto" "udev.log_level=3" "boot.shell_on_fail"];
+  boot.consoleLogLevel = 0;
+  boot.loader.timeout = 0;
+  boot.initrd.verbose = false;
 
   networking.hostName = "zenbox"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
