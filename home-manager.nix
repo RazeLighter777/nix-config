@@ -52,7 +52,7 @@ in
       ];
       bind = [
         "CTRL ALT, T, exec, kitty"
-	"$mod, SHIFT, C, exec, hyprctl reload"
+	"CTRL ALT, C, exec, hyprctl reload"
 	"$mod, D, exec, wofi --show drun --prompt 'Search...'"
       ];
     };
