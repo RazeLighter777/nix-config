@@ -54,7 +54,7 @@ in
         "CTRL ALT, T, exec, kitty"
 	"CTRL ALT, C, exec, hyprctl reload"
 	"$mod, D, exec, wofi --show drun --prompt 'Search...'"
-        "$mod, L, hyprlock"
+        "$mod, L, exec, hyprlock"
       ];
     };
   };
