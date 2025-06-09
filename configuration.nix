@@ -53,6 +53,8 @@
     variant = "";
   };
 
+  services.xserver.videoDrivers = [ "amdgpu" ];
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.justin = {
     isNormalUser = true;
@@ -79,6 +81,10 @@
   # graphics
   hardware.graphics = {
      enable = true;
+     extraPackages = with pkgs; [
+        libva
+        libva-utils
+     ];
   };
 
   # Some programs need SUID wrappers, can be configured further or are
