@@ -82,7 +82,6 @@
     powerManagement.finegrained = false;
     open = true;
     nvidiaSettings = false;
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
 
   # Some programs need SUID wrappers, can be configured further or are
