@@ -10,6 +10,7 @@
       ./hardware-configuration.nix
       ./home-manager.nix
       ./display-manager.nix
+      ./waybar
     ];
 
   # Bootloader.
