@@ -84,7 +84,6 @@ in
       "$mod" = "SUPER";
       exec-once = [
         "nm-applet"
-        "waybar"
       ];
       bindm = [
         # mouse movements
