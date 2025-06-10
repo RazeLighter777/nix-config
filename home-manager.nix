@@ -70,6 +70,11 @@ in
     # The state version is required and should stay at the version you
     # originally installed.
     home.stateVersion = "25.05";
+    home.pointerCursor = {
+      gtk.enable = true;
+      x11.enable = true;
+      hyprcursor.enable = true
+    };
     wayland.windowManager.hyprland = {
       # Whether to enable Hyprland wayland compositor
       enable = true;
@@ -77,6 +82,14 @@ in
       package = pkgs.hyprland;
       # Whether to enable XWayland
       xwayland.enable = true;
+    };
+    programs.vscode = {
+      enable = true;
+      extensions = with pkgs.vscode-extensions; [
+        dracula-theme.theme-dracula
+        vscodevim.vim
+        yzhang.markdown-all-in-one
+      ];
     };
     programs.wofi.enable = true;
     wayland.windowManager.hyprland.settings = {

@@ -111,6 +111,7 @@
     pavucontrol
     bluez
     bluez-tools
+    
   ];
   # graphics
   hardware.graphics = {
@@ -153,7 +154,7 @@
   services.openssh.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 22 ];
+  networking.firewall.allowedTCPPorts = [ 22 5900 ];
   networking.firewall.allowedUDPPorts = [ 51820 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
