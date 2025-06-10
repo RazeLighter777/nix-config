@@ -70,6 +70,13 @@ in
       defaultCacheTtl = 1800;
       enableSshSupport = true;
     };
+    services.hyprpaper.settings = {
+      ipc = "on";
+      splash = false;
+      splash_offset = 2.0;
+      preload = [ "/home/justin/Images/wallpapers/big-sur.jpg" ];
+      wallpaper = [ ", /home/justin/Images/wallpapers/big-sur.jpg" ];
+    };
     # The state version is required and should stay at the version you
     # originally installed.
     home.stateVersion = "25.05";

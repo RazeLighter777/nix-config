@@ -103,6 +103,7 @@
     kitty
     hyprlock
     hyprcursor
+    hyprpaper
     mpv
     zathura
     uwsm
