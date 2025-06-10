@@ -73,7 +73,7 @@ in
     home.pointerCursor = {
       gtk.enable = true;
       x11.enable = true;
-      hyprcursor.enable = true
+      hyprcursor.enable = true;
     };
     wayland.windowManager.hyprland = {
       # Whether to enable Hyprland wayland compositor
