@@ -102,6 +102,7 @@
     arion
     kitty
     hyprlock
+    hyprcursor
     mpv
     zathura
     uwsm
