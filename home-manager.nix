@@ -110,7 +110,7 @@ in
       "$mod" = "SUPER";
       exec-once = [
         "nm-applet"
-        "wayvnc"
+        "wayvnc 0.0.0.0"
       ];
       bindm = [
         # mouse movements
