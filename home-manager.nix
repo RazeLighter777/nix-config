@@ -74,7 +74,7 @@ in
       gtk.enable = true;
       x11.enable = true;
       hyprcursor.enable = true;
-      package = rose-pine-cursor;
+      package = pkgs.rose-pine-cursor;
       name = "BreezX-RosePine-Linux";
     };
     wayland.windowManager.hyprland = {
