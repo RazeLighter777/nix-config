@@ -54,8 +54,11 @@ in
           "browser.sessionstore.max_tabs_undo" = 0;
 
         };
-      };
+      }
     };
+    nixpkgs.config = {
+      allowUnfree = true;
+    }
     programs.home-manager.enable = true;
     programs.git = {
       enable = true;
