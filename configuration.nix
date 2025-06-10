@@ -106,6 +106,7 @@
     zathura
     uwsm
     waybar
+    wayvnc
     networkmanagerapplet
     pavucontrol
     bluez
