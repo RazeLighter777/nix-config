@@ -54,7 +54,7 @@ in
           "browser.sessionstore.max_tabs_undo" = 0;
 
         };
-      }
+      };
     };
     nixpkgs.config = {
       allowUnfree = true;
