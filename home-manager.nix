@@ -74,6 +74,8 @@ in
       gtk.enable = true;
       x11.enable = true;
       hyprcursor.enable = true;
+      package = inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default;
+      name = "BreezX-RosePine-Linux";
     };
     wayland.windowManager.hyprland = {
       # Whether to enable Hyprland wayland compositor
