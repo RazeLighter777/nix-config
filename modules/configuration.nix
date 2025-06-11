@@ -113,7 +113,6 @@
     pavucontrol
     bluez
     bluez-tools
-    make
   ];
   # graphics
   hardware.graphics = {
