@@ -8,9 +8,9 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./home-manager.nix
+      ./home-manager/home-manager.nix
       ./display-manager.nix
-      ./waybar
+      ./home-manager/waybar
     ];
 
   # Bootloader.
