@@ -107,6 +107,7 @@ in
         dracula-theme.theme-dracula
         yzhang.markdown-all-in-one
         github.copilot
+        rust-lang.rust-analyzer
       ];
     };
     programs.wofi.enable = true;
@@ -116,6 +117,7 @@ in
       exec-once = [
         "nm-applet"
         "wayvnc 0.0.0.0"
+        "hyprnotify"
       ];
       bindm = [
         # mouse movements

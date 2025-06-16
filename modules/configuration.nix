@@ -112,6 +112,7 @@
     pavucontrol
     bluez
     bluez-tools
+    hyprnotify
   ];
   # graphics
   hardware.graphics = {
