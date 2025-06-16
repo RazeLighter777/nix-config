@@ -113,6 +113,7 @@
     bluez
     bluez-tools
     hyprnotify
+    make
   ];
   # graphics
   hardware.graphics = {
