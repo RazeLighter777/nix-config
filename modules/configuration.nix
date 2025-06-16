@@ -118,6 +118,7 @@
     gnumake
     gnome-keyring
     openssl
+    pkg-config
   ];
   # graphics
   hardware.graphics = {
