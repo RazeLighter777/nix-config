@@ -114,6 +114,7 @@
     bluez-tools
     hyprnotify
     gnumake
+    gnome-keyring
   ];
   # graphics
   hardware.graphics = {
