@@ -117,6 +117,7 @@
     hyprnotify
     gnumake
     gnome-keyring
+    openssl
   ];
   # graphics
   hardware.graphics = {
