@@ -11,6 +11,7 @@
       ./home-manager/home-manager.nix
       ./display-manager.nix
       ./home-manager/waybar.nix
+      ./rust.nix
     ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
