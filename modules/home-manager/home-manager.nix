@@ -108,6 +108,7 @@ in
         yzhang.markdown-all-in-one
         github.copilot
         rust-lang.rust-analyzer
+        mkhl.direnv
       ];
     };
     programs.wofi.enable = true;
