@@ -20,6 +20,7 @@
     extraGroups  = [ "video" "audio" ];
     linger        = true;
   };
+  security.pam.services.greetd.enableGnomeKeyring = true;
 
   environment.systemPackages = with pkgs; [
     greetd.tuigreet
