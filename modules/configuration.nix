@@ -11,7 +11,6 @@
       ./home-manager/home-manager.nix
       ./display-manager.nix
       ./home-manager/waybar.nix
-      ./rust.nix
     ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -41,7 +40,7 @@
   i18n.defaultLocale = "en_US.UTF-8";
   # nixos direnv
   programs.direnv.enable = true;
-  
+
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
     LC_IDENTIFICATION = "en_US.UTF-8";
