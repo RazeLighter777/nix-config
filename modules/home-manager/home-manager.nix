@@ -109,6 +109,9 @@ in
         github.copilot
         rust-lang.rust-analyzer
         arrterian.nix-env-selector
+        Vue.volar
+        dbaeumer.vscode-eslint
+
       ];
     };
     programs.wofi.enable = true;

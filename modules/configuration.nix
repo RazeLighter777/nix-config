@@ -22,7 +22,11 @@
   boot.consoleLogLevel = 0;
   boot.loader.timeout = 0;
   boot.initrd.verbose = false;
-
+  programs.nix-ld.enable = true;
+    programs.nix-ld.libraries = with pkgs; [
+      # Add any missing dynamic libraries for unpackaged programs
+      # here, NOT in environment.systemPackages
+    ];
   networking.hostName = "zenbox"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
