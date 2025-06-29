@@ -111,7 +111,7 @@ in
         arrterian.nix-env-selector
         vue.volar
         dbaeumer.vscode-eslint
-
+	redis.redis-for-vscode
       ];
     };
     programs.wofi.enable = true;
