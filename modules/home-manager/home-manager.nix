@@ -103,15 +103,15 @@ in
     };
     programs.vscode = {
       enable = true;
-      extensions = with pkgs.vscode-extensions [
-        dracula-theme.theme-dracula
-        yzhang.markdown-all-in-one
-        github.copilot
-        rust-lang.rust-analyzer
-        arrterian.nix-env-selector
-        vue.volar
-        dbaeumer.vscode-eslint
-	redis.redis-for-vscode
+      extensions = with pkgs.vscode-extensions; [
+        "dracula-theme.theme-dracula"
+        "yzhang.markdown-all-in-one"
+        "github.copilot"
+        "rust-lang.rust-analyzer"
+        "arrterian.nix-env-selector"
+        "vue.volar"
+        "dbaeumer.vscode-eslint"
+	"redis.redis-for-vscode"
       ];
     };
     programs.wofi.enable = true;
