@@ -101,6 +101,7 @@
   environment.systemPackages = with pkgs; [
     vim 
     wget
+    cloudflared
     screen
     htop
     git
