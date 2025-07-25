@@ -15,6 +15,7 @@ in
   imports = [
     (import "${home-manager}/nixos")
   ];
+  home-manager.verbose = true;
   home-manager.users.justin =
     { pkgs, ... }:
     {
@@ -52,7 +53,12 @@ in
           };
         };
       };
-
+      programs.kitty = {
+        enable = true;
+        settings = {
+          confirm_os_window_close = 0;
+        };
+      };
       programs.firefox = {
         enable = true;
         profiles.default = {
@@ -152,17 +158,35 @@ in
         ];
       };
       programs.wofi.enable = true;
-      # gtk = {
-      #   enable = true;
-      #   theme = {
-      #     name = "WhiteSur-gtk-theme";
-      #     package = pkgs.whitesur-gtk-theme;
-      #   };
-      #   iconTheme = {
-      #     package = pkgs.whitesur-icon-theme;
-      #     name = "WhiteSur";
-      #   };
-      # };
+      gtk = {
+        enable = true;
+
+        # Note that changing any theme settings in GNOME Tweaks will
+        # delete the symlinks that home-manager has created and replace
+        # them with new files. These will need to be cleared again manually,
+        # otherwise home-manager will complain about them when reloading.
+        cursorTheme = {
+          name = "Quintom_Snow";
+          size = 24;
+        };
+
+        iconTheme = {
+          # Yes, it requires a lowercase d...
+          name = "WhiteSur-dark";
+          package = pkgs.whitesur-icon-theme;
+        };
+
+        theme = {
+          name = "WhiteSur-Dark";
+          package = pkgs.whitesur-gtk-theme.override {
+            altVariants = [ "all" ];
+            colorVariants = [ "dark" ];
+            themeVariants = [ "default" ];
+            iconVariant = "tux";
+            nautilusStyle = "glassy";
+          };
+        };
+      };
       wayland.windowManager.hyprland.settings = {
 
         "$mod" = "SUPER";
