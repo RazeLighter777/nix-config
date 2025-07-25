@@ -10,6 +10,7 @@
     ./hardware-configuration.nix
     ./home-manager/home-manager.nix
     ./display-manager.nix
+    ./nemo.nix
     ./home-manager/waybar.nix
   ];
   # Bootloader.
@@ -28,6 +29,7 @@
   boot.consoleLogLevel = 0;
   boot.loader.timeout = 0;
   boot.initrd.verbose = false;
+  programs.dconf.enable = true;
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
     # Add any missing dynamic libraries for unpackaged programs
@@ -139,6 +141,7 @@
     fluxcd
     k9s
     nixfmt-rfc-style
+    dconf
   ];
   # graphics
   hardware.graphics = {
