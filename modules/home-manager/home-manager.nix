@@ -12,8 +12,8 @@ in
     home.packages = [ pkgs.atool pkgs.httpie ];
     programs.bash.enable = true;
     imports = [
-    "${fetchTarball "https://github.com/msteen/nixos-vscode-server/tarball/master"}/modules/vscode-server/home.nix"
-  ];
+      "${fetchTarball { url = "https://github.com/msteen/nixos-vscode-server/tarball/master"; sha256 = "1l77kybmghws3y834b1agb69vs6h4l746ga5xccvz4p1y8wc67h7"; }}"
+    ];
     xdg.desktopEntries.nemo = {
     name = "Nemo";
     exec = "${pkgs.nemo-with-extensions}/bin/nemo";
