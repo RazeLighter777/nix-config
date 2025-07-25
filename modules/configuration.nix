@@ -124,6 +124,9 @@
     gnome-keyring
     openssl
     pkg-config
+    kubectl
+    fluxcd
+    k9s
   ];
   # graphics
   hardware.graphics = {

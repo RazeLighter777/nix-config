@@ -14,6 +14,18 @@ in
     imports = [
     "${fetchTarball "https://github.com/msteen/nixos-vscode-server/tarball/master"}/modules/vscode-server/home.nix"
   ];
+    xdg.desktopEntries.nemo = {
+    name = "Nemo";
+    exec = "${pkgs.nemo-with-extensions}/bin/nemo";
+};
+xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+        "inode/directory" = [ "nemo.desktop" ];
+        "application/x-gnome-saved-search" = [ "nemo.desktop" ];
+    };
+};
+
 
     services.vscode-server.enable = true;
     programs.firefox = {
@@ -111,6 +123,7 @@ in
         arrterian.nix-env-selector
         vue.volar
         dbaeumer.vscode-eslint
+        jnoortheen.nix-ide
       ];
     };
     programs.wofi.enable = true;
