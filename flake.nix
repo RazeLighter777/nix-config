@@ -1,14 +1,20 @@
 {
   description = "A simple NixOS flake";
   inputs = {
-  nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
-  };
-  outputs = { self, nixpkgs, ... }: {
-    nixosConfigurations = {
-      hostName = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [ ./modules/configuration.nix ];
-      };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+  outputs =
+    { self, nixpkgs, ... }:
+    {
+      nixosConfigurations = {
+        hostName = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [ ./modules/configuration.nix ];
+        };
+      };
+    };
 }

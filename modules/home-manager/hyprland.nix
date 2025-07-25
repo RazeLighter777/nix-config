@@ -19,7 +19,7 @@
       bind = [
         "CTRL ALT, T, exec, kitty"
         "CTRL ALT, C, exec, hyprctl reload"
-        "$mod, D, exec, wofi --show drun --prompt 'Search...'"
+        "$mod, D, exec, wofi --show drun -i --prompt 'Search...'"
         "$mod, L, exec, hyprlock"
         "CTRL ALT, Delete, exec, hyprctl dispatch exit 0"
         "$mod, Q, killactive,"
