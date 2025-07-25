@@ -18,6 +18,7 @@
     ./home-manager/bash.nix
     ./home-manager/dconf.nix
     ./wine.nix
+    ./home-manager/vscode.nix
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
