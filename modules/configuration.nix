@@ -12,6 +12,11 @@
     ./display-manager.nix
     ./nemo.nix
     ./home-manager/waybar.nix
+    ./home-manager/firefox.nix
+    ./home-manager/hyprland.nix
+    ./home-manager/vscode-server.nix
+    ./home-manager/bash.nix
+    ./home-manager/dconf.nix
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -47,7 +52,6 @@
 
   # Set your time zone.
   time.timeZone = "America/New_York";
-
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   # nixos direnv
