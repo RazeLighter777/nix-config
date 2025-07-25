@@ -5,35 +5,41 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./home-manager/home-manager.nix
-      ./display-manager.nix
-      ./home-manager/waybar.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./home-manager/home-manager.nix
+    ./display-manager.nix
+    ./home-manager/waybar.nix
+  ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.plymouth.enable = true;
   # Use LTS kernel.
   boot.kernelPackages = pkgs.linuxPackages;
-  boot.kernelParams = [ "quiet" "splash" "rd.systemd.show_status=auto" "udev.log_level=3" "boot.shell_on_fail"];
+  boot.kernelParams = [
+    "quiet"
+    "splash"
+    "rd.systemd.show_status=auto"
+    "udev.log_level=3"
+    "boot.shell_on_fail"
+  ];
   boot.consoleLogLevel = 0;
   boot.loader.timeout = 0;
   boot.initrd.verbose = false;
   programs.nix-ld.enable = true;
-    programs.nix-ld.libraries = with pkgs; [
-      # Add any missing dynamic libraries for unpackaged programs
-      # here, NOT in environment.systemPackages
-    ];
+  programs.nix-ld.libraries = with pkgs; [
+    # Add any missing dynamic libraries for unpackaged programs
+    # here, NOT in environment.systemPackages
+  ];
   networking.hostName = "zenbox"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-  
+
   # Enable networking
   networking.networkmanager.enable = true;
 
@@ -78,10 +84,15 @@
   users.users.justin = {
     isNormalUser = true;
     description = "Justin";
-    extraGroups = [ "networkmanager" "wheel" "docker" "video"];
-    packages = with pkgs; [];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "video"
+    ];
+    packages = with pkgs; [ ];
   };
-  # polkit 
+  # polkit
   security.polkit.enable = true;
 
   boot.initrd.kernelModules = [ "nvidia" ];
@@ -99,7 +110,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim 
+    vim
     wget
     cloudflared
     screen
@@ -127,20 +138,20 @@
     kubectl
     fluxcd
     k9s
-    thunar
+    nixfmt-rfc-style
   ];
   # graphics
   hardware.graphics = {
-     enable = true;
-     extraPackages = with pkgs; [
-        libva
-        libva-utils
-     ];
+    enable = true;
+    extraPackages = with pkgs; [
+      libva
+      libva-utils
+    ];
   };
   # bluetooth
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
-  services.blueman.enable = true; 
+  services.blueman.enable = true;
 
   # sound
   # rtkit is optional but recommended
@@ -154,7 +165,6 @@
     #jack.enable = true;
   };
 
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -162,17 +172,20 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-  programs.hyprland.withUWSM  = true;
+  programs.hyprland.withUWSM = true;
 
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  
+
   # enable the gnome keyring
   services.gnome.gnome-keyring.enable = true;
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 22 5900 ];
+  networking.firewall.allowedTCPPorts = [
+    22
+    5900
+  ];
   networking.firewall.allowedUDPPorts = [ 51820 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
@@ -184,8 +197,11 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
   # docker install
   virtualisation.docker.enable = true;
   programs.steam = {
@@ -217,7 +233,11 @@
 
           presharedKeyFile = "/home/justin/Keys/peer_A-peer_zenbox.psk";
           # Forward all the traffic via VPN.
-          allowedIPs = [ "10.10.10.0/24" "192.168.87.0/24" "192.168.88.0/24" ];
+          allowedIPs = [
+            "10.10.10.0/24"
+            "192.168.87.0/24"
+            "192.168.88.0/24"
+          ];
           # Or forward only particular subnets
           #allowedIPs = [ "10.100.0.1" "91.108.12.0/22" ];
 
