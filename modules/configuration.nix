@@ -127,6 +127,7 @@
     kubectl
     fluxcd
     k9s
+    thunar
   ];
   # graphics
   hardware.graphics = {
