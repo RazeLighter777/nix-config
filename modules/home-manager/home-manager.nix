@@ -15,6 +15,7 @@ in
   imports = [
     (import "${home-manager}/nixos")
   ];
+  
   home-manager.verbose = true;
   home-manager.users.justin =
     { pkgs, ... }:
@@ -32,6 +33,9 @@ in
         pkgs.atool
         pkgs.httpie
       ];
+      nixpkgs.config = {
+        allowUnfree = true;
+      };
       home.stateVersion = "25.05";
       # Add any other user-specific settings here
     };

@@ -108,6 +108,9 @@
           critical-threshold = 80;
           format = "{temperatureC}°C";
         };
+        "sway/workspaces" = {
+          format = ''<span style="italic">{}</span>'';
+        };
       }
     ];
   };

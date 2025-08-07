@@ -97,6 +97,8 @@
       "wheel"
       "docker"
       "video"
+      "dialout"
+      "tty"
     ];
     packages = with pkgs; [ ];
   };
@@ -149,6 +151,7 @@
     nixfmt-rfc-style
     dconf
     protonplus
+    nfs-utils
   ];
   # graphics
   hardware.graphics = {
