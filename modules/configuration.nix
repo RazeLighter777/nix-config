@@ -12,6 +12,7 @@
     ./display-manager.nix
     ./nemo.nix
     ./home-manager/waybar.nix
+    ./home-manager/neovim.nix
     ./home-manager/firefox.nix
     ./home-manager/hyprland.nix
     ./home-manager/vscode-server.nix
