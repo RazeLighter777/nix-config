@@ -29,6 +29,7 @@ in
         }/modules/vscode-server/home.nix"
       ];
       # User-specific settings (packages, stateVersion, etc.)
+      home.username = "justin";
       home.packages = [
         pkgs.atool
         pkgs.httpie
