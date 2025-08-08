@@ -4,5 +4,8 @@
 	enable = true;
 	viAlias = true;
 	vimAlias = true;
+	plugins = [
+		pkgs.vimPlugins.lazy-nvim
+	];
   };
 }
