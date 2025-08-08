@@ -5,4 +5,3 @@
 +  if type(g) ~= 'string' or g == '' then
 +    return '.*'
 +  end
-
