@@ -1,0 +1,8 @@
+--- a/lua/CopilotChat/utils.lua
++++ b/lua/CopilotChat/utils.lua
+@@
+ function M.glob_to_pattern(g)
++  if type(g) ~= 'string' or g == '' then
++    return '.*'
++  end
+
