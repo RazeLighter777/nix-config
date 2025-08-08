@@ -1,4 +1,16 @@
 {pkgs, ... }:
+let
+  # Override CopilotChat.nvim to pull from GitHub latest commit
+  copilotChatLatest = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "CopilotChat-nvim";
+    version = "git-latest";
+    src = pkgs.fetchFromGitHub {
+      owner = "CopilotC-Nvim";
+      repo = "CopilotChat.nvim";
+      rev = "main"; # you can pin to a commit hash instead of branch
+      sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; # replace with actual hash from nix-prefetch
+    };
+  };
 {
   home-manager.users.justin.programs.neovim = {
 	enable = true;
@@ -13,11 +25,7 @@
 		vim-vsnip
 		cmp-nvim-lsp
 		copilot-lua
-		(CopilotChat-nvim.overrideAttrs (old: {
-        patches = (old.patches or []) ++ [
-          ./patches/fix-nil-pattern.patch
-        ];
-      }))
+		CopilotChatLatest
 		plenary-nvim
 		telescope-nvim
 		telescope-ui-select-nvim
