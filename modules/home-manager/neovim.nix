@@ -1,16 +1,22 @@
 {pkgs, ... }:
 let
   # Override CopilotChat.nvim to pull from GitHub latest commit
-  copilotChatLatest = pkgs.vimUtils.buildVimPluginFrom2Nix {
+  copilotChatLatest = pkgs.vimUtils.buildVimPlugin {
     pname = "CopilotChat-nvim";
     version = "git-latest";
     src = pkgs.fetchFromGitHub {
       owner = "CopilotC-Nvim";
       repo = "CopilotChat.nvim";
       rev = "main"; # you can pin to a commit hash instead of branch
-      sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; # replace with actual hash from nix-prefetch
-    };
-  };
+      sha256 = "sha256-/1nXQw0ptKCkt719nKaoZEmR9H9oy2PtPcv+UwejA3s="; # replace with actual hash from nix-prefetch
+		};
+		dependencies = [
+			pkgs.vimPlugins.plenary-nvim
+			pkgs.vimPlugins.telescope-nvim
+			pkgs.vimPlugins.telescope-ui-select-nvim
+		];
+	};
+in
 {
   home-manager.users.justin.programs.neovim = {
 	enable = true;
@@ -25,8 +31,9 @@ let
 		vim-vsnip
 		cmp-nvim-lsp
 		copilot-lua
-		CopilotChatLatest
+		copilotChatLatest
 		plenary-nvim
+		nvim-treesitter.withAllGrammars
 		telescope-nvim
 		telescope-ui-select-nvim
 	];
@@ -59,7 +66,14 @@ let
 		vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 		vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 		vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
-		require('CopilotChat').setup()			 
+		require('CopilotChat').setup {
+			model = "claude-sonnet-4",
+			window = {
+				layout = 'vertical',
+				width = 0.25, -- 25% of the screen width
+			},
+			auto_insert_mode = true,
+		}
 		require("copilot").setup {
 			suggestion = {
 				enabled = true,

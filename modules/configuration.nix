@@ -15,11 +15,9 @@
     ./home-manager/neovim.nix
     ./home-manager/firefox.nix
     ./home-manager/hyprland.nix
-    ./home-manager/vscode-server.nix
     ./home-manager/bash.nix
     ./home-manager/dconf.nix
     ./wine.nix
-    ./home-manager/vscode.nix
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -125,6 +123,7 @@
     wget
     cloudflared
     screen
+    ripgrep
     htop
     git
     arion
