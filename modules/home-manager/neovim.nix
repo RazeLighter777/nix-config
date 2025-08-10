@@ -173,6 +173,23 @@ in
 				}
 			}
 		}
+		vim.lsp.enable('clangd')
+		vim.lsp.config.clangd =
+			{
+			  single_file_support = true,
+				capabilities = capabilities,
+				filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+				filetype = { "c", "cpp", "objc", "objcpp", "cuda" },
+				init_options = {
+							usePlaceholders = true,
+										completeUnimported = true,
+													clangdFileStatus = true,
+															},
+				cmd = { "clangd", "--background-index", "--query-driver=/nix/store/b9bfidnwbpi5rr6rqkkwdn76fg9dhbqc-xtensa-esp-elf-esp-idf-v5.5/bin/xtensa-esp32-elf-gcc*",
+								"--clang-tidy","--compile-commands-dir=/home/justin/Code/tankrobot/build/","--completion-style=detailed",
+								}
+			}
+		
 	'';
   };
 }
