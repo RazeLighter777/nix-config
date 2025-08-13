@@ -35,6 +35,11 @@ let
       pkgs.vimPlugins.plenary-nvim
     ];
   };
+  fidgetSpinnner = pkgs.vimUtils.buildVimPlugn {
+    pname = "fidget-spinner";
+    src = ./custom-neovim-plugins/fidget-spinner;
+    version = "0.1.0";
+  };
 in
 {
   home-manager.users.justin.programs.neovim = {
@@ -61,6 +66,7 @@ in
       mini-diff
       codecompanion-nvim-latest
       conformNvim
+      fidgetSpinnner
     ];
 
     extraConfig = ''
@@ -104,7 +110,8 @@ in
       require('lualine').setup()
       -- Fidget setup
       require('fidget').setup()
-
+      -- Fidget spinner setup
+      require('fidget-spinner').setup()
       -- Which-key setup
       require('which-key').setup()
 
