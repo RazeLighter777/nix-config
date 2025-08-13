@@ -18,6 +18,7 @@
     ./home-manager/bash.nix
     ./home-manager/dconf.nix
     ./wine.nix
+    ./xmrig.nix
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -191,7 +192,7 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  
+
   # enable the gnome keyring
   services.gnome.gnome-keyring.enable = true;
   # Open ports in the firewall.
