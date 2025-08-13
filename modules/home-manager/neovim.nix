@@ -35,7 +35,7 @@ let
       pkgs.vimPlugins.plenary-nvim
     ];
   };
-  fidgetSpinnner = pkgs.vimUtils.buildVimPlugn {
+  fidgetSpinnner = pkgs.vimUtils.buildVimPlugin {
     pname = "fidget-spinner";
     src = ./custom-neovim-plugins/fidget-spinner;
     version = "0.1.0";
