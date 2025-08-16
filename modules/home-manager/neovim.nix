@@ -39,6 +39,9 @@ let
     pname = "fidget-spinner";
     src = ./custom-neovim-plugins/fidget-spinner;
     version = "0.1.0";
+    dependencies = [
+      pkgs.vimPlugins.fidget-nvim
+    ];
   };
 in
 {
@@ -64,6 +67,8 @@ in
       nui-nvim
       fidget-nvim
       mini-diff
+      indent-blankline-nvim
+      # plugins built from source
       codecompanion-nvim-latest
       conformNvim
       fidgetSpinnner
@@ -71,8 +76,9 @@ in
 
     extraConfig = ''
       colorscheme tokyonight-night
-      set noexpandtab
+      set expandtab
       set nu
+      set undofile
     '';
 
     extraPackages = with pkgs; [
@@ -87,58 +93,63 @@ in
       stylua
     ];
     extraLuaConfig = ''
-      -- Utility functions
-      vim.g.mapleader = ' '
+      -- ============================================================================
+      -- NEOVIM CONFIGURATION
+      -- ============================================================================
+
+      -- Set the leader key to space for custom keybindings
+      vim.g.mapleader = " "
+
+      -- ============================================================================
+      -- UTILITY FUNCTIONS
+      -- ============================================================================
+
+      -- Check if there are words before the cursor (used for completion)
       local has_words_before = function()
         unpack = unpack or table.unpack
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0
-          and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
-                 :sub(col, col)
-                 :match("%s") == nil
+          and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
       end
 
+      -- Send keys to Neovim (helper function for keybindings)
       local feedkey = function(key, mode)
-        vim.api.nvim_feedkeys(
-          vim.api.nvim_replace_termcodes(key, true, true, true),
-          mode,
-          true
-        )
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
       end
 
-      -- Lualine setup
-      require('lualine').setup()
-      -- Fidget setup
-      require('fidget').setup()
-      -- Fidget spinner setup
-      require('fidget-spinner').setup()
-      -- Which-key setup
-      require('which-key').setup()
+      -- ============================================================================
+      -- BASIC PLUGIN SETUP
+      -- ============================================================================
+      require("lualine").setup()
+      require("fidget").setup()
+      require("fidget-spinner").init()
+      require("which-key").setup()
+      require("ibl").setup()
 
       -- Telescope setup
-      require('telescope').setup {
+      require("telescope").setup({
         defaults = {
           file_ignore_patterns = {
             ".git/",
           },
         },
         extensions = {
-          ui_select = require("telescope.themes").get_dropdown {}
-        }
-      }
+          ui_select = require("telescope.themes").get_dropdown({}),
+        },
+      })
 
       -- Mini diff setup
-      require('mini.diff').setup()
+      require("mini.diff").setup()
 
       -- Neotree setup
-      require('neo-tree').setup({
+      require("neo-tree").setup({
         close_if_last_window = true,
         enable_git_status = true,
         enable_diagnostics = true,
       })
 
       -- Code companion setup
-      require('codecompanion').setup({
+      require("codecompanion").setup({
         strategies = {
           chat = {
             adapter = "copilot",
@@ -152,12 +163,28 @@ in
                 },
               },
             },
+            tools = {
+              opts = {
+                auto_submit_errors = true,
+                wait_timeout = 99999999999,
+                default_tools = {
+                  "read_file",
+                  "list_code_usages",
+                  "insert_edit_into_file",
+                  "grep_search",
+                  "get_changed_files",
+                  "file_search",
+                  "create_file",
+                  "cmd_runner",
+                },
+              },
+            },
           },
           inline = {
-            adapter = "copilot"
+            adapter = "copilot",
           },
           cmd = {
-            adapter = "copilot"
+            adapter = "copilread_fileot",
           },
         },
         adapters = {
@@ -176,8 +203,22 @@ in
             enabled = true,
             close_chat_at = 240, -- Close an open chat buffer if the total columns of your display are less than...
             layout = "vertical", -- vertical|horizontal split for default provider
-            opts = { "internal", "filler", "closeoff", "algorithm:patience", "followwrap", "linematch:120" },
+            opts = {
+              "internal",
+              "filler",
+              "closeoff",
+              "algorithm:patience",
+              "followwrap",
+              "linematch:120",
+            },
             provider = "mini_diff", -- default|mini_diff
+          },
+          chat = {
+            window = {
+              width = 0.2,
+            },
+            start_in_insert_mode = true,
+            
           },
           action_palette = {
             width = 95,
@@ -188,47 +229,48 @@ in
             show_default_actions = true,
             show_default_prompt_library = true,
             title = "AI Slop Actions",
-          }
+          },
         },
       })
 
-      vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>', { desc = 'Toggle Neotree' })
-      vim.keymap.set('n', '<leader>ai', ':CodeCompanionChat Toggle<CR>', { desc = 'Toggle CodeCompanion Chat' })
+      -- Keymaps
+      vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Toggle Neotree" })
+      vim.keymap.set("n", "<leader>ai", ":CodeCompanionChat Toggle<CR>", { desc = "Toggle CodeCompanion Chat" })
 
-      -- Telescope UI Select extension
-      require('telescope').load_extension('ui-select')
-      local builtin = require('telescope.builtin')
-      vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
-      vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
-      vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
-      vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+      -- Telescope setup and keymaps
+      require("telescope").load_extension("ui-select")
+      local builtin = require("telescope.builtin")
+      vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
+      vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
+      vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
+      vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
 
       -- Conform.nvim setup
-      require('conform').setup {
+      require("conform").setup({
         formatters_by_ft = {
-          lua = { 'stylua' },
-          python = { 'black' },
-          rust = { 'rustfmt' },
-          javascript = { 'prettier' },
-          typescript = { 'prettier' },
-          html = { 'prettier' },
-          css = { 'prettier' },
-          json = { 'prettier' },
-          yaml = { 'prettier' },
-          markdown = { 'prettier' },
-          nix = { 'nixfmt' },
+          lua = { "stylua" },
+          python = { "black" },
+          rust = { "rustfmt" },
+          javascript = { "prettier" },
+          typescript = { "prettier" },
+          html = { "prettier" },
+          css = { "prettier" },
+          json = { "prettier" },
+          yaml = { "prettier" },
+          markdown = { "prettier" },
+          nix = { "nixfmt" },
         },
         format_on_save = true,
         notify_on_error = true,
-      }
+      })
 
       -- Conform keybindings
-      vim.keymap.set('n', '<leader>rf', function()
-        require('conform').format({ async = true })
-      end, { desc = 'Format file with conform.nvim' })
+      vim.keymap.set("n", "<leader>rf", function()
+        require("conform").format({ async = true })
+      end, { desc = "Format file with conform.nvim" })
 
       -- Copilot setup
-      require("copilot").setup {
+      require("copilot").setup({
         suggestion = {
           enabled = true,
           auto_trigger = true,
@@ -240,7 +282,7 @@ in
             next = "<M-\\>",
             prev = "<M-[>",
             dismiss = "<C-]>",
-          }
+          },
         },
         panel = {
           enabled = false,
@@ -248,27 +290,22 @@ in
         filetypes = {
           ["*"] = true, -- enable for all file types
         },
-      }
+      })
 
       vim.g.copilot_no_tab_map = true
-      vim.keymap.set(
-        'i',
-        '<C-Tab>',
-        'copilot#Accept("\\<CR>")',
-        { expr = true, replace_keycodes = false }
-      )
+      vim.keymap.set("i", "<C-Tab>", 'copilot#Accept("\\<CR>")', { expr = true, replace_keycodes = false })
 
       -- Diagnostics config
-      vim.diagnostic.config {
+      vim.diagnostic.config({
         virtual_text = true,
         signs = true,
         underline = true,
         update_in_insert = true,
         severity_sort = true,
-      }
+      })
 
       -- nvim-cmp setup
-      local cmp = require('cmp')
+      local cmp = require("cmp")
       cmp.setup({
         snippet = {
           -- REQUIRED - you must specify a snippet engine
@@ -291,39 +328,40 @@ in
           -- documentation = cmp.config.window.bordered(),
         },
         mapping = cmp.mapping.preset.insert({
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-e>'] = cmp.mapping.abort(),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.abort(),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         }),
         sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-          { name = 'vsnip' }, -- For vsnip users.
+          { name = "nvim_lsp" },
+          { name = "vsnip" }, -- For vsnip users.
         }, {
-          { name = 'buffer' },
-        })
+          { name = "buffer" },
+        }),
       })
 
       -- LSP setup
       -- r = refactorings, g = goto/get information
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, { desc = 'Go to definition' })
-      vim.keymap.set('n', '<leader>gr', vim.lsp.buf.references, { desc = 'Go to references' })
-      vim.keymap.set('n', '<leader>rr', vim.lsp.buf.rename, { desc = 'Rename symbol' })
-      vim.keymap.set('n', '<leader>gi', vim.lsp.buf.hover, { desc = 'Show hover information' })
-      vim.keymap.set('n', '<leader>gs', vim.lsp.buf.signature_help, { desc = 'Show signature help' })
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+      vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { desc = "Go to references" })
+      vim.keymap.set("n", "<leader>rr", vim.lsp.buf.rename, { desc = "Rename symbol" })
+      vim.keymap.set("n", "<leader>gi", vim.lsp.buf.hover, { desc = "Show hover information" })
+      vim.keymap.set("n", "<leader>gs", vim.lsp.buf.signature_help, { desc = "Show signature help" })
 
-      vim.lsp.enable('rust_analyzer')
-      vim.lsp.config('rust_analyzer', {
+      -- Rust LSP
+      vim.lsp.enable("rust_analyzer")
+      vim.lsp.config("rust_analyzer", {
         capabilities = capabilities,
         settings = {
-          ['rust-analyzer'] = {
+          ["rust-analyzer"] = {
             imports = {
               granularity = {
-                group = 'module',
+                group = "module",
               },
-              prefix = 'self',
+              prefix = "self",
             },
             cargo = {
               allFeatures = true,
@@ -336,7 +374,7 @@ in
             },
             assist = {
               importEnforceGranularity = true,
-              importPrefix = 'crate',
+              importPrefix = "crate",
             },
             inlayHints = {
               lifetimeElisionHints = {
@@ -348,7 +386,8 @@ in
         },
       })
 
-      vim.lsp.enable('pyright')
+      -- Python LSP
+      vim.lsp.enable("pyright")
       vim.lsp.config.pyright = {
         capabilities = capabilities,
         settings = {
@@ -357,12 +396,13 @@ in
               typeCheckingMode = "basic",
               autoSearchPaths = true,
               useLibraryCodeForTypes = true,
-            }
-          }
-        }
+            },
+          },
+        },
       }
 
-      vim.lsp.enable('clangd')
+      -- C/C++ LSP
+      vim.lsp.enable("clangd")
       vim.lsp.config.clangd = {
         single_file_support = true,
         capabilities = capabilities,
@@ -379,14 +419,14 @@ in
           "--clang-tidy",
           "--compile-commands-dir=/home/justin/Code/tankrobot/build/",
           "--completion-style=detailed",
-        }
+        },
       }
 
-      vim.lsp.enable('nil_ls')
+      -- Nix LSP
+      vim.lsp.enable("nil_ls")
       vim.lsp.config.nil_ls = {
         capabilities = capabilities,
       }
-
     '';
   };
 }

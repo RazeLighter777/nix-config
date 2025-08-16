@@ -19,6 +19,7 @@
     ./home-manager/dconf.nix
     ./wine.nix
     ./xmrig.nix
+    ./ollama.nix
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
