@@ -1,11 +1,13 @@
 { pkgs, lib, ... }:
 let
   customOllama = pkgs.ollama-cuda.overrideAttrs (old: {
+    pname = "ollama";
+    version = "v0.11.5-rc2";
     src = pkgs.fetchFromGitHub {
       owner = "ollama";
       repo = "ollama";
-      rev = "d925b5350c75a66e7830e00f53b243084395821f";
-      sha256 = "sha256-/uo35G5aWyU/TBPeaCA1muw2hZgOokONW29Ox9vZgg4=";
+      rev = "v0.11.5-rc2";
+      sha256 = "sha256-SlaDsu001TUW+t9WRp7LqxUSQSGDF1Lqu9M1bgILoX4=";
     };
   });
 in
