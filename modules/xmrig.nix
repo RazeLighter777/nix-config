@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 {
   services.xmrig = {
-    enable = true;
+    enable = false;
     package = pkgs.xmrig-mo;
     settings = {
       autosave = true;

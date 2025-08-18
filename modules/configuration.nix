@@ -200,6 +200,7 @@
   networking.firewall.allowedTCPPorts = [
     22
     5900
+    8080
   ];
   networking.firewall.allowedUDPPorts = [ 51820 ];
   # Or disable the firewall altogether.
@@ -249,9 +250,7 @@
           presharedKeyFile = "/home/justin/Keys/peer_A-peer_zenbox.psk";
           # Forward all the traffic via VPN.
           allowedIPs = [
-            "10.10.10.0/24"
             "192.168.87.0/24"
-            "192.168.88.0/24"
           ];
           # Or forward only particular subnets
           #allowedIPs = [ "10.100.0.1" "91.108.12.0/22" ];
