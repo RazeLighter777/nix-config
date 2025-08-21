@@ -17,6 +17,7 @@
     ./home-manager/hyprland.nix
     ./home-manager/bash.nix
     ./home-manager/dconf.nix
+    ./home-manager/vscode.nix
     ./wine.nix
     ./xmrig.nix
     ./ollama.nix

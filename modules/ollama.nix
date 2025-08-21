@@ -27,9 +27,20 @@ let
           rev = "b6191";
           sha256 = "sha256-niUHCN/CJgUyX9TjwC72luxf9mjNaNNeXkT3jNNFg14=";
         };
+        buildInputs = old.buildInputs ++ [
+          pkgs.blis
+        ];
         cmakeFlags = old.cmakeFlags ++ [
+          (cmakeBool "GGML_AVX" true)
           (cmakeBool "GGML_AVX2" true)
-          (cmakeFeature "CMAKE_C_FLAGS" "-fpermissive")
+          (cmakeBool "GGML_AVX512" true)
+          (cmakeBool "GGML_AVX512_VBMI" true)
+          (cmakeBool "GGML_AVX512_VNNI" true)
+          (cmakeBool "GGML_AVX512_BF16" true)
+          (cmakeBool "GGML_FMA" true)
+          (cmakeBool "GGML_F16C" true)
+          (cmakeBool "GGML_BLAS" true)
+          (cmakeFeature "GGML_BLAS_VENDOR" "FLAME")
         ];
       });
 in
