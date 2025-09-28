@@ -26,7 +26,7 @@ in
             url = "https://github.com/nix-community/nixos-vscode-server/tarball/master";
             sha256 = "1rdn70jrg5mxmkkrpy2xk8lydmlc707sk0zb35426v1yxxka10by";
           }
-        }/modules/ver/home.nix"
+        }/modules/vscode-server/home.nix"
       ];
       # User-specific settings (packages, stateVersion, etc.)
       home.username = "justin";
@@ -37,7 +37,7 @@ in
       nixpkgs.config = {
         allowUnfree = true;
       };
-      home.stateVersion = "25.05";
+      home.stateVersion = "unstable";
       # Add any other user-specific settings here
     };
 }
