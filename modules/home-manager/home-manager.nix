@@ -39,6 +39,7 @@ in
         allowUnfree = true;
       };
       # Add any other user-specific settings here
+      home.stateVersion = "25.05"
     };
   home-manager.extraSpecialArgs = { inherit unstable; };
 }
