@@ -113,7 +113,7 @@
   hardware.nvidia = {
     modesetting.enable = true;
     open = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
   # Allow unfree packages
@@ -202,6 +202,8 @@
     22
     5900
     8080
+    9999
+    5173
   ];
   networking.firewall.allowedUDPPorts = [ 51820 ];
   # Or disable the firewall altogether.

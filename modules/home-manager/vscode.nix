@@ -9,7 +9,7 @@
       ms-vscode-remote.remote-ssh
       rust-lang.rust-analyzer
       ms-python.python
-      vscode-typescript-vue-plugin
+      vue.vscode-typescript-vue-plugin
       esbenp.prettier-vscode
       ms-azuretools.vscode-docker
       ms-vscode.cpptools
