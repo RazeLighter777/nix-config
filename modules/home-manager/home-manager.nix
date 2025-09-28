@@ -24,9 +24,9 @@ in
         "${
           fetchTarball {
             url = "https://github.com/nix-community/nixos-vscode-server/tarball/master";
-            sha256 = "1l77kybmghws3y834b1agb69vs6h4l746ga5xccvz4p1y8wc67h7";
+            sha256 = "1rdn70jrg5mxmkkrpy2xk8lydmlc707sk0zb35426v1yxxka10by";
           }
-        }/modules/vscode-server/home.nix"
+        }/modules/ver/home.nix"
       ];
       # User-specific settings (packages, stateVersion, etc.)
       home.username = "justin";
