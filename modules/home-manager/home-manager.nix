@@ -37,7 +37,7 @@ in
       nixpkgs.config = {
         allowUnfree = true;
       };
-      home.stateVersion = "unstable";
+      home.stateVersion = "25.05";
       # Add any other user-specific settings here
     };
 }
