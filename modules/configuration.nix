@@ -20,20 +20,23 @@
     ./home-manager/vscode.nix
     ./wine.nix
     ./xmrig.nix
-    ./ollama.nix
+    #./ollama.nix
+    ./protonup.nix
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.plymouth.enable = true;
   # Use LTS kernel.
-  boot.kernelPackages = pkgs.linuxPackages;
+  boot.kernelPackages = pkgs.linuxPackages_6_16;
   boot.kernelParams = [
     "quiet"
     "splash"
     "rd.systemd.show_status=auto"
     "udev.log_level=3"
     "boot.shell_on_fail"
+    # more speed, less security
+    "mitigations=off"
   ];
   boot.consoleLogLevel = 0;
   boot.loader.timeout = 0;
