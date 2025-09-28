@@ -37,7 +37,7 @@ in
       nixpkgs.config = {
         allowUnfree = true;
       };
-      home.stateVersion = "25.11";
       # Add any other user-specific settings here
     };
+  home-manager.extraSpecialArgs = { inherit unstable; };
 }
