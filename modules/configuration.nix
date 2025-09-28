@@ -22,6 +22,7 @@
     ./xmrig.nix
     #./ollama.nix
     ./protonup.nix
+    ./obs.nix
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -112,6 +113,8 @@
 
   boot.initrd.kernelModules = [ "nvidia" ];
 
+  boot.kernelModules = [ "ntsync" ];
+
   # nvidia
   hardware.nvidia = {
     modesetting.enable = true;
@@ -158,6 +161,7 @@
     dconf
     protonplus
     nfs-utils
+    lsof
   ];
   # graphics
   hardware.graphics = {
