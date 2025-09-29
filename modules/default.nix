@@ -72,6 +72,7 @@ in
     ./desktops/kde-extra.nix
     ./nvidia
     ./smartcards
+    ./dod-certs
   ];
 
   config = {
@@ -94,6 +95,7 @@ in
       commonKernel.enable = lib.mkDefault true;
       pipewire.enable = lib.mkDefault true;
       smartcards.enable = lib.mkDefault true;
+      dodCerts.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):

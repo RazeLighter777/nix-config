@@ -22,6 +22,8 @@
     nixfmt-rfc-style
     nfs-utils
     lsof
+    unzip
+    
   ];
   nix.settings.experimental-features = [
     "nix-command"
