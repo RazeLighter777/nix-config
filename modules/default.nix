@@ -73,6 +73,7 @@ in
     ./nvidia
     ./smartcards
     ./dod-certs
+    ./remmina
   ];
 
   config = {
@@ -96,6 +97,7 @@ in
       pipewire.enable = lib.mkDefault true;
       smartcards.enable = lib.mkDefault true;
       dodCerts.enable = lib.mkDefault true;
+      remmina.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
