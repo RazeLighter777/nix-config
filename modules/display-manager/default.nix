@@ -23,7 +23,7 @@
       linger = true;
     };
     security.pam.services.greetd.enableGnomeKeyring = true;
-    environment.systemPackages = [ pkgs.greetd.tuigreet ];
+    environment.systemPackages = [ pkgs.tuigreet ];
     programs.uwsm.enable = true;
     programs.uwsm.package = pkgs.uwsm;
     programs.uwsm.waylandCompositors.hyprland = {

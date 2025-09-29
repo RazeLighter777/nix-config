@@ -8,6 +8,7 @@
   config = lib.mkIf config.my.firefox.enable {
     home-manager.users.${config.my.user.name}.programs.firefox = {
       enable = true;
+      smartcardSupport = true;
       profiles.default = {
         id = 0;
         settings = {
