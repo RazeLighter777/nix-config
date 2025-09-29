@@ -1,8 +1,16 @@
 { config, lib, ... }:
 
 let
-  inherit (lib) mkEnableOption mkIf optional any mkOption types;
-in {
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    optional
+    any
+    mkOption
+    types
+    ;
+in
+{
   options.my = {
     user.name = mkOption {
       type = types.str;
@@ -31,18 +39,19 @@ in {
     vscode.enable = mkEnableOption "Enable VSCode configuration";
     kde.enable = mkEnableOption "Enable KDE Plasma desktop";
     nvidia.enable = mkEnableOption "Enable NVIDIA drivers and related settings";
+    smartcards.enable = mkEnableOption "Enable smart card support (PC/SC daemon)";
   };
 
-  imports = [ 
-    ./common 
-    ./networking 
-    ./docker 
-    ./fonts-locale 
-    ./bluetooth 
-    ./steam 
-    ./plymouth 
-    ./common-kernel 
-    ./pipewire 
+  imports = [
+    ./common
+    ./networking
+    ./docker
+    ./fonts-locale
+    ./bluetooth
+    ./steam
+    ./plymouth
+    ./common-kernel
+    ./pipewire
     ./home-manager
     ./display-manager
     ./nemo
@@ -63,6 +72,7 @@ in {
     ./kde
     ./desktops/kde-extra.nix
     ./nvidia
+    ./smartcards
   ];
 
   config = {
@@ -78,12 +88,13 @@ in {
       bash.enable = lib.mkDefault true;
       dconf.enable = lib.mkDefault true;
       vscode.enable = lib.mkDefault true;
-  fontsLocale.enable = lib.mkDefault true;
-  bluetooth.enable = lib.mkDefault true;
-  steam.enable = lib.mkDefault true;
-  plymouth.enable = lib.mkDefault true;
-  commonKernel.enable = lib.mkDefault true;
-  pipewire.enable = lib.mkDefault true;
+      fontsLocale.enable = lib.mkDefault true;
+      bluetooth.enable = lib.mkDefault true;
+      steam.enable = lib.mkDefault true;
+      plymouth.enable = lib.mkDefault true;
+      commonKernel.enable = lib.mkDefault true;
+      pipewire.enable = lib.mkDefault true;
+      smartcards.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):

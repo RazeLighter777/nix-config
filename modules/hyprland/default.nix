@@ -1,12 +1,23 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   config = lib.mkIf config.my.hyprland.enable {
     home-manager.users.${config.my.user.name} = {
       wayland.windowManager.hyprland = {
-        enable = true; package = pkgs.hyprland; xwayland.enable = true;
+        enable = true;
+        package = pkgs.hyprland;
+        xwayland.enable = true;
         settings = {
           "$mod" = "SUPER";
-          exec-once = [ "nm-applet" "wayvnc 0.0.0.0" "hyprnotify" ];
+          exec-once = [
+            "nm-applet"
+            "wayvnc 0.0.0.0"
+            "hyprnotify"
+          ];
           bindm = [
             "$mod, mouse:272, movewindow"
             "$mod, mouse:273, resizewindow"
@@ -94,27 +105,45 @@
       services.hyprpaper = {
         enable = true;
         settings = {
-          ipc = "on"; splash = false; splash_offset = 2.0;
+          ipc = "on";
+          splash = false;
+          splash_offset = 2.0;
           preload = [ "${config.my.user.homeDir}/Images/wallpapers/big-sur.jpg" ];
           wallpaper = [ ", ${config.my.user.homeDir}/Images/wallpapers/big-sur.jpg" ];
         };
       };
       gtk = {
         enable = true;
-        cursorTheme = { name = "Quintom_Snow"; size = 24; };
-        iconTheme = { name = "WhiteSur-dark"; package = pkgs.whitesur-icon-theme; };
+        cursorTheme = {
+          name = "Quintom_Snow";
+          size = 24;
+        };
+        iconTheme = {
+          name = "WhiteSur-dark";
+          package = pkgs.whitesur-icon-theme;
+        };
         theme = {
           name = "WhiteSur-Dark";
           package = pkgs.whitesur-gtk-theme.override {
-            altVariants = [ "all" ]; colorVariants = [ "dark" ]; themeVariants = [ "default" ]; iconVariant = "tux"; nautilusStyle = "glassy";
+            altVariants = [ "all" ];
+            colorVariants = [ "dark" ];
+            themeVariants = [ "default" ];
+            iconVariant = "tux";
+            nautilusStyle = "glassy";
           };
         };
       };
       home.pointerCursor = {
-        gtk.enable = true; x11.enable = true; hyprcursor.enable = true;
-        package = pkgs.rose-pine-cursor; name = "BreezeX-RosePine-Linux";
+        gtk.enable = true;
+        x11.enable = true;
+        hyprcursor.enable = true;
+        package = pkgs.rose-pine-cursor;
+        name = "BreezeX-RosePine-Linux";
       };
-      programs.kitty = { enable = true; settings.confirm_os_window_close = 0; };
+      programs.kitty = {
+        enable = true;
+        settings.confirm_os_window_close = 0;
+      };
     };
   };
 }

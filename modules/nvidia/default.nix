@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   config = lib.mkIf config.my.nvidia.enable {
     services.xserver.videoDrivers = [ "nvidia" ];

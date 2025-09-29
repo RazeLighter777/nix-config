@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   config = lib.mkIf config.my.displayManager.enable {
     services.greetd = {
@@ -11,7 +16,10 @@
     users.users.greeter = {
       isNormalUser = false;
       description = "greetd greeter user";
-      extraGroups = [ "video" "audio" ];
+      extraGroups = [
+        "video"
+        "audio"
+      ];
       linger = true;
     };
     security.pam.services.greetd.enableGnomeKeyring = true;
@@ -21,7 +29,7 @@
     programs.uwsm.waylandCompositors.hyprland = {
       prettyName = "Hyprland";
       comment = "Hyprland compositor managed by UWSM";
-    binPath = "${config.my.user.homeDir}/.nix-profile/bin/Hyprland";
+      binPath = "${config.my.user.homeDir}/.nix-profile/bin/Hyprland";
     };
     services.xserver.desktopManager.runXdgAutostartIfNone = true;
   };

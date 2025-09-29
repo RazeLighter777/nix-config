@@ -1,5 +1,8 @@
 { config, lib, ... }:
-let cfg = config.my.steam; in {
+let
+  cfg = config.my.steam;
+in
+{
   options.my.steam.enable = lib.mkEnableOption "Enable Steam with open firewall rules for common features";
   config = lib.mkIf cfg.enable {
     programs.steam = {

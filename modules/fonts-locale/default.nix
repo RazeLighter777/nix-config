@@ -1,5 +1,13 @@
-{ config, pkgs, lib, ... }:
-let cfg = config.my.fontsLocale; in {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  cfg = config.my.fontsLocale;
+in
+{
   options.my.fontsLocale.enable = lib.mkEnableOption "Enable shared fonts and locale extra settings";
   config = lib.mkIf cfg.enable {
     fonts.packages = with pkgs; [

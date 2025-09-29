@@ -1,13 +1,21 @@
-{ config, pkgs, lib, ... }:
 {
-  imports = [ ./hardware-configuration.nix ../../modules ];
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules
+  ];
   my = {
     hyprland.enable = true;
     displayManager.enable = true;
     waybar.enable = true; # paired with Hyprland
     nvidia.enable = true;
-    obs.enable = true;    # optional GPU-accelerated app
-    xmrig.enable = true;  # explicitly opt-in (default false)
+    obs.enable = true; # optional GPU-accelerated app
+    xmrig.enable = true; # explicitly opt-in (default false)
     # All other common apps come from mkDefault in modules/default.nix
   };
 
@@ -21,8 +29,16 @@
   services.xserver.xkb.layout = "us";
 
   users.users.${config.my.user.name} = {
-    isNormalUser = true; description = config.my.user.name;
-    extraGroups = [ "networkmanager" "wheel" "docker" "video" "dialout" "tty" ];
+    isNormalUser = true;
+    description = config.my.user.name;
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "video"
+      "dialout"
+      "tty"
+    ];
     packages = [ ];
   };
   security.polkit.enable = true;
@@ -31,18 +47,46 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate = (_: true);
   # Host-specific packages layered on top of common + hyprland extras
-  environment.systemPackages = with pkgs; [ cloudflared screen arion mpv gnome-keyring protonplus ];
-  hardware.graphics = { enable = true; extraPackages = with pkgs; [ libva libva-utils ]; };
+  environment.systemPackages = with pkgs; [
+    cloudflared
+    screen
+    arion
+    mpv
+    gnome-keyring
+    protonplus
+  ];
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      libva
+      libva-utils
+    ];
+  };
   # PipeWire + rtkit enabled via my.pipewire module
   services.gnome.gnome-keyring.enable = true;
-  networking.firewall.allowedTCPPorts = [ 22 5900 8080 9999 5173 ];
+  networking.firewall.allowedTCPPorts = [
+    22
+    5900
+    8080
+    9999
+    5173
+  ];
   networking.firewall.allowedUDPPorts = [ 51820 ];
   system.stateVersion = "25.05";
   # Experimental features & docker enabled in shared modules
   # Steam enabled via my.steam module
   networking.wireguard.interfaces.wg0 = {
-    ips = [ "192.168.87.5/32" ]; listenPort = 51820;
+    ips = [ "192.168.87.5/32" ];
+    listenPort = 51820;
     privateKeyFile = "${config.my.user.homeDir}/Keys/peer_zenbox.key";
-    peers = [{ publicKey = "VzQMzZcTBQYrARnefqraQJuc6CVFf15ifUNsDuTV2wY="; presharedKeyFile = "${config.my.user.homeDir}/Keys/peer_A-peer_zenbox.psk"; allowedIPs = [ "192.168.87.0/24" ]; endpoint = "edge.prizrak.me:51820"; persistentKeepalive = 25; }];
+    peers = [
+      {
+        publicKey = "VzQMzZcTBQYrARnefqraQJuc6CVFf15ifUNsDuTV2wY=";
+        presharedKeyFile = "${config.my.user.homeDir}/Keys/peer_A-peer_zenbox.psk";
+        allowedIPs = [ "192.168.87.0/24" ];
+        endpoint = "edge.prizrak.me:51820";
+        persistentKeepalive = 25;
+      }
+    ];
   };
 }

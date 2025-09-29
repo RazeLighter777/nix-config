@@ -1,5 +1,13 @@
-{ config, lib, pkgs, ... }:
-let cfg = config.my.commonKernel; in {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.my.commonKernel;
+in
+{
   options.my.commonKernel.enable = lib.mkEnableOption "Enable shared kernel defaults";
   config = lib.mkIf cfg.enable {
     boot.kernelPackages = pkgs.linuxPackages_6_16;
