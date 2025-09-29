@@ -34,6 +34,7 @@ in
         ];
         nixpkgs.config.allowUnfree = true;
         home.stateVersion = "25.05";
+        home.enableNixpkgsReleaseCheck = false;
       };
     home-manager.extraSpecialArgs = { inherit unstable; };
   };

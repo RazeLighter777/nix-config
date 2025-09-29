@@ -9,7 +9,7 @@ let
     
     src = pkgs.fetchurl {
       url = "https://militarycac.com/maccerts/AllCerts.zip";
-      sha256 = "sha256-sHuQeJwvOdt3yiajCpKoUXCO5hXyI1I18JhnhBut+sw=";
+      sha256 = "sha256-sHuQeJwvOdt3yiajCSaFGnCO5hXyI1I18JhnhBut+sw=";
     };
     
     nativeBuildInputs = [ pkgs.unzip pkgs.openssl ];
