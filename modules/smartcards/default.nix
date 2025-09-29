@@ -4,5 +4,6 @@ let cfg = config.my.smartcards; in {
   config = lib.mkIf cfg.enable {
     services.pcscd.enable = true;
     services.pcscd.plugins = [ pkgs.acsccid ];
+    environment.systemPackages = [ pkgs.pcsc-tools pkgs.opensc]
   };
 }
