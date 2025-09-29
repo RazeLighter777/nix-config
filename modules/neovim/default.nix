@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   codecompanion-nvim-latest = pkgs.vimUtils.buildVimPlugin {
     pname = "codecompanion-nvim"; version = "2025-08-11";
@@ -27,7 +27,8 @@ let
     pname = "fidget-spinner"; src = ./custom-neovim-plugins/fidget-spinner; version = "0.1.0"; dependencies = [ pkgs.vimPlugins.fidget-nvim ];
   };
 in {
-  home-manager.users.${config.my.user.name}.programs.neovim = {
+  config = lib.mkIf config.my.neovim.enable {
+    home-manager.users.${config.my.user.name}.programs.neovim = {
     enable = true; viAlias = true; vimAlias = true;
     plugins = with pkgs.vimPlugins; [
       tokyonight-nvim nvim-lspconfig nvim-cmp vim-vsnip cmp-nvim-lsp copilot-lua
@@ -38,5 +39,6 @@ in {
     extraConfig = ''colorscheme tokyonight-night\nset expandtab\nset nu\nset undofile'';
     extraPackages = with pkgs; [ nodejs nil gcc tree-sitter nodePackages.prettier black pyright nixfmt-rfc-style stylua ];
     extraLuaConfig = builtins.readFile ./nvim-lua-config.lua;
+  };
   };
 }

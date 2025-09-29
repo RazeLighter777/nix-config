@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   customOllama = pkgs.ollama-cuda.overrideAttrs (_: {
     pname = "ollama-cuda";
@@ -31,11 +31,13 @@ let
     ];
   });
 in {
-  services.ollama = {
-    enable = true;
-    package = customOllama;
-    loadModels = [ "gpt-oss:120b" ];
-    acceleration = "cuda";
+  config = lib.mkIf config.my.ollama.enable {
+    services.ollama = {
+      enable = true;
+      package = customOllama;
+      loadModels = [ "gpt-oss:120b" ];
+      acceleration = "cuda";
+    };
+    environment.systemPackages = [ customOllama customLlamaCpp ];
   };
-  environment.systemPackages = [ customOllama customLlamaCpp ];
 }

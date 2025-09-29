@@ -1,6 +1,7 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
-  home-manager.users.${config.my.user.name}.programs.waybar = {
+  config = lib.mkIf config.my.waybar.enable {
+    home-manager.users.${config.my.user.name}.programs.waybar = {
     enable = true;
     systemd.enable = true;
     style = ''
@@ -28,5 +29,6 @@
       temperature = { critical-threshold = 80; format = "{temperatureC}°C"; };
       "sway/workspaces".format = ''<span style="italic">{}</span>'';
     } ];
+  };
   };
 }

@@ -1,6 +1,7 @@
-{ config, ... }:
+{ config, pkgs, lib, ... }:
 {
-  home-manager.users.${config.my.user.name}.programs.firefox = {
+  config = lib.mkIf config.my.firefox.enable {
+    home-manager.users.${config.my.user.name}.programs.firefox = {
     enable = true;
     profiles.default = {
       id = 0;
@@ -36,5 +37,6 @@
         "browser.sessionstore.max_tabs_undo" = 0;
       };
     };
+  };
   };
 }

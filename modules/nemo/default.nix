@@ -1,4 +1,6 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
-  environment.systemPackages = [ pkgs.nemo-with-extensions ];
+  config = lib.mkIf config.my.nemo.enable {
+    environment.systemPackages = [ pkgs.nemo-with-extensions ];
+  };
 }

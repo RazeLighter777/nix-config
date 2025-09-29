@@ -1,6 +1,7 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
-  home-manager.users.${config.my.user.name}.programs.vscode = {
+  config = lib.mkIf config.my.vscode.enable {
+    home-manager.users.${config.my.user.name}.programs.vscode = {
     enable = true;
     extensions = with pkgs.vscode-extensions; [
       github.copilot
@@ -17,5 +18,6 @@
       redhat.vscode-yaml
       bbenoist.nix
     ];
+  };
   };
 }
