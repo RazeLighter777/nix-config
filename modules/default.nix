@@ -39,6 +39,7 @@ in
     vscode.enable = mkEnableOption "Enable VSCode configuration";
     kde.enable = mkEnableOption "Enable KDE Plasma desktop";
     nvidia.enable = mkEnableOption "Enable NVIDIA drivers and related settings";
+    remmina.enable = mkEnableOption "Enable Remmina remote desktop client";
   };
 
   imports = [
