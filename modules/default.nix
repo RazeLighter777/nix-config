@@ -43,9 +43,10 @@ in {
     steam.enable = mkEnableOption "Enable Steam gaming platform";
     plymouth.enable = mkEnableOption "Enable Plymouth splash";
     commonKernel.enable = mkEnableOption "Enable shared kernel configuration";
+    pipewire.enable = mkEnableOption "Enable PipeWire audio stack";
   };
 
-  imports = [ ./common ./networking ./docker ./fonts-locale ./bluetooth ./steam ./plymouth ./common-kernel ]
+  imports = [ ./common ./networking ./docker ./fonts-locale ./bluetooth ./steam ./plymouth ./common-kernel ./pipewire ]
     ++ (optional homeMgrNeeded ./home-manager)
     ++ (optional cfg.displayManager.enable ./display-manager)
     ++ (optional cfg.nemo.enable ./nemo)
@@ -85,6 +86,7 @@ in {
   steam.enable = lib.mkDefault true;
   plymouth.enable = lib.mkDefault true;
   commonKernel.enable = lib.mkDefault true;
+  pipewire.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):

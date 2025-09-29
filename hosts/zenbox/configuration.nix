@@ -33,8 +33,7 @@
   # Host-specific packages layered on top of common + hyprland extras
   environment.systemPackages = with pkgs; [ cloudflared screen arion mpv gnome-keyring protonplus ];
   hardware.graphics = { enable = true; extraPackages = with pkgs; [ libva libva-utils ]; };
-  security.rtkit.enable = true;
-  services.pipewire = { enable = true; alsa.enable = true; alsa.support32Bit = true; pulse.enable = true; };
+  # PipeWire + rtkit enabled via my.pipewire module
   services.gnome.gnome-keyring.enable = true;
   networking.firewall.allowedTCPPorts = [ 22 5900 8080 9999 5173 ];
   networking.firewall.allowedUDPPorts = [ 51820 ];
