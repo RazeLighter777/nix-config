@@ -14,8 +14,8 @@
   networking.hostName = "zenbox";
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelParams = lib.mkAfter [ "mitigations=off" ];
   # Kernel base config + plymouth handled by my.commonKernel / my.plymouth
-  boot.kernelParams = boot.kernelParams ++ [ "mitigations=off" ];
   # Common services (nix-ld, networkmanager, locale/timezone, direnv) now handled by aggregated modules
   # Fonts & extra locale settings provided by my.fontsLocale module
   services.xserver.xkb.layout = "us";
