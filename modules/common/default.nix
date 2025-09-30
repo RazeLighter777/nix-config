@@ -23,7 +23,12 @@
     nfs-utils
     lsof
     unzip
-    
+    file
+    jq
+    nettools
+    fastfetch
+    tcpdump
+    perf
   ];
   nix.settings.experimental-features = [
     "nix-command"
