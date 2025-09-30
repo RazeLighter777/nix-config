@@ -72,7 +72,11 @@ in
         conformNvim
         fidgetSpinnner
       ];
-      extraConfig = ''colorscheme tokyonight-night\nset expandtab\nset nu\nset undofile'';
+      extraConfig = ''
+      colorscheme tokyonight-night
+      set expandtab
+      set nu
+      set undofile'';
       extraPackages = with pkgs; [
         nodejs
         nil
