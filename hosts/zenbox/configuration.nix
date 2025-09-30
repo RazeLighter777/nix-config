@@ -15,7 +15,7 @@
     waybar.enable = true; # paired with Hyprland
     nvidia.enable = true;
     obs.enable = true; # optional GPU-accelerated app
-    xmrig.enable = true; # explicitly opt-in (default false)
+    xmrig.enable = false; # explicitly opt-in (default false)
     # All other common apps come from mkDefault in modules/default.nix
   };
 
