@@ -40,6 +40,7 @@ in
     kde.enable = mkEnableOption "Enable KDE Plasma desktop";
     nvidia.enable = mkEnableOption "Enable NVIDIA drivers and related settings";
     remmina.enable = mkEnableOption "Enable Remmina remote desktop client";
+    freerdp.enable = mkEnableOption "Enable FreeRDP client";
   };
 
   imports = [
@@ -75,6 +76,7 @@ in
     ./smartcards
     ./dod-certs
     ./remmina
+    ./freerdp
   ];
 
   config = {
@@ -99,6 +101,7 @@ in
       smartcards.enable = lib.mkDefault true;
       dodCerts.enable = lib.mkDefault true;
       remmina.enable = lib.mkDefault true;
+      freerdp.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
