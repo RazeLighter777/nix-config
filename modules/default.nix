@@ -42,6 +42,8 @@ in
     remmina.enable = mkEnableOption "Enable Remmina remote desktop client";
     freerdp.enable = mkEnableOption "Enable FreeRDP client";
     gnupg.enable = mkEnableOption "Enable gpg agent";
+    kanshi.enable = mkEnableOption "Enable kanshi";
+    libreoffice.enable = mkEnableOption "Enable libreoffice";
   };
 
   imports = [
@@ -79,6 +81,8 @@ in
     ./remmina
     ./freerdp
     ./gnupg
+    ./kanshi
+    ./libreoffice
   ];
 
   config = {
@@ -105,6 +109,8 @@ in
       remmina.enable = lib.mkDefault true;
       freerdp.enable = lib.mkDefault true;
       gnupg.enable = lib.mkDefault true;
+      kanshi.enable = lib.mkDefault true;
+      libreoffice.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
