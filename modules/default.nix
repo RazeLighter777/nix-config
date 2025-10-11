@@ -46,7 +46,7 @@ in
     libreoffice.enable = mkEnableOption "Enable libreoffice";
     flatpak.enable = mkEnableOption "Enable flatpaks";
     screen.enable = mkEnableOption "Enable screen";
-
+    brightnessctl.enable = mkEnableOption "Enable brightness";
   };
 
   imports = [
@@ -88,6 +88,7 @@ in
     ./libreoffice
     ./flatpak
     ./screen
+    ./brightnessctl
   ];
 
   config = {
@@ -118,6 +119,7 @@ in
       libreoffice.enable = lib.mkDefault true;
       flatpak.enable = lib.mkDefault true;
       screen.enable = lib.mkDefault true;
+      brightnessctl.enable = lib.mkDefault false;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):

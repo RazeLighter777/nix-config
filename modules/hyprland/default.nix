@@ -11,6 +11,12 @@
         enable = true;
         package = pkgs.hyprland;
         xwayland.enable = true;
+        extraConfig = ''
+          input {
+            touchpad {
+              natural_scroll = yes
+            }
+          }'';
         settings = {
           "$mod" = "SUPER";
           exec-once = [
@@ -23,6 +29,12 @@
             "$mod, mouse:272, movewindow"
             "$mod, mouse:273, resizewindow"
             "$mod ALT, mouse:272, resizewindow"
+          ];
+          bindl = [
+            ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"
+          ];
+          binde = [
+            ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
           ];
           bind = [
             "CTRL ALT, T, exec, kitty"
@@ -99,6 +111,8 @@
             "$mod CTRL, bracketright, movetoworkspacesilent, +1"
             "$mod, period, workspace, e+1"
             "$mod, comma, workspace, e-1"
+            (lib.mkIf config.my.brightnessctl.enable "bind = , XF86MonBrightnessUp, exec, brightnessctl s +5%")
+            (lib.mkIf config.my.brightnessctl.enable "bind = , XF86MonBrightnessDown, exec, brightnessctl s 5%-")
           ];
         };
       };
