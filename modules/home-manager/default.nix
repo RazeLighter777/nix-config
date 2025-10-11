@@ -16,6 +16,7 @@ in
 
   config = lib.mkIf config.my.homeManager.enable {
     home-manager.verbose = true;
+    nixpkgs.config.allowUnfree = true;
     home-manager.users.${config.my.user.name} =
       { pkgs, ... }:
       {

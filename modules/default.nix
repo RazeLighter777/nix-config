@@ -41,6 +41,7 @@ in
     nvidia.enable = mkEnableOption "Enable NVIDIA drivers and related settings";
     remmina.enable = mkEnableOption "Enable Remmina remote desktop client";
     freerdp.enable = mkEnableOption "Enable FreeRDP client";
+    gnupgagent.enable = mkEnableOption "Enable gpg agent";
   };
 
   imports = [
@@ -77,6 +78,7 @@ in
     ./dod-certs
     ./remmina
     ./freerdp
+    ./gnupg
   ];
 
   config = {
@@ -102,6 +104,7 @@ in
       dodCerts.enable = lib.mkDefault true;
       remmina.enable = lib.mkDefault true;
       freerdp.enable = lib.mkDefault true;
+      gnupg.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
