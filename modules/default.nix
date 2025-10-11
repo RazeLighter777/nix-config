@@ -45,6 +45,8 @@ in
     kanshi.enable = mkEnableOption "Enable kanshi";
     libreoffice.enable = mkEnableOption "Enable libreoffice";
     flatpak.enable = mkEnableOption "Enable flatpaks";
+    screen.enable = mkEnableOption "Enable screen";
+
   };
 
   imports = [
@@ -85,6 +87,7 @@ in
     ./kanshi
     ./libreoffice
     ./flatpak
+    ./screen
   ];
 
   config = {
@@ -114,6 +117,7 @@ in
       kanshi.enable = lib.mkDefault true;
       libreoffice.enable = lib.mkDefault true;
       flatpak.enable = lib.mkDefault true;
+      screen.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
