@@ -29,6 +29,7 @@
     fastfetch
     tcpdump
     perf
+    valgrind
   ];
   nix.settings.experimental-features = [
     "nix-command"
