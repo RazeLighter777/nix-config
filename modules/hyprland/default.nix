@@ -17,6 +17,7 @@
             "nm-applet"
             "wayvnc 0.0.0.0"
             "hyprnotify"
+            "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY"
           ];
           bindm = [
             "$mod, mouse:272, movewindow"
@@ -117,6 +118,7 @@
         cursorTheme = {
           name = "Quintom_Snow";
           size = 24;
+          package = pkgs.quintom-cursor-theme;
         };
         iconTheme = {
           name = "WhiteSur-dark";

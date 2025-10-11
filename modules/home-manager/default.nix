@@ -31,6 +31,7 @@ in
         home.username = config.my.user.name;
         home.packages = [
           pkgs.atool
+          pkgs.dconf
           pkgs.httpie
         ];
         nixpkgs.config.allowUnfree = true;
