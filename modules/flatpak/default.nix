@@ -5,7 +5,7 @@
   ...
 }:
 {
-  config = lib.mkIf config.my.nemo.enable {
+  config = lib.mkIf config.my.flatpak.enable {
     services.flatpak.enable = true;
   };
 }
