@@ -30,6 +30,7 @@
       "video"
     ];
   };
+  security.sudo.wheelNeedsPassword = false;
   # Host-specific extra packages (on top of common + KDE extras)
   environment.systemPackages = with pkgs; [ mpv ];
   # NetworkManager & SSH enabled via networking module
