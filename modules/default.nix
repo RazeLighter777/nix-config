@@ -41,7 +41,7 @@ in
     nvidia.enable = mkEnableOption "Enable NVIDIA drivers and related settings";
     remmina.enable = mkEnableOption "Enable Remmina remote desktop client";
     freerdp.enable = mkEnableOption "Enable FreeRDP client";
-    gnupgagent.enable = mkEnableOption "Enable gpg agent";
+    gnupg.enable = mkEnableOption "Enable gpg agent";
   };
 
   imports = [
