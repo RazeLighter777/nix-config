@@ -5,9 +5,10 @@
   ...
 }:
 {
-  programs.gnupg = {
-    agent.enable = true;
-    agent.enableBrowserSocket = true;
-    agent.enableSSHSupport = true;
+  home-manager.users.${config.my.user.name}.services.gpg-agent = {
+    enable = true;
+    enableBashIntegration = true;
+    enableScDaemon = true;
+    enableSshSupport = true;
   };
 }
