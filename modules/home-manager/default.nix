@@ -6,7 +6,7 @@
 }:
 let
   home-manager = builtins.fetchTarball {
-    url = "https://github.com/nix-community/home-manager/archive/release-master.tar.gz";
+    url = "https://github.com/nix-community/home-manager/archive/master.tar.gz";
     sha256 = "0q3lv288xlzxczh6lc5lcw0zj9qskvjw3pzsrgvdh8rl8ibyq75s"; # keep existing
   };
   unstable = pkgs.unstable or pkgs; # fallback if overlay not present

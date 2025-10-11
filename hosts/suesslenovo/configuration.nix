@@ -10,7 +10,7 @@
     ../../modules
   ];
   my = {
-    kde.enable = true;
+    hyprland.enable = true;
     displayManager.enable = true;
     waybar.enable = true;
     # Rely on mkDefault for rest (no NVIDIA / OBS / XMRig)
