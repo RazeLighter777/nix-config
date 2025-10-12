@@ -48,6 +48,7 @@ in
     screen.enable = mkEnableOption "Enable screen";
     brightnessctl.enable = mkEnableOption "Enable brightness";
     gnome-keyring.enable = mkEnableOption "Gnome keyring";
+    battery.enable = mkEnableOption "Battery support";
   };
 
   imports = [
@@ -91,6 +92,7 @@ in
     ./screen
     ./brightnessctl
     ./gnome-keyring
+    ./seahorse
   ];
 
   config = {
@@ -123,6 +125,7 @@ in
       screen.enable = lib.mkDefault true;
       brightnessctl.enable = lib.mkDefault false;
       gnome-keyring.enable = lib.mkDefault false;
+      battery.enable = lib.mkDefault false;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):

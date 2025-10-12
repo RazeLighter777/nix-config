@@ -27,6 +27,7 @@
           modules-right = [
             "pulseaudio"
             "network"
+            (lib.mkIf config.my.battery.enable "battery")
             "cpu"
             "memory"
             "temperature"

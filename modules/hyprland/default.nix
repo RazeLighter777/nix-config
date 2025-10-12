@@ -21,15 +21,16 @@
             }
           }
           source = ~/.config/hypr/workspaces.conf
+          source = ~/.config/hypr/monitors.conf
         '';
         settings = {
           "$mod" = "SUPER";
           exec-once = [
+            "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY"
+            "hyprnotify"
             "nm-applet"
             "wayvnc 0.0.0.0"
-            "hyprnotify"
             "systemctl --user start hyprpolkitagent"
-            "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY"
           ];
           bindm = [
             "$mod, mouse:272, movewindow"
