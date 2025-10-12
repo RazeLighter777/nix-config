@@ -12,7 +12,9 @@ let
   unstable = pkgs.unstable or pkgs; # fallback if overlay not present
 in
 {
-  imports = [ (import "${home-manager}/nixos") ];
+  imports = [
+    (import "${home-manager}/nixos")
+  ];
 
   config = lib.mkIf config.my.homeManager.enable {
     home-manager.verbose = true;

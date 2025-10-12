@@ -1,5 +1,6 @@
 {
   description = "A simple NixOS flake";
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nur = {
@@ -7,9 +8,24 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
   outputs =
-    { self, nixpkgs, ... }:
     {
+      self,
+      nixpkgs,
+      nur,
+      ...
+    }:
+    let
+      # Import the NUR package set into `nurPkgs`
+      nurPkgs = import nur { inherit nixpkgs; };
+    in
+    {
+      nixpkgs.config.packageOverrides = pkgs: {
+        # Add nur as part of the pkgs set so it will be accessible as pkgs.nur
+        nur = nurPkgs;
+      };
+
       nixosConfigurations = {
         zenbox = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";

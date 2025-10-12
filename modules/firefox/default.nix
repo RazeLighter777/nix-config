@@ -9,15 +9,35 @@
     home-manager.users.${config.my.user.name}.programs.firefox = {
       enable = true;
       package = pkgs.firefox.override {
-          nativeMessagingHosts = [pkgs.tridactyl-native];
-          cfg = {
-            pipewireSupport = true;
-            ffmpegSupport = true;
-            smartcardSupport = true;
-          };
+        nativeMessagingHosts = [ pkgs.tridactyl-native ];
+        cfg = {
+          pipewireSupport = true;
+          ffmpegSupport = true;
+          smartcardSupport = true;
         };
+      };
       profiles.default = {
         id = 0;
+        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+          cookies-txt
+          don-t-fuck-with-paste
+          greasemonkey
+          bitwarden
+          libredirect
+          localcdn
+          noscript
+          privacy-pass
+          protondb-for-steam
+          return-youtube-dislikes
+          rust-search-extension
+          search-by-image
+          sponsorblock
+          steam-database
+          ublock-origin
+          unpaywall
+          vimium-c
+          yomitan
+        ];
         settings = {
           "extensions.autoDisableScopes" = 0;
           "browser.search.defaultenginename" = "Google";
