@@ -15,6 +15,7 @@
     waybar.enable = true;
     brightnessctl.enable = true;
     # Rely on mkDefault for rest (no NVIDIA / OBS / XMRig)
+    gnome-keyring.enable = true;
   };
   networking.hostName = "suesslenovo";
   boot.loader.systemd-boot.enable = true;

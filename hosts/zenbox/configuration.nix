@@ -18,6 +18,7 @@
     xmrig.enable = false; # explicitly opt-in (default false)
     # All other common apps come from mkDefault in modules/default.nix
     ollama.enable = true; # optional AI app
+    gnome-keyring.enable = true;
   };
 
   networking.hostName = "zenbox";
@@ -53,7 +54,6 @@
     screen
     arion
     mpv
-    gnome-keyring
     protonplus
   ];
   hardware.graphics = {
@@ -64,7 +64,6 @@
     ];
   };
   # PipeWire + rtkit enabled via my.pipewire module
-  services.gnome.gnome-keyring.enable = true;
   networking.firewall.allowedTCPPorts = [
     22
     5900

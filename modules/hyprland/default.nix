@@ -6,6 +6,9 @@
 }:
 {
   config = lib.mkIf config.my.hyprland.enable {
+    environment.systemPackages = [
+      pkgs.hyprpolkitagent
+    ];
     home-manager.users.${config.my.user.name} = {
       wayland.windowManager.hyprland = {
         enable = true;
@@ -16,13 +19,16 @@
             touchpad {
               natural_scroll = yes
             }
-          }'';
+          }
+          source = ~/.config/hypr/workspaces.conf
+        '';
         settings = {
           "$mod" = "SUPER";
           exec-once = [
             "nm-applet"
             "wayvnc 0.0.0.0"
             "hyprnotify"
+            "systemctl --user start hyprpolkitagent"
             "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY"
           ];
           bindm = [

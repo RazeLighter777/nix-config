@@ -47,6 +47,7 @@ in
     flatpak.enable = mkEnableOption "Enable flatpaks";
     screen.enable = mkEnableOption "Enable screen";
     brightnessctl.enable = mkEnableOption "Enable brightness";
+    gnome-keyring.enable = mkEnableOption "Gnome keyring";
   };
 
   imports = [
@@ -89,6 +90,7 @@ in
     ./flatpak
     ./screen
     ./brightnessctl
+    ./gnome-keyring
   ];
 
   config = {
@@ -120,6 +122,7 @@ in
       flatpak.enable = lib.mkDefault true;
       screen.enable = lib.mkDefault true;
       brightnessctl.enable = lib.mkDefault false;
+      gnome-keyring.enable = lib.mkDefault false;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
