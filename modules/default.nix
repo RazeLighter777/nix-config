@@ -42,7 +42,7 @@ in
     remmina.enable = mkEnableOption "Enable Remmina remote desktop client";
     freerdp.enable = mkEnableOption "Enable FreeRDP client";
     gnupg.enable = mkEnableOption "Enable gpg agent";
-    kanshi.enable = mkEnableOption "Enable kanshi";
+    nwg-display.enable = mkEnableOption "Enable nwg-display";
     libreoffice.enable = mkEnableOption "Enable libreoffice";
     flatpak.enable = mkEnableOption "Enable flatpaks";
     screen.enable = mkEnableOption "Enable screen";
@@ -84,7 +84,7 @@ in
     ./remmina
     ./freerdp
     ./gnupg
-    ./kanshi
+    ./nwg-display
     ./libreoffice
     ./flatpak
     ./screen
@@ -114,7 +114,7 @@ in
       remmina.enable = lib.mkDefault true;
       freerdp.enable = lib.mkDefault true;
       gnupg.enable = lib.mkDefault true;
-      kanshi.enable = lib.mkDefault true;
+      nwg-display.enable = lib.mkDefault true;
       libreoffice.enable = lib.mkDefault true;
       flatpak.enable = lib.mkDefault true;
       screen.enable = lib.mkDefault true;

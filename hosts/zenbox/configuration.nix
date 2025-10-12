@@ -17,6 +17,7 @@
     obs.enable = true; # optional GPU-accelerated app
     xmrig.enable = false; # explicitly opt-in (default false)
     # All other common apps come from mkDefault in modules/default.nix
+    ollama.enable = true; # optional AI app
   };
 
   networking.hostName = "zenbox";
