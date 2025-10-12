@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 let
@@ -10,6 +11,9 @@ let
     sha256 = "0q83c34qf6wx5fsjhnwl6b774a0gz0y8qvamlysz1hsil42k18qq"; # keep existing
   };
   unstable = pkgs.unstable or pkgs; # fallback if overlay not present
+  nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+    inherit pkgs;
+  };
 in
 {
   imports = [
@@ -19,6 +23,7 @@ in
   config = lib.mkIf config.my.homeManager.enable {
     home-manager.verbose = true;
     nixpkgs.config.allowUnfree = true;
+    home-manager.extraSpecialArgs = { inherit inputs; };
     home-manager.users.${config.my.user.name} =
       { pkgs, ... }:
       {

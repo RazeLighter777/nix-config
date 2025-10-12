@@ -111,8 +111,8 @@
             "$mod CTRL, bracketright, movetoworkspacesilent, +1"
             "$mod, period, workspace, e+1"
             "$mod, comma, workspace, e-1"
-            (lib.mkIf config.my.brightnessctl.enable "bind = , XF86MonBrightnessUp, exec, brightnessctl s +5%")
-            (lib.mkIf config.my.brightnessctl.enable "bind = , XF86MonBrightnessDown, exec, brightnessctl s 5%-")
+            (lib.mkIf config.my.brightnessctl.enable ", XF86MonBrightnessUp, exec, brightnessctl s +5%")
+            (lib.mkIf config.my.brightnessctl.enable ", XF86MonBrightnessDown, exec, brightnessctl s 5%-")
           ];
         };
       };

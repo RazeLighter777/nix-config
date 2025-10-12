@@ -13,6 +13,7 @@
     hyprland.enable = true;
     displayManager.enable = true;
     waybar.enable = true;
+    brightnessctl.enable = true;
     # Rely on mkDefault for rest (no NVIDIA / OBS / XMRig)
   };
   networking.hostName = "suesslenovo";

@@ -7,6 +7,10 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -15,14 +19,14 @@
       nixpkgs,
       nur,
       ...
-    }:
+    }@inputs:
     let
-      # Import the NUR package set into `nurPkgs`
+      # Import nur, passing nixpkgs to it
       nurPkgs = import nur { inherit nixpkgs; };
     in
     {
       nixpkgs.config.packageOverrides = pkgs: {
-        # Add nur as part of the pkgs set so it will be accessible as pkgs.nur
+        # Make nur available under pkgs.nur
         nur = nurPkgs;
       };
 
@@ -30,13 +34,16 @@
         zenbox = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [ ./hosts/zenbox/configuration.nix ];
+          specialArgs = { inherit inputs; };
         };
         suesslenovo = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [ ./hosts/suesslenovo/configuration.nix ];
+          specialArgs = { inherit inputs; };
         };
         halloweentown = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
           modules = [ ./hosts/halloweentown/configuration.nix ];
         };
       };
