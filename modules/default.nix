@@ -33,6 +33,7 @@ in
     waybar.enable = mkEnableOption "Enable Waybar configuration";
     neovim.enable = mkEnableOption "Enable Neovim configuration";
     firefox.enable = mkEnableOption "Enable Firefox configuration";
+    thunderbird.enable = mkEnableOption "Enable Thunderbird configuration";
     hyprland.enable = mkEnableOption "Enable Hyprland home-manager configuration";
     bash.enable = mkEnableOption "Enable Bash configuration";
     dconf.enable = mkEnableOption "Enable dconf settings";
@@ -76,6 +77,7 @@ in
     ./waybar
     ./neovim
     ./firefox
+    ./thunderbird
     ./hyprland
     ./desktops/hyprland-extra.nix
     ./bash
@@ -112,6 +114,7 @@ in
       protonup.enable = lib.mkDefault true;
       neovim.enable = lib.mkDefault true;
       firefox.enable = lib.mkDefault true;
+      thunderbird.enable = lib.mkDefault true;
       bash.enable = lib.mkDefault true;
       dconf.enable = lib.mkDefault true;
       vscode.enable = lib.mkDefault true;
