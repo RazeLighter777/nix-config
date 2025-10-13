@@ -7,7 +7,6 @@
 
 {
   config = lib.mkIf config.my.waybar.enable {
-    environment.systemPackages = [ pkgs.hyprland-autoname-workspaces ];
     home-manager.users.${config.my.user.name}.programs.waybar = {
       enable = true;
       systemd.enable = true;
@@ -24,14 +23,14 @@
           margin: 6px 10px;
         }
 
-        #workspaces button {
+        #taskbar button {
           background: transparent;
           border-radius: 8px;
           padding: 0 10px;
           color: #eee;
         }
 
-        #workspaces button.focused {
+        #taskbar button.focused {
           background: rgba(255, 140, 0, 0.3);
           box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
         }
@@ -56,10 +55,6 @@
           font-size: 13px;
         }
       '';
-      ".config/hyprland-autoname-workspaces/config.toml" = {
-        source = ./hyprland-autoname-workspaces/config.toml;
-        recursive = true;
-      };
       settings = [
         {
           height = 30;
@@ -70,7 +65,6 @@
           modules-center = [ "hyprland/window" ];
           modules-left = [
             "hyprland/workspaces"
-            "hyprland/mode"
           ];
           modules-right = [
             "pulseaudio"
@@ -173,7 +167,18 @@
             critical-threshold = 80;
             format = "{temperatureC}°C";
           };
-          "hyprland/workspaces".format = ''{name}'';
+          "hyprland/workspaces" = {
+            format = "{name} {windows}";
+            format-window-seperator = " ";
+            "workspace-taskbar" = {
+              enable = true;
+              format = "{icon}";
+              icon-size = 20;
+              icon-theme = "WhiteSur-dark";
+              update-active-window = true;
+            };
+          };
+
         }
       ];
     };

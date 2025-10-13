@@ -80,7 +80,7 @@
             "systemctl --user enable --now mako.service"
             "nm-applet"
             "systemctl --user start hyprpolkitagent"
-            "hyprland-autoname-workspaces"
+            "udiskie"
           ];
           bindm = [
             "$mod, mouse:272, movewindow"

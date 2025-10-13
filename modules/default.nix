@@ -50,6 +50,7 @@ in
     gnome-keyring.enable = mkEnableOption "Gnome keyring";
     battery.enable = mkEnableOption "Battery support";
     kitty.enable = mkEnableOption "Kitty terminal";
+    udiskie.enable = mkEnableOption "Udiskie";
   };
 
   imports = [
@@ -95,6 +96,7 @@ in
     ./gnome-keyring
     ./seahorse
     ./kitty
+    ./udiskie
   ];
 
   config = {
@@ -129,6 +131,7 @@ in
       gnome-keyring.enable = lib.mkDefault false;
       battery.enable = lib.mkDefault false;
       kitty.enable = lib.mkDefault true;
+      udiskie.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
