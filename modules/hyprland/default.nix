@@ -25,7 +25,7 @@
           background-color = "#000000";
           border-color = "#FFFFFF";
           border-radius = 0;
-          default-timeout = 0;
+          default-timeout = 10000;
           font = "monospace 10";
           height = 100;
           icons = true;
