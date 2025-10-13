@@ -218,7 +218,7 @@
               enable = true;
               format = "{icon}";
               icon-size = 20;
-              icon-theme = "WhiteSur-dark";
+              icon-theme = "Papirus-dark";
               update-active-window = true;
             };
           };

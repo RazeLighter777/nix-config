@@ -101,9 +101,9 @@
             "$mod CTRL, S, exec, hyprshot -m region"
             "CTRL ALT, T, exec, kitty"
             "CTRL ALT, C, exec, hyprctl reload"
-            "$mod, D, exec, rofi -show drun -replace -i -show-icons -icon-theme 'WhiteSur-dark'"
+            "$mod, D, exec, rofi -show drun -replace -i -show-icons -icon-theme 'Papirus-dark'"
             "$mod, L, exec, hyprlock"
-            "$mod, P, exec, rofi -show p -modi p:rofi-power-menu -show-icons -icon-theme 'WhiteSur-dark'"
+            "$mod, P, exec, rofi -show p -modi p:rofi-power-menu -show-icons -icon-theme 'Papirus-dark'"
             "CTRL ALT, Delete, exec, hyprctl dispatch exit 0"
             "$mod, Q, killactive,"
             "$mod CTRL, D, layoutmsg, removemaster"
@@ -112,7 +112,7 @@
             "$mod, K, layoutmsg, cycleprev"
             "$mod CTRL, Return, layoutmsg, swapwithmaster"
             "$mod SHIFT, I, togglesplit"
-            "$mod, P, pseudo,"
+            "$mod SHIFT, P, pseudo,"
             "$mod, M, exec, hyprctl dispatch splitratio 0.3"
             "$mod, G, togglegroup"
             "$mod CTRL, tab, changegroupactive"
@@ -205,7 +205,7 @@
           package = pkgs.papirus-icon-theme;
         };
         theme = {
-          name = "WhiteSur-Dark";
+          name = "WhiteSur-dark";
           package = pkgs.whitesur-gtk-theme.override {
             altVariants = [ "all" ];
             colorVariants = [ "dark" ];
