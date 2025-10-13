@@ -21,5 +21,6 @@ in
     boot.consoleLogLevel = 0;
     boot.loader.timeout = 0;
     boot.initrd.verbose = false;
+    boot.initrd.systemd.enable = true;
   };
 }

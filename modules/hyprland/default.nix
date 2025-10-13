@@ -81,6 +81,8 @@
             "nm-applet"
             "systemctl --user start hyprpolkitagent"
             "udiskie"
+            "wl-paste --watch cliphist store"
+            "wl-clip-persist --clipboard regular"
           ];
           bindm = [
             "$mod, mouse:272, movewindow"
@@ -95,6 +97,7 @@
           ];
           bind = [
             "$mod SHIFT, C, exec, hyprpicker --autocopy"
+            "$mod CTRL, C, exec, cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"
             "$mod CTRL, S, exec, hyprshot -m region"
             "CTRL ALT, T, exec, kitty"
             "CTRL ALT, C, exec, hyprctl reload"
@@ -198,8 +201,8 @@
           package = pkgs.quintom-cursor-theme;
         };
         iconTheme = {
-          name = "WhiteSur-dark";
-          package = pkgs.whitesur-icon-theme;
+          name = "Papirus-dark";
+          package = pkgs.papirus-icon-theme;
         };
         theme = {
           name = "WhiteSur-Dark";

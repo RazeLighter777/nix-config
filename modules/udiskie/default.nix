@@ -5,8 +5,9 @@
   ...
 }:
 {
-  config = lib.mkIf config.my.vscode.enable {
-    home-manager.users.${config.my.user.name}.programs.vscode = {
+  config = lib.mkIf config.my.udiskie.enable {
+    services.udisks2.enable = true;
+    home-manager.users.${config.my.user.name} = {
       services.udiskie = {
         enable = true;
         notify = true;

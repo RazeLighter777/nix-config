@@ -11,6 +11,9 @@
     pavucontrol
     hyprpicker
     wl-clipboard
+    cliphist
+    wl-clip-persist
+    swayimg
   ];
   programs.hyprland.withUWSM = true;
 }
