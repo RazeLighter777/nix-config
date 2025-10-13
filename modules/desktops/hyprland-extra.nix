@@ -9,7 +9,8 @@
     wayvnc
     networkmanagerapplet
     pavucontrol
-    hyprnotify
+    hyprpicker
+    wl-clipboard
   ];
   programs.hyprland.withUWSM = true;
 }

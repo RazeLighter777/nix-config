@@ -4,36 +4,86 @@
   lib,
   ...
 }:
+
 {
   config = lib.mkIf config.my.waybar.enable {
+    environment.systemPackages = [ pkgs.hyprland-autoname-workspaces ];
     home-manager.users.${config.my.user.name}.programs.waybar = {
       enable = true;
       systemd.enable = true;
+
       style = ''
         ${builtins.readFile "${pkgs.waybar}/etc/xdg/waybar/style.css"}
-        window#waybar { background: transparent; border-bottom: none; }
+
+        window#waybar {
+          background: rgba(30, 30, 30, 0.4); /* semi-transparent dark glass */
+          border-radius: 12px;
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          box-shadow: 0 0 10px rgba(255, 100, 0, 0.2); /* warm glow */
+          padding: 4px 10px;
+          margin: 6px 10px;
+        }
+
+        #workspaces button {
+          background: transparent;
+          border-radius: 8px;
+          padding: 0 10px;
+          color: #eee;
+        }
+
+        #workspaces button.focused {
+          background: rgba(255, 140, 0, 0.3);
+          box-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+        }
+
+        #clock,
+        #cpu,
+        #memory,
+        #battery,
+        #temperature,
+        #pulseaudio,
+        #network,
+        #tray {
+          background: rgba(40, 40, 40, 0.5);
+          border-radius: 8px;
+          margin: 0 5px;
+          padding: 2px 8px;
+          color: #ddd;
+        }
+
+        * {
+          font-family: "JetBrainsMono Nerd Font", monospace;
+          font-size: 13px;
+        }
       '';
+      ".config/hyprland-autoname-workspaces/config.toml" = {
+        source = ./hyprland-autoname-workspaces/config.toml;
+        recursive = true;
+      };
       settings = [
         {
           height = 30;
           layer = "top";
           position = "bottom";
           tray.spacing = 10;
-          modules-center = [ "sway/window" ];
+
+          modules-center = [ "hyprland/window" ];
           modules-left = [
-            "sway/workspaces"
-            "sway/mode"
+            "hyprland/workspaces"
+            "hyprland/mode"
           ];
           modules-right = [
             "pulseaudio"
             "network"
             (lib.mkIf config.my.battery.enable "battery")
+            "idle_inhibitor"
             "cpu"
             "memory"
             "temperature"
             "clock"
             "tray"
           ];
+
           battery = {
             format = "{capacity}% {icon}";
             format-alt = "{time} {icon}";
@@ -51,15 +101,41 @@
               warning = 30;
             };
           };
-          clock = {
-            format-alt = "{:%Y-%m-%d}";
-            tooltip-format = "{:%Y-%m-%d | %H:%M}";
+          idle_inhibitor = {
+            format = "{icon}";
+            format-icons = {
+              activated = "";
+              deactivated = "";
+            };
           };
+
+          clock = {
+            tooltip-format = "<tt><small>{calendar}</small></tt>";
+            calendar = {
+              mode = "year";
+              mode-mon-col = 3;
+              on-scroll = 1;
+              format = {
+                months = "<span color='#73DACA'><b>{}</b></span>";
+                weekdays = "<span color='#73DACA'><b>{}</b></span>";
+                days = "<span color='#9ECE6A'>{}</span>";
+                today = "<span color='#D5D5D6'><b><u>{}</u></b></span>";
+              };
+              actions = {
+                on-click-right = "mode";
+                on-scroll-up = "shift-up";
+                on-scroll-down = "shift-down";
+              };
+            };
+          };
+
           cpu = {
             format = "{usage}% ";
             tooltip = false;
           };
+
           memory.format = "{}% ";
+
           network = {
             interval = 1;
             format-alt = "{ifname}: {ipaddr}/{cidr}";
@@ -68,6 +144,7 @@
             format-linked = "{ifname} (No IP) ";
             format-wifi = "{essid} ({signalStrength}%) ";
           };
+
           pulseaudio = {
             format = "{volume}% {icon} {format_source}";
             format-bluetooth = "{volume}% {icon} {format_source}";
@@ -90,12 +167,13 @@
             format-source-muted = "";
             on-click = "pavucontrol";
           };
-          "sway/mode".format = ''<span style="italic">{}</span>'';
+
+          "hyprland/mode".format = ''<span style="italic">{}</span>'';
           temperature = {
             critical-threshold = 80;
             format = "{temperatureC}°C";
           };
-          "sway/workspaces".format = ''<span style="italic">{}</span>'';
+          "hyprland/workspaces".format = ''{name}'';
         }
       ];
     };

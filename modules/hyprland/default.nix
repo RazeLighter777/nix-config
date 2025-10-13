@@ -80,6 +80,7 @@
             "systemctl --user enable --now mako.service"
             "nm-applet"
             "systemctl --user start hyprpolkitagent"
+            "hyprland-autoname-workspaces"
           ];
           bindm = [
             "$mod, mouse:272, movewindow"
@@ -93,6 +94,7 @@
             ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
           ];
           bind = [
+            "$mod SHIFT, C, exec, hyprpicker --autocopy"
             "$mod CTRL, S, exec, hyprshot -m region"
             "CTRL ALT, T, exec, kitty"
             "CTRL ALT, C, exec, hyprctl reload"
