@@ -8,8 +8,56 @@
   config = lib.mkIf config.my.hyprland.enable {
     environment.systemPackages = [
       pkgs.hyprpolkitagent
+      pkgs.rofi-power-menu
     ];
     home-manager.users.${config.my.user.name} = {
+      programs.hyprshot = {
+        enable = true;
+      };
+      services.mako = {
+        enable = true;
+        settings = {
+          "actionable=true" = {
+            anchor = "top-left";
+          };
+          actions = true;
+          anchor = "top-right";
+          background-color = "#000000";
+          border-color = "#FFFFFF";
+          border-radius = 0;
+          default-timeout = 0;
+          font = "monospace 10";
+          height = 100;
+          icons = true;
+          ignore-timeout = false;
+          layer = "top";
+          margin = 10;
+          markup = true;
+          width = 300;
+        };
+      };
+      services.hypridle = {
+        enable = true;
+        settings = {
+          general = {
+            after_sleep_cmd = "hyprctl dispatch dpms on";
+            ignore_dbus_inhibit = false;
+            lock_cmd = "hyprlock";
+          };
+
+          listener = [
+            {
+              timeout = 900;
+              on-timeout = "hyprlock";
+            }
+            {
+              timeout = 1200;
+              on-timeout = "hyprctl dispatch dpms off";
+              on-resume = "hyprctl dispatch dpms on";
+            }
+          ];
+        };
+      };
       wayland.windowManager.hyprland = {
         enable = true;
         package = pkgs.hyprland;
@@ -26,10 +74,11 @@
         settings = {
           "$mod" = "SUPER";
           exec-once = [
-            "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY"
-            "hyprnotify"
+            "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP GTK_THEME"
+            "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP GTK_THEME"
+            "systemctl --user enable --now hypridle.service"
+            "systemctl --user enable --now mako.service"
             "nm-applet"
-            "wayvnc 0.0.0.0"
             "systemctl --user start hyprpolkitagent"
           ];
           bindm = [
@@ -44,10 +93,12 @@
             ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
           ];
           bind = [
+            "$mod CTRL, S, exec, hyprshot -m region"
             "CTRL ALT, T, exec, kitty"
             "CTRL ALT, C, exec, hyprctl reload"
-            "$mod, D, exec, wofi --show drun -i --prompt 'Search...'"
+            "$mod, D, exec, rofi -show drun -replace -i -show-icons -icon-theme 'WhiteSur-dark'"
             "$mod, L, exec, hyprlock"
+            "$mod, P, exec, rofi -show p -modi p:rofi-power-menu -show-icons -icon-theme 'WhiteSur-dark'"
             "CTRL ALT, Delete, exec, hyprctl dispatch exit 0"
             "$mod, Q, killactive,"
             "$mod CTRL, D, layoutmsg, removemaster"
@@ -123,7 +174,10 @@
           ];
         };
       };
-      programs.wofi.enable = true;
+      programs.rofi = {
+        enable = true;
+        theme = "${config.my.user.homeDir}/.nix-profile/share/rofi/themes/glue_pro_blue.rasi";
+      };
       services.hyprpaper = {
         enable = true;
         settings = {

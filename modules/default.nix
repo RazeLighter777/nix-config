@@ -49,6 +49,7 @@ in
     brightnessctl.enable = mkEnableOption "Enable brightness";
     gnome-keyring.enable = mkEnableOption "Gnome keyring";
     battery.enable = mkEnableOption "Battery support";
+    kitty.enable = mkEnableOption "Kitty terminal";
   };
 
   imports = [
@@ -93,6 +94,7 @@ in
     ./brightnessctl
     ./gnome-keyring
     ./seahorse
+    ./kitty
   ];
 
   config = {
@@ -126,6 +128,7 @@ in
       brightnessctl.enable = lib.mkDefault false;
       gnome-keyring.enable = lib.mkDefault false;
       battery.enable = lib.mkDefault false;
+      kitty.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
