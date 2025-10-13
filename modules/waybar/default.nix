@@ -218,7 +218,7 @@
               enable = true;
               format = "{icon}";
               icon-size = 20;
-              icon-theme = "Papirus-dark";
+              icon-theme = "Tela-dark";
               update-active-window = true;
             };
           };

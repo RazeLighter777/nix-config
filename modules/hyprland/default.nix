@@ -22,11 +22,8 @@
           };
           actions = true;
           anchor = "top-right";
-          background-color = "#000000";
-          border-color = "#FFFFFF";
           border-radius = 0;
           default-timeout = 10000;
-          font = "monospace 10";
           height = 100;
           icons = true;
           ignore-timeout = false;
@@ -101,9 +98,9 @@
             "$mod CTRL, S, exec, hyprshot -m region"
             "CTRL ALT, T, exec, kitty"
             "CTRL ALT, C, exec, hyprctl reload"
-            "$mod, D, exec, rofi -show drun -replace -i -show-icons -icon-theme 'Papirus-dark'"
+            "$mod, D, exec, rofi -show drun -replace -i -show-icons -icon-theme 'Tela-dark'"
             "$mod, L, exec, hyprlock"
-            "$mod, P, exec, rofi -show p -modi p:rofi-power-menu -show-icons -icon-theme 'Papirus-dark'"
+            "$mod, P, exec, rofi -show p -modi p:rofi-power-menu -show-icons -icon-theme 'Tela-dark'"
             "CTRL ALT, Delete, exec, hyprctl dispatch exit 0"
             "$mod, Q, killactive,"
             "$mod CTRL, D, layoutmsg, removemaster"
@@ -181,7 +178,6 @@
       };
       programs.rofi = {
         enable = true;
-        theme = "${config.my.user.homeDir}/.nix-profile/share/rofi/themes/glue_pro_blue.rasi";
       };
       services.hyprpaper = {
         enable = true;
@@ -193,34 +189,10 @@
           wallpaper = [ ", ${config.my.user.homeDir}/Images/wallpapers/big-sur.jpg" ];
         };
       };
-      gtk = {
-        enable = true;
-        cursorTheme = {
-          name = "Quintom_Snow";
-          size = 24;
-          package = pkgs.quintom-cursor-theme;
-        };
-        iconTheme = {
-          name = "Papirus-dark";
-          package = pkgs.papirus-icon-theme;
-        };
-        theme = {
-          name = "WhiteSur-dark";
-          package = pkgs.whitesur-gtk-theme.override {
-            altVariants = [ "all" ];
-            colorVariants = [ "dark" ];
-            themeVariants = [ "default" ];
-            iconVariant = "tux";
-            nautilusStyle = "glassy";
-          };
-        };
-      };
       home.pointerCursor = {
         gtk.enable = true;
         x11.enable = true;
         hyprcursor.enable = true;
-        package = pkgs.rose-pine-cursor;
-        name = "BreezeX-RosePine-Linux";
       };
       programs.kitty = {
         enable = true;

@@ -17,6 +17,7 @@
     # Rely on mkDefault for rest (no NVIDIA / OBS / XMRig)
     gnome-keyring.enable = true;
     battery.enable = true;
+    stylix.enable = true;
   };
   networking.hostName = "suesslenovo";
   boot.loader.systemd-boot.enable = true;

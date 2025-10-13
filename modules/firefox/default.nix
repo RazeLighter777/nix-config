@@ -8,7 +8,9 @@
 {
   config = lib.mkIf config.my.firefox.enable {
     home-manager.useGlobalPkgs = true;
-    home-manager.users.${config.my.user.name}.programs.firefox = {
+    home-manager.users.${config.my.user.name} = {
+      stylix.targets.firefox.profileNames = [ "default" ];
+    programs.firefox = {
       enable = true;
       package = pkgs.firefox.override {
         nativeMessagingHosts = [ pkgs.tridactyl-native ];
@@ -236,6 +238,7 @@
           "browser.link.open_newwindow.restriction" = 0;
         };
       };
+    };
     };
   };
 }

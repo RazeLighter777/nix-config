@@ -52,6 +52,7 @@ in
     kitty.enable = mkEnableOption "Kitty terminal";
     udiskie.enable = mkEnableOption "Udiskie";
     stylix.enable = mkEnableOption "Enable Stylix tiling window manager";
+    winboat.enable = mkEnableOption "Enable WinBoat - Run Windows apps on Linux";
   };
 
   imports = [
@@ -99,9 +100,11 @@ in
     ./kitty
     ./udiskie
     ./stylix
+    ./winboat
   ];
 
   config = {
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
     my = {
       # Defaults: most user applications enabled unless explicitly disabled in a host.
       homeManager.enable = lib.mkDefault true;
@@ -134,7 +137,8 @@ in
       battery.enable = lib.mkDefault false;
       kitty.enable = lib.mkDefault true;
       udiskie.enable = lib.mkDefault true;
-      stylix.enable = lib.mkDefault true;
+      stylix.enable = lib.mkDefault false;
+      winboat.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
