@@ -23,7 +23,7 @@ in
     };
     homeManager.enable = mkEnableOption "Enable home-manager integration";
     displayManager.enable = mkEnableOption "Enable greetd / tuigreet display manager for Hyprland";
-    dolphin.enable = mkEnableOption "Enable Dolphin file manager";
+    nautilus.enable = mkEnableOption "Enable nautilus file manager";
     wine.enable = mkEnableOption "Enable Wine packages";
     xmrig.enable = mkEnableOption "Enable XMRig mining service";
     ollama.enable = mkEnableOption "Enable Ollama service (CUDA)";
@@ -67,7 +67,7 @@ in
     ./pipewire
     ./home-manager
     ./display-manager
-    ./dolphin
+    ./nautilus
     ./wine
     ./xmrig
     ./ollama
@@ -108,7 +108,7 @@ in
     my = {
       # Defaults: most user applications enabled unless explicitly disabled in a host.
       homeManager.enable = lib.mkDefault true;
-      dolphin.enable = lib.mkDefault true;
+      nautilus.enable = lib.mkDefault true;
       wine.enable = lib.mkDefault true;
       protonup.enable = lib.mkDefault true;
       neovim.enable = lib.mkDefault true;

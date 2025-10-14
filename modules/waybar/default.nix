@@ -12,7 +12,27 @@
       systemd.enable = true;
 
       style = ''
-        /* Root bar: transparent dark theme with a subtle glow */
+        /* Roo          backlight = {
+            format = "{percent}% ";
+            on-scroll-up = "brightnessctl set +5%";
+            on-scroll-down = "brightnessctl set 5%-";
+          };
+
+          bluetooth = {
+            format = "";
+            format-disabled = ""; # Hide when bluetooth is disabled
+            format-off = ""; # Hide when bluetooth is off
+            format-on = ""; # Hide when on but no devices connected
+            format-connected = " {num_connections}";
+            format-connected-battery = " {device_alias} {device_battery_percentage}%";
+            tooltip-format = "{controller_alias}\t{controller_address}\n\n{num_connections} connected";
+            tooltip-format-connected = "{controller_alias}\t{controller_address}\n\n{device_enumerate}";
+            tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
+            tooltip-format-enumerate-connected-battery = "{device_alias}\t{device_address}\t{device_battery_percentage}%";
+            on-click = "blueman-manager";
+          };
+
+        }transparent dark theme with a subtle glow */
         window#waybar {
           background-color: rgba(30, 30, 30, 0.40);
           border-radius: 12px;
@@ -42,6 +62,7 @@
         #battery,
         #idle_inhibitor,
         #backlight,
+        #bluetooth,
         #tray {
           background-color: rgba(40, 40, 40, 0.50);
           border-radius: 8px;
@@ -55,7 +76,8 @@
         #network:hover,
         #battery:hover,
         #idle_inhibitor:hover,
-        #backlight:hover {
+        #backlight:hover,
+        #bluetooth:hover {
           box-shadow: 0 0 4px rgba(255, 255, 255, 0.08);
         }
 
@@ -83,6 +105,7 @@
         #network.disconnected { color: #ff7a90; }
         #battery.warning { color: #ffcc66; }
         #battery.critical { color: #ff7a90; }
+        #bluetooth.connected { color: #73DACA; }
       '';
       settings = [
         {
@@ -101,6 +124,7 @@
           modules-right = [
             (lib.mkIf config.my.brightnessctl.enable "backlight")
             "pulseaudio"
+            "bluetooth"
             "network"
             (lib.mkIf config.my.battery.enable "battery")
             "idle_inhibitor"

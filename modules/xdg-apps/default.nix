@@ -6,7 +6,6 @@
 {
   config = lib.mkIf config.my.xdg-apps.enable {
     home-manager.users.${config.my.user.name} = {
-      xdg.configFile."menus/applications.menu".text = builtins.readFile ./applications.menu;
       xdg.mimeApps = {
         enable = true;
         defaultApplications = {
