@@ -23,6 +23,7 @@
       nixpkgs,
       nur,
       stylix,
+      dolphin-overlay,
       ...
     }@inputs:
     let

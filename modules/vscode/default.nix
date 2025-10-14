@@ -21,7 +21,8 @@
         ms-vscode.cpptools
         ecmel.vscode-html-css
         redhat.vscode-yaml
-        bbenoist.nix
+        jnoortheen.nix-ide
+
       ];
     };
   };
