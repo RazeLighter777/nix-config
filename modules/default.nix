@@ -23,8 +23,7 @@ in
     };
     homeManager.enable = mkEnableOption "Enable home-manager integration";
     displayManager.enable = mkEnableOption "Enable greetd / tuigreet display manager for Hyprland";
-    nemo.enable = mkEnableOption "Enable Nemo file manager";
-    nemoDesktop.enable = mkEnableOption "Register Nemo desktop/xgd entries";
+    dolphin.enable = mkEnableOption "Enable Dolphin file manager";
     wine.enable = mkEnableOption "Enable Wine packages";
     xmrig.enable = mkEnableOption "Enable XMRig mining service";
     ollama.enable = mkEnableOption "Enable Ollama service (CUDA)";
@@ -67,8 +66,7 @@ in
     ./pipewire
     ./home-manager
     ./display-manager
-    ./nemo
-    ./nemo-desktop
+    ./dolphin
     ./wine
     ./xmrig
     ./ollama
@@ -108,8 +106,7 @@ in
     my = {
       # Defaults: most user applications enabled unless explicitly disabled in a host.
       homeManager.enable = lib.mkDefault true;
-      nemo.enable = lib.mkDefault true;
-      nemoDesktop.enable = lib.mkDefault true;
+      dolphin.enable = lib.mkDefault true;
       wine.enable = lib.mkDefault true;
       protonup.enable = lib.mkDefault true;
       neovim.enable = lib.mkDefault true;
