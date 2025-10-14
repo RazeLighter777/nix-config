@@ -52,6 +52,7 @@ in
     kitty.enable = mkEnableOption "Kitty terminal";
     udiskie.enable = mkEnableOption "Udiskie";
     stylix.enable = mkEnableOption "Enable Stylix tiling window manager";
+    xdg-apps.enable = mkEnableOption "Enable custom XDG MIME applications";
   };
 
   imports = [
@@ -76,6 +77,7 @@ in
     ./neovim
     ./firefox
     ./thunderbird
+    ./xdg-apps
     ./hyprland
     ./desktops/hyprland-extra.nix
     ./bash
@@ -136,6 +138,7 @@ in
       kitty.enable = lib.mkDefault true;
       udiskie.enable = lib.mkDefault true;
       stylix.enable = lib.mkDefault false;
+      xdg-apps.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
