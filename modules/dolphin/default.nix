@@ -1,7 +1,7 @@
 { lib, config, inputs, pkgs, ... }:
 
 let
-  cfg = config.my.stylix;
+  cfg = config.my.dolphin;
 in
 {
   inputs = {
@@ -10,12 +10,13 @@ in
   };
 
   outputs = { self, nixpkgs, dolphin-overlay, ... }: {
+    (lik.myIf lib.mkIf cfg.enable 
     nixosConfigurations.your-host = nixpkgs.lib.nixosSystem {
       modules = [
         {
           nixpkgs.overlays = [ dolphin-overlay.overlays.default ];
         }
       ];
-    };
+    };);
   };
 }
