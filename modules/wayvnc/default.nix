@@ -37,7 +37,7 @@
           ExecStartPre = lib.mkIf config.my.hyprland.enable "${pkgs.writeShellScript "wayvnc-pre-start" ''
             export WAYLAND_DISPLAY=$(${pkgs.hyprland}/bin/hyprctl instances -j | ${pkgs.jq}/bin/jq -r '.[0]["wl_socket"]')
           ''}";
-          ExecStart = "${pkgs.wayvnc}/bin/wayvnc 127.0.0.1 5900 --gpu -Ltrace";
+          ExecStart = "${pkgs.wayvnc}/bin/wayvnc 127.0.0.1 5900 -Linfo";
           Restart = "on-failure";
           RestartSec = 5;
         };
