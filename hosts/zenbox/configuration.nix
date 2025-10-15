@@ -20,6 +20,7 @@
     ollama.enable = true; # optional AI app
     gnome-keyring.enable = true;
     blueberry.enable = true;
+    stylix.enable = true; # for color scheme management
   };
 
   networking.hostName = "zenbox";
