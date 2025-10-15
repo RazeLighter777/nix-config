@@ -13,7 +13,7 @@
             BindsTo = [ "wayvnc.service" ];
         };
         Service = {
-            ExecStartPre = mkIf config.my.hyprland.enable "${pkgs.writeShellScript "wayvnc-pre-start" ''
+            ExecStartPre = lib.mkIf config.my.hyprland.enable "${pkgs.writeShellScript "wayvnc-pre-start" ''
                ${getExe' pkgs.hyprland "hyprctl"} --instance 0 keyword animations:enabled false
             ''}";
             ExecStart = "${pkgs.novnc}/bin/novnc --listen 127.0.0.1:6080 --vnc 127.0.0.1:5900";
