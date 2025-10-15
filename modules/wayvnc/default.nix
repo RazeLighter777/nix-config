@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  ...
 }:
 {
   config = lib.mkIf config.my.wayvnc.enable {
