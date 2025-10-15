@@ -53,6 +53,7 @@ in
     udiskie.enable = mkEnableOption "Udiskie";
     stylix.enable = mkEnableOption "Enable Stylix tiling window manager";
     xdg-apps.enable = mkEnableOption "Enable custom XDG MIME applications";
+    blueberry.enable = mkEnableOption "Enable Blueberry Bluetooth configuration";
   };
 
   imports = [
@@ -101,6 +102,7 @@ in
     ./kitty
     ./udiskie
     ./stylix
+    ./blueberry
   ];
 
   config = {
@@ -139,6 +141,7 @@ in
       udiskie.enable = lib.mkDefault true;
       stylix.enable = lib.mkDefault false;
       xdg-apps.enable = lib.mkDefault true;
+      blueberry
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):

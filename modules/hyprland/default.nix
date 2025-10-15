@@ -78,6 +78,7 @@
             "nm-applet"
             "systemctl --user start hyprpolkitagent"
             "udiskie"
+            (lib.mkIf config.my.blueberry.enable "blueberry-tray")
             "wl-paste --watch cliphist store"
             "wl-clip-persist --clipboard regular"
           ];
@@ -101,6 +102,7 @@
             "$mod, D, exec, rofi -show drun -replace -i -show-icons -icon-theme 'Tela-dark'"
             "$mod, L, exec, hyprlock"
             "$mod, P, exec, rofi -show p -modi p:rofi-power-menu -show-icons -icon-theme 'Tela-dark'"
+            (lib.mkIf config.my.blueberry.enable "$mod, B, exec, blueberry")
             "CTRL ALT, Delete, exec, hyprctl dispatch exit 0"
             "$mod, Q, killactive,"
             "$mod CTRL, D, layoutmsg, removemaster"
