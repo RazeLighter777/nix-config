@@ -54,6 +54,7 @@ in
     stylix.enable = mkEnableOption "Enable Stylix tiling window manager";
     xdg-apps.enable = mkEnableOption "Enable custom XDG MIME applications";
     blueberry.enable = mkEnableOption "Enable Blueberry Bluetooth configuration";
+    wayvnc.enable = mkEnableOption "Enable WayVNC server for Hyprland";
   };
 
   imports = [
@@ -103,6 +104,7 @@ in
     ./udiskie
     ./stylix
     ./blueberry
+    ./wayvnc
   ];
 
   config = {
@@ -142,6 +144,7 @@ in
       stylix.enable = lib.mkDefault false;
       xdg-apps.enable = lib.mkDefault true;
       blueberry.enable = lib.mkDefault false;
+      wayvnc.enable = lib.mkDefault false;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):

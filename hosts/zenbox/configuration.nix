@@ -21,6 +21,7 @@
     gnome-keyring.enable = true;
     blueberry.enable = true;
     stylix.enable = true; # for color scheme management
+    wayvnc.enable = true; # for remote desktop access
   };
 
   networking.hostName = "zenbox";
