@@ -7,6 +7,11 @@
 {
   config = lib.mkIf config.my.wayvnc.enable {
     home-manager.users.${config.my.user.name} = {
+      # packages needed for WayVNC and noVNC
+        home.packages = with pkgs; [
+          wayvnc
+          novnc
+        ];
       systemd.user.services.novnc = {
         Unit = {
             Description = "noVNC Client Web Server";
