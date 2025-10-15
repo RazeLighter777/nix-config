@@ -141,7 +141,7 @@ in
       udiskie.enable = lib.mkDefault true;
       stylix.enable = lib.mkDefault false;
       xdg-apps.enable = lib.mkDefault true;
-      blueberry
+      blueberry.enable = lib.mkDefault false;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):

@@ -19,6 +19,7 @@
     # All other common apps come from mkDefault in modules/default.nix
     ollama.enable = true; # optional AI app
     gnome-keyring.enable = true;
+    blueberry.enable = true;
   };
 
   networking.hostName = "zenbox";

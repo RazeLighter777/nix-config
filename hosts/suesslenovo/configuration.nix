@@ -18,6 +18,7 @@
     gnome-keyring.enable = true;
     battery.enable = true;
     stylix.enable = true;
+    blueberry.enable = true;
   };
   networking.hostName = "suesslenovo";
   boot.loader.systemd-boot.enable = true;
