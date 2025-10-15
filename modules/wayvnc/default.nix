@@ -34,7 +34,10 @@
           Wants = [ "graphical-session.target" ];
         };
         Service = {
-          ExecStart = ''WAYLAND_DISPLAY=$(${pkgs.hyprland}/bin/hyprctl instances -j | ${pkgs.jq}/bin/jq -r '.[0]["wl_socket"]') ${pkgs.wayvnc}/bin/wayvnc 127.0.0.1 5900 --gpu --log-level info'';
+          ExecStartPre = lib.mkIf config.my.hyprland.enable "${pkgs.writeShellScript "wayvnc-pre-start" ''
+            export WAYLAND_DISPLAY=$(${pkgs.hyprland}/bin/hyprctl instances -j | ${pkgs.jq}/bin/jq -r '.[0]["wl_socket"]')
+          ''}";
+          ExecStart = "${pkgs.wayvnc}/bin/wayvnc 127.0.0.1 5900 --gpu --log-level info";
           Restart = "on-failure";
           RestartSec = 5;
         };
