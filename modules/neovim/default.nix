@@ -73,10 +73,13 @@ in
         fidgetSpinnner
       ];
       extraConfig = ''
-      colorscheme tokyonight-night
-      set expandtab
-      set nu
-      set undofile'';
+        colorscheme tokyonight-night
+        set tabstop=2
+        set shiftwidth=2
+        set expandtab
+        set softtabstop=2
+        set nu
+        set undofile'';
       extraPackages = with pkgs; [
         nodejs
         nil

@@ -55,6 +55,7 @@ in
     xdg-apps.enable = mkEnableOption "Enable custom XDG MIME applications";
     blueberry.enable = mkEnableOption "Enable Blueberry Bluetooth configuration";
     wayvnc.enable = mkEnableOption "Enable WayVNC server for Hyprland";
+    pinpam.enable = mkEnableOption "Enable PIN and PAM integration";
   };
 
   imports = [
@@ -105,10 +106,14 @@ in
     ./stylix
     ./blueberry
     ./wayvnc
+    ./pinpam
   ];
 
   config = {
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    nix.settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     my = {
       # Defaults: most user applications enabled unless explicitly disabled in a host.
       homeManager.enable = lib.mkDefault true;
@@ -145,6 +150,7 @@ in
       xdg-apps.enable = lib.mkDefault true;
       blueberry.enable = lib.mkDefault false;
       wayvnc.enable = lib.mkDefault false;
+      pinpam.enable = lib.mkDefault false;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):

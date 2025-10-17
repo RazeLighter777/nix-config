@@ -15,6 +15,10 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    pinpam = {
+      url = "github:razelighter777/pinpam";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -23,6 +27,7 @@
       nixpkgs,
       nur,
       stylix,
+      pinpam,
       ...
     }@inputs:
     let
