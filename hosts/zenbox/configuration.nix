@@ -22,6 +22,7 @@
     blueberry.enable = true;
     stylix.enable = true; # for color scheme management
     wayvnc.enable = true; # for remote desktop access
+    pinpam.enable = true; # for managing PINs
   };
 
   networking.hostName = "zenbox";
@@ -46,9 +47,15 @@
     ];
     packages = [ ];
   };
+  programs.nix-ld.enable = true;
   security.polkit.enable = true;
-  boot.kernelModules = [ "ntsync" ];
+  security.tpm2 = {
+    enable = true;
+    pkcs11.enable = true;
+    abrmd.enable = true;
+  };
 
+  boot.kernelModules = [ "ntsync" ];
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate = (_: true);
   # Host-specific packages layered on top of common + hyprland extras
