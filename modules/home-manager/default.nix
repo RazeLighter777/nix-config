@@ -27,6 +27,8 @@ in
     home-manager.users.${config.my.user.name} =
       { pkgs, ... }:
       {
+        stylix.autoEnable = false;
+        stylix.targets.opencode.enable = false;
         imports = [
           "${
             fetchTarball {

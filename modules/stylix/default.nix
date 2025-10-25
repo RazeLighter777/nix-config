@@ -7,13 +7,14 @@ in
   # Import Stylix module unconditionally; control activation via cfg.enable
   imports = [ inputs.stylix.nixosModules.stylix ];
 
-  config = {
+  config = lib.mkIf cfg.enable {
     home-manager.users.${user} = {
       stylix.targets.kde.enable = cfg.enable;
     };
     # Activate stylix only when my.stylix.enable is true
     stylix.enable = lib.mkDefault cfg.enable;
     stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/black-metal-dark-funeral.yaml";
+    stylix.autoEnable = false;
     stylix.opacity = {
       terminal = 0.7;
       desktop = 0.9;
