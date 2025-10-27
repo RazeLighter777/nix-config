@@ -8,7 +8,7 @@
 let
   home-manager = builtins.fetchTarball {
     url = "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-    sha256 = "031z0xgrh3w81w4cz0pz58aknri3by7fgxv8wi17hx2hvp42z3lx";
+    sha256 = "088yzga3r3rcb7wd64qzi3552i3ag0sg6yd75cwzp5d1jq8qz13l";
   };
   unstable = pkgs.unstable or pkgs; # fallback if overlay not present
   nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
