@@ -22,6 +22,7 @@
     blueberry.enable = true;
     stylix.enable = true; # for color scheme management
     wayvnc.enable = true; # for remote desktop access
+    pinpam.enable = true;
   };
 
   networking.hostName = "zenbox";

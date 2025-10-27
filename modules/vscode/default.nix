@@ -6,6 +6,7 @@
 }:
 {
   config = lib.mkIf config.my.vscode.enable {
+    programs.nix-ld.enable = true;
     home-manager.users.${config.my.user.name}.programs = {
       vscode = {
         enable = true;
@@ -28,4 +29,4 @@
     };
 
   };
-}
+}   

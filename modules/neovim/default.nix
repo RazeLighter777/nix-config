@@ -27,8 +27,6 @@
         fidget-nvim
         mini-diff
         indent-blankline-nvim
-        conformNvim
-        fidgetSpinnner
       ];
       extraConfig = ''
         colorscheme tokyonight-night
