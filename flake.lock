@@ -76,11 +76,19 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
+<<<<<<< HEAD
         "lastModified": 1761278620,
         "narHash": "sha256-wXblionelTRI2Bpiigez6UpCiz+760ItWHeXcrQA2cE=",
         "owner": "rycee",
         "repo": "nur-expressions",
         "rev": "de5552e6036ecfdf1cab325bf17b3c9040869d45",
+=======
+        "lastModified": 1761537827,
+        "narHash": "sha256-ycO0xEJ3ZYGI6ZypYY5hswmJ0oXqBLeuJiFR8hPzMVQ=",
+        "owner": "rycee",
+        "repo": "nur-expressions",
+        "rev": "317a76be83cb9ff7327f43a455f73bc38f44373e",
+>>>>>>> tpm
         "type": "gitlab"
       },
       "original": {
@@ -183,11 +191,19 @@
     },
     "nixpkgs": {
       "locked": {
+<<<<<<< HEAD
         "lastModified": 1761114652,
         "narHash": "sha256-f/QCJM/YhrV/lavyCVz8iU3rlZun6d+dAiC3H+CDle4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "01f116e4df6a15f4ccdffb1bcd41096869fb385c",
+=======
+        "lastModified": 1761373498,
+        "narHash": "sha256-Q/uhWNvd7V7k1H1ZPMy/vkx3F8C13ZcdrKjO7Jv7v0c=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "6a08e6bb4e46ff7fcbb53d409b253f6bad8a28ce",
+>>>>>>> tpm
         "type": "github"
       },
       "original": {
@@ -221,11 +237,19 @@
         ]
       },
       "locked": {
+<<<<<<< HEAD
         "lastModified": 1761335057,
         "narHash": "sha256-4wd0+zYj8OxMwZDikT1EGv2x7vHAn52JalHBBfjp35o=",
         "owner": "nix-community",
         "repo": "NUR",
         "rev": "0aeab0631db7b173adc6bfb7fecd4f07662be95c",
+=======
+        "lastModified": 1761562282,
+        "narHash": "sha256-sEDRZPp2HKj4+8Wc0nMXCKKOvPKaiTUNlA1zeJfz9H8=",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "ae00f8adb10c16be1120613b95fb9ea727216233",
+>>>>>>> tpm
         "type": "github"
       },
       "original": {
@@ -267,11 +291,19 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
+<<<<<<< HEAD
         "lastModified": 1761328408,
         "narHash": "sha256-kN2gIPRwwlcuB1b1xN3p2Z7vekfxiSTUjs4pwofl/oM=",
         "owner": "razelighter777",
         "repo": "pinpam",
         "rev": "34a1dafd10c58f34268b1fc93dfd6d00f5a9b4ed",
+=======
+        "lastModified": 1761563676,
+        "narHash": "sha256-/BzUUYN0U+HRznqnzRzStfPPytJbHZaMaZacGzQlJ+E=",
+        "owner": "razelighter777",
+        "repo": "pinpam",
+        "rev": "8cebc29096384dee3473b01e444cf3ab3bbbc0e8",
+>>>>>>> tpm
         "type": "github"
       },
       "original": {

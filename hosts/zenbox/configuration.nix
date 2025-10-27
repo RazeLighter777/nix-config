@@ -23,6 +23,7 @@
     stylix.enable = true; # for color scheme management
     wayvnc.enable = true; # for remote desktop access
     pinpam.enable = true; # for managing PINs
+    pinpam.enable = true;
   };
 
   networking.hostName = "zenbox";

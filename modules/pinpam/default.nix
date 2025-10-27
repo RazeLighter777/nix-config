@@ -10,15 +10,17 @@ let
 in
 {
   imports = [ inputs.pinpam.nixosModules.default ];
-
   config = lib.mkIf cfg.enable {
     # Pinpam-specific configurations can go here
     security.pinpam = {
       enable = true;
       enableSudoPin = true;
       enableTpmAccess = true;
+      enableHyprlockPin = true;
       pinPolicy = {
-        maxAttempts = 5;
+        minLength = 4;
+	maxLength = 6;
+	maxAttempts = 5;
       };
     };
   };
