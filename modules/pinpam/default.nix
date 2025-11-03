@@ -17,6 +17,7 @@ in
       enableSudoPin = true;
       enableTpmAccess = true;
       enableHyprlockPin = true;
+      enableSystemAuthPin = true;
       pinPolicy = {
         minLength = 4;
 	maxLength = 6;

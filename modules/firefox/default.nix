@@ -8,7 +8,7 @@
 {
   config = lib.mkIf config.my.firefox.enable {
     home-manager.users.${config.my.user.name} = {
-      #stylix.targets.firefox.profileNames = (lib.mkIf config.my.stylix.enable [ "default" ]);
+      stylix.targets.firefox.profileNames = (lib.mkIf config.my.stylix.enable [ "default" ]);
       programs.firefox = {
         enable = true;
         package = pkgs.firefox.override {

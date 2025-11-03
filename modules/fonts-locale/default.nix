@@ -16,7 +16,7 @@ in
       jetbrains-mono
       font-awesome
       noto-fonts
-      noto-fonts-emoji
+      noto-fonts-color-emoji
     ];
     i18n.extraLocaleSettings = {
       LC_ADDRESS = "en_US.UTF-8";
