@@ -107,6 +107,7 @@ in
     ./blueberry
     ./wayvnc
     ./pinpam
+    ./print
   ];
 
   config = {
@@ -151,6 +152,7 @@ in
       blueberry.enable = lib.mkDefault false;
       wayvnc.enable = lib.mkDefault false;
       pinpam.enable = lib.mkDefault false;
+      print.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
