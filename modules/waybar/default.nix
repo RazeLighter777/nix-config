@@ -243,7 +243,7 @@
               enable = true;
               format = "{icon}";
               icon-size = 20;
-              icon-theme = "Tela-dark";
+              icon-theme = "Papirus-Dark";
               update-active-window = true;
             };
           };

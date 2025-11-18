@@ -55,68 +55,9 @@ require("neo-tree").setup({
 	enable_diagnostics = true,
 })
 
--- Code companion setup
-require("codecompanion").setup({
-	strategies = {
-		chat = {
-			adapter = "copilot",
-			slash_commands = {
-				["file"] = {
-					callback = "strategies.chat.slash_commands.file",
-					description = "Select a file using telescope",
-					opts = { provider = "telescope", contains_code = true },
-				},
-			},
-			tools = {
-				opts = {
-					auto_submit_errors = true,
-						wait_timeout = 99999999999,
-						default_tools = {
-							"read_file",
-							"list_code_usages",
-							"insert_edit_into_file",
-							"grep_search",
-							"get_changed_files",
-							"file_search",
-							"create_file",
-							"cmd_runner",
-						},
-				},
-			},
-		},
-		inline = { adapter = "copilot" },
-		cmd = { adapter = "copilot" },
-	},
-	adapters = {
-		copilot = function()
-			return require("codecompanion.adapters").extend("copilot", {
-				schema = { model = { default = "claude-sonnet-4" } },
-			})
-		end,
-	},
-	display = {
-		diff = {
-			enabled = true,
-			close_chat_at = 240,
-			layout = "vertical",
-			opts = {
-				"internal", "filler", "closeoff", "algorithm:patience", "followwrap", "linematch:120",
-			},
-			provider = "mini_diff",
-		},
-		chat = { window = { width = 0.2 }, start_in_insert_mode = true },
-		action_palette = { width = 95, height = 10, provider = "telescope" },
-		opts = {
-			show_default_actions = true,
-			show_default_prompt_library = true,
-			title = "AI Slop Actions",
-		},
-	},
-})
 
 -- Keymaps
 vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { desc = "Toggle Neotree" })
-vim.keymap.set("n", "<leader>ai", ":CodeCompanionChat Toggle<CR>", { desc = "Toggle CodeCompanion Chat" })
 
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
@@ -146,23 +87,6 @@ require("conform").setup({
 vim.keymap.set("n", "<leader>rf", function()
 	require("conform").format({ async = true })
 end, { desc = "Format file with conform.nvim" })
-
--- Copilot setup
-require("copilot").setup({
-	suggestion = {
-		enabled = true,
-		auto_trigger = true,
-		debounce = 64,
-		keymap = {
-			accept = "<C-f>", next = "<M-\\>", prev = "<M-[>", dismiss = "<C-]>",
-		},
-	},
-	panel = { enabled = false },
-	filetypes = { ["*"] = true },
-})
-
-vim.g.copilot_no_tab_map = true
-vim.keymap.set("i", "<C-Tab>", 'copilot#Accept("\\<CR>")', { expr = true, replace_keycodes = false })
 
 -- Diagnostics config
 vim.diagnostic.config({

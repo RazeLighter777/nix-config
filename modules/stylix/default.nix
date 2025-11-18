@@ -19,7 +19,7 @@ in
     };
     # Activate stylix only when my.stylix.enable is true
     stylix.enable = lib.mkDefault cfg.enable;
-    stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/black-metal-dark-funeral.yaml";
+    stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-mirage.yaml";
     stylix.opacity = {
       terminal = 0.7;
       desktop = 0.9;
@@ -30,9 +30,9 @@ in
       size = 24;
     };
     stylix.icons = {
-      package = pkgs.tela-icon-theme;
-      light = "Tela-Light";
-      dark = "Tela-Dark";
+      package = pkgs.papirus-icon-theme;
+      light = "Papirus-Light";
+      dark = "Papirus-Dark";
       enable = true;
     };
     stylix.polarity = "dark"; # "light" | "dark" | "auto"

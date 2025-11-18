@@ -27,9 +27,9 @@
         fidget-nvim
         mini-diff
         indent-blankline-nvim
+        conform-nvim
       ];
       extraConfig = ''
-        colorscheme tokyonight-night
         set tabstop=2
         set shiftwidth=2
         set expandtab

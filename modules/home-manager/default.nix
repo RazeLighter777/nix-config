@@ -6,10 +6,6 @@
   ...
 }:
 let
-  home-manager = builtins.fetchTarball {
-    url = "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-    sha256 = "088yzga3r3rcb7wd64qzi3552i3ag0sg6yd75cwzp5d1jq8qz13l";
-  };
   unstable = pkgs.unstable or pkgs; # fallback if overlay not present
   nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
     inherit pkgs;
@@ -17,13 +13,13 @@ let
 in
 {
   imports = [
-    (import "${home-manager}/nixos")
+    inputs.home-manager.nixosModules.home-manager
   ];
 
   config = lib.mkIf config.my.homeManager.enable {
     home-manager.verbose = true;
     nixpkgs.config.allowUnfree = true;
-    home-manager.extraSpecialArgs = { inherit inputs; };
+    home-manager.extraSpecialArgs = { inherit inputs unstable; };
     home-manager.users.${config.my.user.name} =
       { pkgs, ... }:
       {
@@ -45,6 +41,5 @@ in
         home.stateVersion = "25.05";
         home.enableNixpkgsReleaseCheck = false;
       };
-    home-manager.extraSpecialArgs = { inherit unstable; };
   };
 }
