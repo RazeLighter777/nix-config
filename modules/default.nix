@@ -57,6 +57,7 @@ in
     wayvnc.enable = mkEnableOption "Enable WayVNC server for Hyprland";
     pinpam.enable = mkEnableOption "Enable PIN and PAM integration";
     discord.enable = mkEnableOption "Enable Discord configuration";
+    customKernel.enable = mkEnableOption "Enable custom linux-landlock-no-inherit kernel";
   };
 
   imports = [
@@ -68,6 +69,7 @@ in
     ./steam
     ./plymouth
     ./common-kernel
+    ./custom-kernel
     ./pipewire
     ./home-manager
     ./display-manager
@@ -157,6 +159,7 @@ in
       pinpam.enable = lib.mkDefault false;
       print.enable = lib.mkDefault true;
       discord.enable = lib.mkDefault true;
+      customKernel.enable = lib.mkDefault false;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
