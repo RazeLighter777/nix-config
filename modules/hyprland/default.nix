@@ -115,6 +115,7 @@
             "$mod CTRL, Return, layoutmsg, swapwithmaster"
             "$mod SHIFT, I, togglesplit"
             "$mod SHIFT, P, pseudo,"
+            "$mod SHIFT, F, togglefloating"
             "$mod, M, exec, hyprctl dispatch splitratio 0.3"
             "$mod, G, togglegroup"
             "$mod CTRL, tab, changegroupactive"

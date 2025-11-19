@@ -1,4 +1,4 @@
-{ lib, config ... }:
+{ lib, config, ... }:
 {
   virtualisation = {
   containers.enable = true;
@@ -13,5 +13,5 @@
     extraGroups = [
       "podman"
     ];
-  }
+  };
 }

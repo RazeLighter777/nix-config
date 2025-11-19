@@ -56,6 +56,7 @@ in
     blueberry.enable = mkEnableOption "Enable Blueberry Bluetooth configuration";
     wayvnc.enable = mkEnableOption "Enable WayVNC server for Hyprland";
     pinpam.enable = mkEnableOption "Enable PIN and PAM integration";
+    discord.enable = mkEnableOption "Enable Discord configuration";
   };
 
   imports = [
@@ -109,6 +110,7 @@ in
     ./pinpam
     ./print
     ./hyprlock
+    ./discord
   ];
 
   config = {
@@ -154,6 +156,7 @@ in
       wayvnc.enable = lib.mkDefault false;
       pinpam.enable = lib.mkDefault false;
       print.enable = lib.mkDefault true;
+      discord.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
