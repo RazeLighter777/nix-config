@@ -224,10 +224,6 @@
             "media.rdd-vpx.enabled" = true; # enable hardware acceleration
 
             # override fonts (Set tracking protection to custom without "Suspected fingerprinters")
-            "font.minimum-size.x-western" = 13;
-            "font.size.fixed.x-western" = 15;
-            "font.size.monospace.x-western" = 15;
-            "font.size.variable.x-western" = 15;
             "browser.display.use_document_fonts" = 0;
 
             # do not open a tab in a new window

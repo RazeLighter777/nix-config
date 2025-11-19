@@ -67,6 +67,9 @@
           }
           source = ~/.config/hypr/workspaces.conf
           source = ~/.config/hypr/monitors.conf
+          experimental {
+            xx_color_management_v4 = true
+          }
         '';
         settings = {
           "$mod" = "SUPER";

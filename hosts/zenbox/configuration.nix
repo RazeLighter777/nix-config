@@ -55,7 +55,11 @@
     abrmd.enable = true;
   };
 
-  boot.kernelModules = [ "ntsync" ];
+  boot.kernelModules = [
+    "ntsync"
+    # my wifi driver
+    "rtw89_8852ce"
+  ];
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate = (_: true);
   # Host-specific packages layered on top of common + hyprland extras

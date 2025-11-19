@@ -15,6 +15,6 @@
     wl-clip-persist
     swayimg
   ];
-  security.pam.services.hyprlock = {};
+  security.pam.services.hyprlock = { };
   programs.hyprland.withUWSM = true;
 }
