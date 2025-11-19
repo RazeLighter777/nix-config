@@ -108,6 +108,7 @@ in
     ./wayvnc
     ./pinpam
     ./print
+    ./hyprlock
   ];
 
   config = {
