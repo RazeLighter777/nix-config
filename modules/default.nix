@@ -61,7 +61,7 @@ in
   imports = [
     ./common
     ./networking
-    ./docker
+    ./podman
     ./fonts-locale
     ./bluetooth
     ./steam
