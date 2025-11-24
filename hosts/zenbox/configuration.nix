@@ -13,7 +13,7 @@
     hyprland.enable = true;
     displayManager.enable = true;
     waybar.enable = true; # paired with Hyprland
-    nvidia.enable = true;
+    nvidia.enable = true; # Disabled - incompatible with custom kernel
     obs.enable = true; # optional GPU-accelerated app
     xmrig.enable = false; # explicitly opt-in (default false)
     # All other common apps come from mkDefault in modules/default.nix
@@ -23,6 +23,7 @@
     stylix.enable = true; # for color scheme management
     wayvnc.enable = true; # for remote desktop access
     pinpam.enable = true; # for managing PINs
+    customKernel.enable = false;
   };
 
   networking.hostName = "zenbox";
