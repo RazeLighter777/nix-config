@@ -58,6 +58,7 @@ in
     pinpam.enable = mkEnableOption "Enable PIN and PAM integration";
     discord.enable = mkEnableOption "Enable Discord configuration";
     customKernel.enable = mkEnableOption "Enable custom linux-landlock-no-inherit kernel";
+    calibre.enable = mkEnableOption "Enable Calibre eBook manager";
   };
 
   imports = [
@@ -113,6 +114,7 @@ in
     ./print
     ./hyprlock
     ./discord
+    ./calibre
   ];
 
   config = {
@@ -160,6 +162,7 @@ in
       print.enable = lib.mkDefault true;
       discord.enable = lib.mkDefault true;
       customKernel.enable = lib.mkDefault false;
+      calibre.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
