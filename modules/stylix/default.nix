@@ -19,6 +19,7 @@ in
     };
     # Activate stylix only when my.stylix.enable is true
     stylix.enable = lib.mkDefault cfg.enable;
+    stylix.enableReleaseChecks = false;
     stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-mirage.yaml";
     stylix.opacity = {
       terminal = 0.7;
