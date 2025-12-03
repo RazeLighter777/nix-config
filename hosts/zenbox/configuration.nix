@@ -87,7 +87,7 @@
     5173
   ];
   networking.firewall.allowedUDPPorts = [ 51820 ];
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
   # Experimental features & docker enabled in shared modules
   # Steam enabled via my.steam module
   networking.wireguard.interfaces.wg0 = {

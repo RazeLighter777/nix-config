@@ -40,6 +40,6 @@
     8080
   ];
   networking.firewall.allowedUDPPorts = [ 51820 ];
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
   # Experimental features & docker via shared modules
 }

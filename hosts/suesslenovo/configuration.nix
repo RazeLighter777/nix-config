@@ -47,7 +47,7 @@
     22
   ];
   networking.firewall.allowedUDPPorts = [ 51820 ];
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
   # Docker enabled via docker module
   # Steam enabled via my.steam module
 }
