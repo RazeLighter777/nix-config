@@ -6,13 +6,14 @@
   ...
 }:
 {
-  config = lib.mkIf config.my.firefox.enable {
-    home-manager.users.${config.my.user.name} = {
-      
-      programs.firefox = {
-        enable = true;
-        package = pkgs.firefox.override {
-          nativeMessagingHosts = [ pkgs.tridactyl-native ];
+  config = lib.mkMerge [
+    (lib.mkIf config.my.firefox.enable {
+      home-manager.users.${config.my.user.name} = {
+        
+        programs.firefox = {
+          enable = true;
+          package = pkgs.firefox.override {
+            nativeMessagingHosts = [ pkgs.tridactyl-native ];
           cfg = {
             pipewireSupport = true;
             ffmpegSupport = true;
@@ -234,6 +235,12 @@
           };
         };
       };
-    } // (lib.mkIf config.my.stylix.enable { stylix.targets.firefox.profileNames = [ "default" ]; } );
-  };
+    };
+    })
+    (lib.mkIf (config.my.firefox.enable && config.my.stylix.enable) {
+      home-manager.users.${config.my.user.name} = {
+        stylix.targets.firefox.profileNames = [ "default" ];
+      };
+    })
+  ];
 }

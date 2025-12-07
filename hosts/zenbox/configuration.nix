@@ -26,6 +26,7 @@
     customKernel.enable = false;
     sunshine.enable = true; # game streaming server
     moonlight.enable = true; # game streaming client
+    firefox.enable = true;
   };
 
   networking.hostName = "zenbox";
