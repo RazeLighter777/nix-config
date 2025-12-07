@@ -13,7 +13,7 @@
     user.name = "michelle"; # host-specific primary user
     kde.enable = true; # choose KDE desktop
     nvidia.enable = true; # enable NVIDIA driver for this laptop
-    pinutil.enable = true;
+    pinpam.enable = true;
     # All standard applications pulled in via mkDefault
   };
   networking.hostName = "halloweentown";
