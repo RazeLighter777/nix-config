@@ -25,6 +25,7 @@
     pinpam.enable = true; # for managing PINs
     customKernel.enable = false;
     sunshine.enable = true; # game streaming server
+    moonlight.enable = true; # game streaming client
   };
 
   networking.hostName = "zenbox";

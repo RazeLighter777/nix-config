@@ -60,6 +60,7 @@ in
     customKernel.enable = mkEnableOption "Enable custom linux-landlock-no-inherit kernel";
     calibre.enable = mkEnableOption "Enable Calibre eBook manager";
     sunshine.enable = mkEnableOption "Enable Sunshine game streaming server";
+    moonlight.enable = mkEnableOption "Enable Moonlight game streaming client";
   };
 
   imports = [
@@ -117,6 +118,7 @@ in
     ./discord
     ./calibre
     ./sunshine
+    ./moonlight
   ];
 
   config = {
@@ -166,6 +168,7 @@ in
       customKernel.enable = lib.mkDefault false;
       calibre.enable = lib.mkDefault true;
       sunshine.enable = lib.mkDefault false;
+      moonlight.enable = lib.mkDefault false;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
