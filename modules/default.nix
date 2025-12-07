@@ -59,6 +59,7 @@ in
     discord.enable = mkEnableOption "Enable Discord configuration";
     customKernel.enable = mkEnableOption "Enable custom linux-landlock-no-inherit kernel";
     calibre.enable = mkEnableOption "Enable Calibre eBook manager";
+    sunshine.enable = mkEnableOption "Enable Sunshine game streaming server";
   };
 
   imports = [
@@ -115,6 +116,7 @@ in
     ./hyprlock
     ./discord
     ./calibre
+    ./sunshine
   ];
 
   config = {
@@ -163,6 +165,7 @@ in
       discord.enable = lib.mkDefault true;
       customKernel.enable = lib.mkDefault false;
       calibre.enable = lib.mkDefault true;
+      sunshine.enable = lib.mkDefault false;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):

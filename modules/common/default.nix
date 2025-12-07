@@ -30,6 +30,9 @@
     tcpdump
     perf
     valgrind
+    fzf
+    python3
+    nmap
   ];
   nix.settings.experimental-features = [
     "nix-command"

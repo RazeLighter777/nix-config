@@ -24,6 +24,7 @@
     wayvnc.enable = true; # for remote desktop access
     pinpam.enable = true; # for managing PINs
     customKernel.enable = false;
+    sunshine.enable = true; # game streaming server
   };
 
   networking.hostName = "zenbox";
