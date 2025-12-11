@@ -119,6 +119,7 @@ in
     ./calibre
     ./sunshine
     ./moonlight
+    ./pcmanfm
   ];
 
   config = {
@@ -169,6 +170,7 @@ in
       calibre.enable = lib.mkDefault true;
       sunshine.enable = lib.mkDefault false;
       moonlight.enable = lib.mkDefault false;
+      pcmanfm.enable = lib.mkDefault false;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
