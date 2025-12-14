@@ -33,6 +33,7 @@
     fzf
     python3
     nmap
+    direnv
   ];
   nix.settings.experimental-features = [
     "nix-command"

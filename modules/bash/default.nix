@@ -13,6 +13,10 @@
         bashrcExtra = ''
           # fzf
           eval "$(fzf --bash)"
+          # vim
+          export EDITOR=vim
+          # direnv
+          eval "$(direnv hook bash)"
           # Git prompt
           export GIT_PS1_SHOWDIRTYSTATE=1
           export GIT_PS1_SHOWSTASHSTATE=1
