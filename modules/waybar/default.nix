@@ -12,6 +12,27 @@
       systemd.enable = true;
 
       style = ''
+        /* Roo          backlight = {
+            format = "{percent}% ";
+            on-scroll-up = "brightnessctl set +5%";
+            on-scroll-down = "brightnessctl set 5%-";
+          };
+
+          bluetooth = {
+            format = "";
+            format-disabled = ""; # Hide when bluetooth is disabled
+            format-off = ""; # Hide when bluetooth is off
+            format-on = ""; # Hide when on but no devices connected
+            format-connected = " {num_connections}";
+            format-connected-battery = " {device_alias} {device_battery_percentage}%";
+            tooltip-format = "{controller_alias}\t{controller_address}\n\n{num_connections} connected";
+            tooltip-format-connected = "{controller_alias}\t{controller_address}\n\n{device_enumerate}";
+            tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
+            tooltip-format-enumerate-connected-battery = "{device_alias}\t{device_address}\t{device_battery_percentage}%";
+            on-click = "blueman-manager";
+          };
+
+        }transparent dark theme with a subtle glow */
         window#waybar {
           background-color: rgba(30, 30, 30, 0.40);
           border-radius: 12px;
@@ -84,16 +105,6 @@
         #network.disconnected { color: #ff7a90; }
         #battery.warning { color: #ffcc66; }
         #battery.critical { color: #ff7a90; }
-        
-        /* Bluetooth states */
-        #bluetooth.disabled,
-        #bluetooth.off,
-        #bluetooth.on,
-        #bluetooth.no-controller {
-          opacity: 0;
-          margin: 0;
-          padding: 0;
-        }
         #bluetooth.connected { color: #73DACA; }
       '';
       settings = [
@@ -125,8 +136,6 @@
             "tray"
           ];
 
-
-
           battery = {
             format = "{capacity}% {icon}";
             format-alt = "{time} {icon}";
@@ -150,16 +159,6 @@
               activated = "";
               deactivated = "";
             };
-          };
-          bluetooth = {
-            format = " {status}";
-            format-connected = " {device_alias} ({num_connections})";
-            format-connected-battery = " {device_alias} {device_battery_percentage}%";
-            tooltip-format = "{controller_alias}\t{controller_address}\n\n{num_connections} connected";
-            tooltip-format-connected = "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}";
-            tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
-            tooltip-format-enumerate-connected-battery = "{device_alias}\t{device_address}\t{device_battery_percentage}%";
-            on-click = (lib.mkIf config.my.blueberry.enable "blueberry" );
           };
 
           clock = {
@@ -243,7 +242,7 @@
               enable = true;
               format = "{icon}";
               icon-size = 20;
-              icon-theme = "Papirus-Dark";
+              icon-theme = "Tela-dark";
               update-active-window = true;
             };
           };
