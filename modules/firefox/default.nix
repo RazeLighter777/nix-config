@@ -27,11 +27,6 @@
                 permissions = [ "internal:privateBrowsingAllowed" ];
                 origins = [ ];
               };
-              "tridactyl.vim@cmcaine.co.uk" = {
-                permissions = [ "internal:privateBrowsingAllowed" ];
-                origins = [ ];
-              };
-
             };
           };
 
@@ -135,7 +130,6 @@
             steam-database
             ublock-origin
             unpaywall
-            vimium-c
             old-reddit-redirect
           ];
           settings = {
@@ -178,8 +172,6 @@
             "browser.quitShortcut.disabled" = true; # disable ctrl+q
             "browser.shell.checkDefaultBrowser" = false; # don't check if default browser
 
-            # download handling
-            "browser.download.dir" = "/home/meain/down"; # default download dir
             "browser.startup.page" = 3; # restore previous session
 
             # ui changes

@@ -20,6 +20,7 @@
     stylix.enable = true;
     blueberry.enable = true;
     pinpam.enable = true;
+    pcmanfm.enable = true;
   };
   networking.hostName = "suesslenovo";
   boot.loader.systemd-boot.enable = true;

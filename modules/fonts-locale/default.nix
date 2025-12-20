@@ -14,6 +14,7 @@ in
       dejavu_fonts
       emacs-all-the-icons-fonts
       jetbrains-mono
+      nerd-fonts.jetbrains-mono
       font-awesome
       noto-fonts
       noto-fonts-color-emoji

@@ -61,6 +61,8 @@ in
     calibre.enable = mkEnableOption "Enable Calibre eBook manager";
     sunshine.enable = mkEnableOption "Enable Sunshine game streaming server";
     moonlight.enable = mkEnableOption "Enable Moonlight game streaming client";
+    pcmanfm.enable = mkEnableOption "Enable PCManFM file manager";
+    shattered-pixel-dungeon.enable = mkEnableOption "Enable Shattered Pixel Dungeon game";
   };
 
   imports = [
@@ -119,6 +121,8 @@ in
     ./calibre
     ./sunshine
     ./moonlight
+    ./pcmanfm
+    ./shattered-pixel-dungeon
   ];
 
   config = {
@@ -129,7 +133,7 @@ in
     my = {
       # Defaults: most user applications enabled unless explicitly disabled in a host.
       homeManager.enable = lib.mkDefault true;
-      nautilus.enable = lib.mkDefault true;
+      nautilus.enable = lib.mkDefault false;
       wine.enable = lib.mkDefault true;
       protonup.enable = lib.mkDefault true;
       neovim.enable = lib.mkDefault true;
@@ -169,6 +173,8 @@ in
       calibre.enable = lib.mkDefault true;
       sunshine.enable = lib.mkDefault false;
       moonlight.enable = lib.mkDefault false;
+      pcmanfm.enable = lib.mkDefault false;
+      shattered-pixel-dungeon.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
