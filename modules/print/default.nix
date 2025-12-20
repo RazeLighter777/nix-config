@@ -10,6 +10,12 @@ in
 {
   options.my.print.enable = lib.mkEnableOption "Enable printing";
   config = lib.mkIf cfg.enable {
-	services.printing.enable = true;
+    services.printing = {
+      enable = true;
+      drivers = with pkgs; [
+        epson-escpr2
+        epson-escpr
+      ];
+    };
   };
 }
