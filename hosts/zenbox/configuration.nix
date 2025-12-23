@@ -28,6 +28,7 @@
     moonlight.enable = true; # game streaming client
     firefox.enable = true;
     pcmanfm.enable = true;
+    qflipper.enable = true;
   };
 
   networking.hostName = "zenbox";

@@ -63,6 +63,7 @@ in
     moonlight.enable = mkEnableOption "Enable Moonlight game streaming client";
     pcmanfm.enable = mkEnableOption "Enable PCManFM file manager";
     shattered-pixel-dungeon.enable = mkEnableOption "Enable Shattered Pixel Dungeon game";
+    qflipper.enable = mkEnableOption "Enable qFlipper";
   };
 
   imports = [
@@ -123,6 +124,7 @@ in
     ./moonlight
     ./pcmanfm
     ./shattered-pixel-dungeon
+    ./qflipper
   ];
 
   config = {
@@ -175,6 +177,7 @@ in
       moonlight.enable = lib.mkDefault false;
       pcmanfm.enable = lib.mkDefault false;
       shattered-pixel-dungeon.enable = lib.mkDefault true;
+      qflipper.enable = lib.mkDefault false;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):

@@ -8,11 +8,70 @@
 {
   config = lib.mkIf config.my.waybar.enable {
     home-manager.users.${config.my.user.name} = {
-      home.packages = with pkgs; [
-        waybar
-        waybar-mpris
-        nerd-fonts.jetbrains-mono
-      ];
+      home.packages =
+        let
+          waybar-bandwidth = pkgs.writeShellScriptBin "waybar-bandwidth" ''
+            set -euo pipefail
+
+            ip="${pkgs.iproute2}/bin/ip"
+            awk="${pkgs.gawk}/bin/awk"
+            date="${pkgs.coreutils}/bin/date"
+
+            iface="$($ip route show default 2>/dev/null | $awk 'NR==1{for(i=1;i<=NF;i++) if($i=="dev") {print $(i+1); exit}}')"
+            if [[ -z "${iface:-}" || ! -d "/sys/class/net/$iface/statistics" ]]; then
+              echo "🢃 0.00 Mbps 🢁 0.00 Mbps"
+              exit 0
+            fi
+
+            rx_file="/sys/class/net/$iface/statistics/rx_bytes"
+            tx_file="/sys/class/net/$iface/statistics/tx_bytes"
+            rx_now="$(cat "$rx_file" 2>/dev/null || echo 0)"
+            tx_now="$(cat "$tx_file" 2>/dev/null || echo 0)"
+            t_now_ns="$($date +%s%N)"
+
+            state_file="/tmp/waybar-bandwidth-$iface.state"
+
+            if [[ -f "$state_file" ]]; then
+              read -r rx_prev tx_prev t_prev_ns < "$state_file" || true
+            else
+              rx_prev="$rx_now"
+              tx_prev="$tx_now"
+              t_prev_ns="$t_now_ns"
+            fi
+
+            printf '%s %s %s\n' "$rx_now" "$tx_now" "$t_now_ns" > "$state_file"
+
+            $awk \
+              -v rx_now="$rx_now" -v tx_now="$tx_now" \
+              -v rx_prev="${rx_prev:-$rx_now}" -v tx_prev="${tx_prev:-$tx_now}" \
+              -v t_now_ns="$t_now_ns" -v t_prev_ns="${t_prev_ns:-$t_now_ns}" \
+              'BEGIN {
+                dt = (t_now_ns - t_prev_ns) / 1000000000.0;
+                if (dt <= 0) dt = 1.0;
+
+                drx = rx_now - rx_prev;
+                dtx = tx_now - tx_prev;
+                if (drx < 0) drx = 0;
+                if (dtx < 0) dtx = 0;
+
+                down_mbps = (drx * 8.0) / (dt * 1000000.0);
+                up_mbps = (dtx * 8.0) / (dt * 1000000.0);
+
+                down_icon = "🢃";
+                up_icon = "🢁";
+                if (down_mbps > 1.0) down_icon = down_icon "🚀";
+                if (up_mbps > 1.0) up_icon = up_icon "🚀";
+
+                printf "%s %.2f Mbps %s %.2f Mbps\n", down_icon, down_mbps, up_icon, up_mbps;
+              }'
+          '';
+        in
+        (with pkgs; [
+          waybar
+          waybar-mpris
+          nerd-fonts.jetbrains-mono
+          waybar-bandwidth
+        ]);
 
       programs.waybar = {
         enable = true;
@@ -46,6 +105,7 @@
           #temperature,
           #pulseaudio,
           #network,
+          #custom-bandwidth,
           #battery,
           #idle_inhibitor,
           #backlight,
@@ -61,6 +121,7 @@
           #clock:hover,
           #pulseaudio:hover,
           #network:hover,
+          #custom-bandwidth:hover,
           #battery:hover,
           #idle_inhibitor:hover,
           #backlight:hover,
@@ -123,7 +184,6 @@
               "network"
               (lib.mkIf config.my.battery.enable "battery")
               "idle_inhibitor"
-              "temperature"
               "tray"
             ];
 
@@ -154,7 +214,7 @@
 
             clock = {
               tooltip-format = "<tt><small>{calendar}</small></tt>";
-              format = "{:%H:%M}  ";
+              format = "{:%H:%M} ⏱️ ";
               format-alt = "{:%Y-%m-%d  %H:%M:%S}";
               calendar = {
                 mode = "year";
@@ -219,7 +279,7 @@
             "hyprland/mode".format = ''<span style="italic">{}</span>'';
             temperature = {
               critical-threshold = 122;
-              format = "{temperatureF}°F";
+              format = "{temperatureF}°F 🌡️ ";
             };
             disk = {
               interval = 30;
@@ -272,6 +332,8 @@
             modules-left = [
               "cpu"
               "memory"
+              "custom/bandwidth"
+              "temperature"
             ];
             modules-right = [
               "disk"
@@ -305,6 +367,12 @@
             };
 
             memory.format = "{}% 🧠";
+
+            "custom/bandwidth" = {
+              exec = "waybar-bandwidth";
+              interval = 1;
+              tooltip = false;
+            };
 
             disk = {
               interval = 30;
