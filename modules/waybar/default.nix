@@ -18,7 +18,7 @@
             date="${pkgs.coreutils}/bin/date"
 
             iface="$($ip route show default 2>/dev/null | $awk 'NR==1{for(i=1;i<=NF;i++) if($i=="dev") {print $(i+1); exit}}')"
-            if [[ -z "${iface:-}" || ! -d "/sys/class/net/$iface/statistics" ]]; then
+            if [[ -z "''${iface:-}" || ! -d "/sys/class/net/$iface/statistics" ]]; then
               echo "🢃 0.00 Mbps 🢁 0.00 Mbps"
               exit 0
             fi
@@ -43,8 +43,8 @@
 
             $awk \
               -v rx_now="$rx_now" -v tx_now="$tx_now" \
-              -v rx_prev="${rx_prev:-$rx_now}" -v tx_prev="${tx_prev:-$tx_now}" \
-              -v t_now_ns="$t_now_ns" -v t_prev_ns="${t_prev_ns:-$t_now_ns}" \
+              -v rx_prev="''${rx_prev:-$rx_now}" -v tx_prev="''${tx_prev:-$tx_now}" \
+              -v t_now_ns="$t_now_ns" -v t_prev_ns="''${t_prev_ns:-$t_now_ns}" \
               'BEGIN {
                 dt = (t_now_ns - t_prev_ns) / 1000000000.0;
                 if (dt <= 0) dt = 1.0;
@@ -115,6 +115,12 @@
             border-radius: 8px;
             padding: 2px 8px;
             margin: 0 5px;
+          }
+
+          /* Bandwidth glyphs sit slightly high vs other modules */
+          #custom-bandwidth {
+            padding-top: 6px;
+            padding-bottom: .5px;
           }
 
           /* Subtle hover feedback */
@@ -341,7 +347,7 @@
 
             clock = {
               tooltip-format = "<tt><small>{calendar}</small></tt>";
-              format = "{:%H:%M}  ";
+              format = "{:%H:%M} ⏱️";
               format-alt = "{:%Y-%m-%d  %H:%M:%S}";
               calendar = {
                 mode = "year";
