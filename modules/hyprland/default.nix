@@ -78,12 +78,6 @@
             "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP GTK_THEME"
             "systemctl --user enable --now hypridle.service"
             "systemctl --user enable --now mako.service"
-            "nm-applet"
-            "systemctl --user start hyprpolkitagent"
-            "udiskie"
-            (lib.mkIf config.my.blueberry.enable "blueberry-tray")
-            "wl-paste --watch cliphist store"
-            "wl-clip-persist --clipboard regular"
           ];
           bindm = [
             "$mod, mouse:272, movewindow"
@@ -203,6 +197,99 @@
       programs.kitty = {
         enable = true;
         settings.confirm_os_window_close = 0;
+      };
+
+      # Systemd user services for applets
+      systemd.user.services = {
+        nm-applet = {
+          Unit = {
+            Description = "Network Manager Applet";
+            PartOf = [ "graphical-session.target" ];
+            After = [ "graphical-session.target" ];
+          };
+          Service = {
+            ExecStart = "${pkgs.networkmanagerapplet}/bin/nm-applet";
+            Restart = "on-failure";
+          };
+          Install = {
+            WantedBy = [ "graphical-session.target" ];
+          };
+        };
+
+        hyprpolkitagent = {
+          Unit = {
+            Description = "Hyprland Polkit Agent";
+            PartOf = [ "graphical-session.target" ];
+            After = [ "graphical-session.target" ];
+          };
+          Service = {
+            ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
+            Restart = "on-failure";
+          };
+          Install = {
+            WantedBy = [ "graphical-session.target" ];
+          };
+        };
+
+        udiskie = {
+          Unit = {
+            Description = "Udiskie Automounter";
+            PartOf = [ "graphical-session.target" ];
+            After = [ "graphical-session.target" ];
+          };
+          Service = {
+            ExecStart = "${pkgs.udiskie}/bin/udiskie";
+            Restart = "on-failure";
+          };
+          Install = {
+            WantedBy = [ "graphical-session.target" ];
+          };
+        };
+
+        blueberry-tray = lib.mkIf config.my.blueberry.enable {
+          Unit = {
+            Description = "Blueberry System Tray";
+            PartOf = [ "graphical-session.target" ];
+            After = [ "graphical-session.target" ];
+          };
+          Service = {
+            ExecStart = "${pkgs.blueberry}/bin/blueberry-tray";
+            Restart = "on-failure";
+          };
+          Install = {
+            WantedBy = [ "graphical-session.target" ];
+          };
+        };
+
+        cliphist-store = {
+          Unit = {
+            Description = "Clipboard History Store";
+            PartOf = [ "graphical-session.target" ];
+            After = [ "graphical-session.target" ];
+          };
+          Service = {
+            ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store";
+            Restart = "on-failure";
+          };
+          Install = {
+            WantedBy = [ "graphical-session.target" ];
+          };
+        };
+
+        wl-clip-persist = {
+          Unit = {
+            Description = "Wayland Clipboard Persist";
+            PartOf = [ "graphical-session.target" ];
+            After = [ "graphical-session.target" ];
+          };
+          Service = {
+            ExecStart = "${pkgs.wl-clip-persist}/bin/wl-clip-persist --clipboard regular";
+            Restart = "on-failure";
+          };
+          Install = {
+            WantedBy = [ "graphical-session.target" ];
+          };
+        };
       };
     };
   };

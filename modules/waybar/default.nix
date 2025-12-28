@@ -68,7 +68,6 @@
         in
         (with pkgs; [
           waybar
-          waybar-mpris
           nerd-fonts.jetbrains-mono
           waybar-bandwidth
         ]);
@@ -160,14 +159,6 @@
           #battery.warning { color: #ffcc66; }
           #battery.critical { color: #ff7a90; }
           #bluetooth.connected { color: #73DACA; }
-
-          /* Media player */
-          #custom-waybar-mpris {
-            background-color: rgba(40, 40, 40, 0.50);
-            border-radius: 8px;
-            padding: 2px 8px;
-            margin: 0 5px;
-          }
         '';
         settings = [
           {
@@ -184,7 +175,6 @@
               "hyprland/workspaces"
             ];
             modules-right = [
-              "custom/waybar-mpris"
               (lib.mkIf config.my.brightnessctl.enable "backlight")
               "pulseaudio"
               "network"
@@ -318,16 +308,6 @@
               on-scroll-up = "brightnessctl set +5%";
               on-scroll-down = "brightnessctl set 5%-";
             };
-
-            "custom/waybar-mpris" = {
-              return-type = "json";
-              exec = "waybar-mpris --autofocus --play '▶' --pause '⏸' --order 'SYMBOL:ARTIST:TITLE'";
-              on-click = "waybar-mpris --send toggle";
-              on-click-right = "waybar-mpris --send player-next";
-              escape = true;
-              max-length = 50;
-            };
-
           }
           {
             height = 30;
