@@ -59,8 +59,6 @@ in
     discord.enable = mkEnableOption "Enable Discord configuration";
     customKernel.enable = mkEnableOption "Enable custom linux-landlock-no-inherit kernel";
     calibre.enable = mkEnableOption "Enable Calibre eBook manager";
-    sunshine.enable = mkEnableOption "Enable Sunshine game streaming server";
-    moonlight.enable = mkEnableOption "Enable Moonlight game streaming client";
     pcmanfm.enable = mkEnableOption "Enable PCManFM file manager";
     shattered-pixel-dungeon.enable = mkEnableOption "Enable Shattered Pixel Dungeon game";
     qflipper.enable = mkEnableOption "Enable qFlipper";
@@ -120,8 +118,6 @@ in
     ./hyprlock
     ./discord
     ./calibre
-    ./sunshine
-    ./moonlight
     ./pcmanfm
     ./shattered-pixel-dungeon
     ./qflipper
@@ -173,8 +169,6 @@ in
       discord.enable = lib.mkDefault true;
       customKernel.enable = lib.mkDefault false;
       calibre.enable = lib.mkDefault true;
-      sunshine.enable = lib.mkDefault false;
-      moonlight.enable = lib.mkDefault false;
       pcmanfm.enable = lib.mkDefault false;
       shattered-pixel-dungeon.enable = lib.mkDefault true;
       qflipper.enable = lib.mkDefault false;
