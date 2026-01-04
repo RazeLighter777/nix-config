@@ -22,7 +22,7 @@ in
       description = "Home directory path for the primary user.";
     };
     homeManager.enable = mkEnableOption "Enable home-manager integration";
-    displayManager.enable = mkEnableOption "Enable greetd / tuigreet display manager for Hyprland";
+    displayManager.enable = mkEnableOption "Enable SDDM autologin for Hyprland (Hyprlock becomes the only login screen)";
     nautilus.enable = mkEnableOption "Enable nautilus file manager";
     wine.enable = mkEnableOption "Enable Wine packages";
     xmrig.enable = mkEnableOption "Enable XMRig mining service";
@@ -121,6 +121,7 @@ in
     ./pcmanfm
     ./shattered-pixel-dungeon
     ./qflipper
+    ./scx
   ];
 
   config = {
@@ -172,6 +173,7 @@ in
       pcmanfm.enable = lib.mkDefault false;
       shattered-pixel-dungeon.enable = lib.mkDefault true;
       qflipper.enable = lib.mkDefault false;
+      scx.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
@@ -190,7 +192,7 @@ in
       }
       {
         assertion = !(config.my.displayManager.enable && config.my.kde.enable);
-        message = "KDE (Plasma) uses SDDM; disable the greetd displayManager module.";
+        message = "This displayManager module is Hyprland-specific; disable it when using KDE (Plasma).";
       }
     ];
   };

@@ -4,6 +4,11 @@
   lib,
   ...
 }:
+let
+  hyprlockLoginScript = pkgs.writeShellScript "hyprlock-login" ''
+    ${pkgs.hyprlock}/bin/hyprlock --immediate --immediate-render || ${pkgs.hyprland}/bin/hyprctl dispatch exit
+  '';
+in
 {
   config = lib.mkIf config.my.hyprland.enable {
     environment.systemPackages = [
@@ -74,6 +79,7 @@
         settings = {
           "$mod" = "SUPER";
           exec-once = [
+            "systemctl --user start hyprlock-login.service"
             "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP GTK_THEME"
             "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP GTK_THEME"
             "systemctl --user enable --now hypridle.service"
@@ -201,6 +207,18 @@
 
       # Systemd user services for applets
       systemd.user.services = {
+        hyprlock-login = {
+          Unit = {
+            Description = "Hyprlock login screen";
+            PartOf = [ "graphical-session.target" ];
+            After = [ "graphical-session.target" ];
+          };
+          Service = {
+            Type = "oneshot";
+            ExecStart = hyprlockLoginScript;
+          };
+        };
+
         nm-applet = {
           Unit = {
             Description = "Network Manager Applet";
@@ -224,21 +242,6 @@
           };
           Service = {
             ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
-            Restart = "on-failure";
-          };
-          Install = {
-            WantedBy = [ "graphical-session.target" ];
-          };
-        };
-
-        udiskie = {
-          Unit = {
-            Description = "Udiskie Automounter";
-            PartOf = [ "graphical-session.target" ];
-            After = [ "graphical-session.target" ];
-          };
-          Service = {
-            ExecStart = "${pkgs.udiskie}/bin/udiskie";
             Restart = "on-failure";
           };
           Install = {

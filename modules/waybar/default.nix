@@ -70,6 +70,7 @@
           waybar
           nerd-fonts.jetbrains-mono
           waybar-bandwidth
+          playerctl
         ]);
 
       programs.waybar = {
@@ -109,7 +110,8 @@
           #idle_inhibitor,
           #backlight,
           #bluetooth,
-          #tray {
+          #tray,
+          #mpris {
             background-color: rgba(40, 40, 40, 0.50);
             border-radius: 8px;
             padding: 2px 8px;
@@ -173,6 +175,7 @@
             modules-center = [ "hyprland/window" ];
             modules-left = [
               "hyprland/workspaces"
+              "mpris"
             ];
             modules-right = [
               (lib.mkIf config.my.brightnessctl.enable "backlight")
@@ -307,6 +310,21 @@
               format = "{percent}% ☀";
               on-scroll-up = "brightnessctl set +5%";
               on-scroll-down = "brightnessctl set 5%-";
+            };
+
+            mpris = {
+              format = "{player_icon} {dynamic}";
+              format-paused = "{status_icon} <i>{dynamic}</i>";
+              interval = 1;
+              player-icons = {
+                default = "▶";
+                mpv = "🎵";
+                firefox = "🦊";
+              };
+              status-icons = {
+                paused = "⏸";
+              };
+              ignored-players = [ ];
             };
           }
           {

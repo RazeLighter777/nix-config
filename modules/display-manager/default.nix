@@ -6,31 +6,52 @@
 }:
 {
   config = lib.mkIf config.my.displayManager.enable {
-    services.greetd = {
+    services.xserver.enable = true;
+
+    services.displayManager.sddm = {
       enable = true;
-      settings.default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --time-format '%I:%M %p | %a • %h | %F' --cmd 'uwsm start hyprland'";
-        user = "greeter";
-      };
+      wayland.enable = true;
     };
-    users.users.greeter = {
-      isNormalUser = false;
-      description = "greetd greeter user";
-      extraGroups = [
-        "video"
-        "audio"
-      ];
-      linger = true;
+
+    services.displayManager.autoLogin = {
+      enable = true;
+      user = config.my.user.name;
     };
-    security.pam.services.greetd.enableGnomeKeyring = true;
-    environment.systemPackages = [ pkgs.tuigreet ];
+
+    services.displayManager.defaultSession = "hyprland";
+
+    environment.etc."sddm.conf.d/hyprland-autologin.conf".text = ''
+      [Autologin]
+      Session=hyprland
+      User=${config.my.user.name}
+    '';
+
+    services.displayManager.sessionPackages = [
+      (pkgs.stdenvNoCC.mkDerivation {
+        name = "hyprland-uwsm-session";
+        dontUnpack = true;
+        installPhase = ''
+          mkdir -p $out/share/wayland-sessions
+          cat > $out/share/wayland-sessions/hyprland.desktop <<EOF
+          [Desktop Entry]
+          Name=Hyprland
+          Comment=Hyprland compositor managed by UWSM
+          Exec=uwsm start -F -- ${pkgs.hyprland}/bin/Hyprland
+          Type=Application
+          EOF
+        '';
+        passthru.providedSessions = [ "hyprland" ];
+      })
+    ];
+
     programs.uwsm.enable = true;
     programs.uwsm.package = pkgs.uwsm;
     programs.uwsm.waylandCompositors.hyprland = {
       prettyName = "Hyprland";
       comment = "Hyprland compositor managed by UWSM";
-      binPath = "${config.my.user.homeDir}/.nix-profile/bin/Hyprland";
+      binPath = "${pkgs.hyprland}/bin/Hyprland";
     };
+
     services.xserver.desktopManager.runXdgAutostartIfNone = true;
   };
 }

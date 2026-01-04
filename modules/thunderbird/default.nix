@@ -36,6 +36,11 @@
             # UI improvements
             "mailnews.default_sort_order" = 2; # Sort by date, descending
             "mail.ui.folderpane.showTotal" = true; # Show total message count
+
+            # Linux kernel mailing list 
+            "mailnews.wraplength" = 0; # Disable line wrapping in emails, to preserve formatting for patch submissions
+            "mailnews.send_plaintext_flowed" = false; # Disable format=flowed for better compatibility with mailing lists
+            
           };
         };
       };
