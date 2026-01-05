@@ -32,7 +32,7 @@ in
     waybar.enable = mkEnableOption "Enable Waybar configuration";
     neovim.enable = mkEnableOption "Enable Neovim configuration";
     firefox.enable = mkEnableOption "Enable Firefox configuration";
-    mutt.enable = mkEnableOption "Enable Mutt email client";
+    thunderbird.enable = mkEnableOption "Enable Thunderbird email client";
     ark.enable = mkEnableOption "Enable Ark archive manager";
     hyprland.enable = mkEnableOption "Enable Hyprland home-manager configuration";
     bash.enable = mkEnableOption "Enable Bash configuration";
@@ -88,7 +88,7 @@ in
     ./waybar
     ./neovim
     ./firefox
-    ./mutt
+    ./thunderbird
     ./ark
     ./xdg-apps
     ./hyprland
@@ -140,7 +140,7 @@ in
       protonup.enable = lib.mkDefault true;
       neovim.enable = lib.mkDefault true;
       firefox.enable = lib.mkDefault true;
-      mutt.enable = lib.mkDefault true;
+      thunderbird.enable = lib.mkDefault true;
       ark.enable = lib.mkDefault true;
       bash.enable = lib.mkDefault true;
       dconf.enable = lib.mkDefault true;
