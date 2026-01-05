@@ -6,7 +6,11 @@
 }:
 let
   hyprlockLoginScript = pkgs.writeShellScript "hyprlock-login" ''
-    ${pkgs.hyprlock}/bin/hyprlock --immediate --immediate-render || ${pkgs.hyprland}/bin/hyprctl dispatch exit
+    ${pkgs.hyprlock}/bin/hyprlock --immediate --immediate-render
+    status=$?
+    if [ $status -ne 0 ]; then
+      ${pkgs.hyprland}/bin/hyprctl dispatch exit
+    fi
   '';
 in
 {

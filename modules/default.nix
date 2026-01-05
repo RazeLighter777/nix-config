@@ -62,6 +62,7 @@ in
     pcmanfm.enable = mkEnableOption "Enable PCManFM file manager";
     shattered-pixel-dungeon.enable = mkEnableOption "Enable Shattered Pixel Dungeon game";
     qflipper.enable = mkEnableOption "Enable qFlipper";
+    spotify.enable = mkEnableOption "Enable Spotify";
   };
 
   imports = [
@@ -122,6 +123,7 @@ in
     ./shattered-pixel-dungeon
     ./qflipper
     ./scx
+    ./spotify
   ];
 
   config = {
@@ -174,6 +176,7 @@ in
       shattered-pixel-dungeon.enable = lib.mkDefault true;
       qflipper.enable = lib.mkDefault false;
       scx.enable = lib.mkDefault true;
+      spotify.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):
