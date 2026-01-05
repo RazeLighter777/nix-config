@@ -23,7 +23,7 @@ in
     };
     homeManager.enable = mkEnableOption "Enable home-manager integration";
     displayManager.enable = mkEnableOption "Enable SDDM autologin for Hyprland (Hyprlock becomes the only login screen)";
-    nautilus.enable = mkEnableOption "Enable nautilus file manager";
+    dolphin.enable = mkEnableOption "Enable Dolphin file manager";
     wine.enable = mkEnableOption "Enable Wine packages";
     xmrig.enable = mkEnableOption "Enable XMRig mining service";
     ollama.enable = mkEnableOption "Enable Ollama service (CUDA)";
@@ -32,7 +32,8 @@ in
     waybar.enable = mkEnableOption "Enable Waybar configuration";
     neovim.enable = mkEnableOption "Enable Neovim configuration";
     firefox.enable = mkEnableOption "Enable Firefox configuration";
-    thunderbird.enable = mkEnableOption "Enable Thunderbird configuration";
+    mutt.enable = mkEnableOption "Enable Mutt email client";
+    ark.enable = mkEnableOption "Enable Ark archive manager";
     hyprland.enable = mkEnableOption "Enable Hyprland home-manager configuration";
     bash.enable = mkEnableOption "Enable Bash configuration";
     dconf.enable = mkEnableOption "Enable dconf settings";
@@ -47,19 +48,19 @@ in
     flatpak.enable = mkEnableOption "Enable flatpaks";
     screen.enable = mkEnableOption "Enable screen";
     brightnessctl.enable = mkEnableOption "Enable brightness";
-    gnome-keyring.enable = mkEnableOption "Gnome keyring";
+    kwallet.enable = mkEnableOption "KWallet (replaces gnome-keyring/seahorse)";
     battery.enable = mkEnableOption "Battery support";
     kitty.enable = mkEnableOption "Kitty terminal";
     udiskie.enable = mkEnableOption "Udiskie";
     stylix.enable = mkEnableOption "Enable Stylix tiling window manager";
     xdg-apps.enable = mkEnableOption "Enable custom XDG MIME applications";
-    blueberry.enable = mkEnableOption "Enable Blueberry Bluetooth configuration";
+    bluedevil.enable = mkEnableOption "Enable BlueDevil Bluetooth manager";
+    networkmanager-qt.enable = mkEnableOption "Enable NetworkManager Qt components";
     wayvnc.enable = mkEnableOption "Enable WayVNC server for Hyprland";
     pinpam.enable = mkEnableOption "Enable PIN and PAM integration";
     discord.enable = mkEnableOption "Enable Discord configuration";
     customKernel.enable = mkEnableOption "Enable custom linux-landlock-no-inherit kernel";
     calibre.enable = mkEnableOption "Enable Calibre eBook manager";
-    pcmanfm.enable = mkEnableOption "Enable PCManFM file manager";
     shattered-pixel-dungeon.enable = mkEnableOption "Enable Shattered Pixel Dungeon game";
     qflipper.enable = mkEnableOption "Enable qFlipper";
     spotify.enable = mkEnableOption "Enable Spotify";
@@ -78,7 +79,7 @@ in
     ./pipewire
     ./home-manager
     ./display-manager
-    ./nautilus
+    ./dolphin
     ./wine
     ./xmrig
     ./ollama
@@ -87,7 +88,8 @@ in
     ./waybar
     ./neovim
     ./firefox
-    ./thunderbird
+    ./mutt
+    ./ark
     ./xdg-apps
     ./hyprland
     ./desktops/hyprland-extra.nix
@@ -107,19 +109,18 @@ in
     ./flatpak
     ./screen
     ./brightnessctl
-    ./gnome-keyring
-    ./seahorse
+    ./kwallet
     ./kitty
     ./udiskie
     ./stylix
-    ./blueberry
+    ./bluedevil
+    ./networkmanager-qt
     ./wayvnc
     ./pinpam
     ./print
     ./hyprlock
     ./discord
     ./calibre
-    ./pcmanfm
     ./shattered-pixel-dungeon
     ./qflipper
     ./scx
@@ -134,12 +135,13 @@ in
     my = {
       # Defaults: most user applications enabled unless explicitly disabled in a host.
       homeManager.enable = lib.mkDefault true;
-      nautilus.enable = lib.mkDefault false;
+      dolphin.enable = lib.mkDefault true;
       wine.enable = lib.mkDefault true;
       protonup.enable = lib.mkDefault true;
       neovim.enable = lib.mkDefault true;
       firefox.enable = lib.mkDefault true;
-      thunderbird.enable = lib.mkDefault true;
+      mutt.enable = lib.mkDefault true;
+      ark.enable = lib.mkDefault true;
       bash.enable = lib.mkDefault true;
       dconf.enable = lib.mkDefault true;
       vscode.enable = lib.mkDefault true;
@@ -159,20 +161,20 @@ in
       flatpak.enable = lib.mkDefault true;
       screen.enable = lib.mkDefault true;
       brightnessctl.enable = lib.mkDefault false;
-      gnome-keyring.enable = lib.mkDefault false;
+      kwallet.enable = lib.mkDefault false;
       battery.enable = lib.mkDefault false;
       kitty.enable = lib.mkDefault true;
       udiskie.enable = lib.mkDefault true;
       stylix.enable = lib.mkDefault false;
       xdg-apps.enable = lib.mkDefault true;
-      blueberry.enable = lib.mkDefault false;
+      bluedevil.enable = lib.mkDefault false;
+      networkmanager-qt.enable = lib.mkDefault false;
       wayvnc.enable = lib.mkDefault false;
       pinpam.enable = lib.mkDefault false;
       print.enable = lib.mkDefault true;
       discord.enable = lib.mkDefault true;
       customKernel.enable = lib.mkDefault false;
       calibre.enable = lib.mkDefault true;
-      pcmanfm.enable = lib.mkDefault false;
       shattered-pixel-dungeon.enable = lib.mkDefault true;
       qflipper.enable = lib.mkDefault false;
       scx.enable = lib.mkDefault true;

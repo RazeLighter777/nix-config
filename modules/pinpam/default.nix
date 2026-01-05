@@ -16,7 +16,7 @@ in
       enable = true;
       enableSudoPin = true;
       enableTpmAccess = true;
-      enableHyprlockPin = true;
+        enableHyprlockPin = false;
       enableSystemAuthPin = true;
       pinPolicy = {
         minLength = 4;

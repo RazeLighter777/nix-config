@@ -15,12 +15,13 @@
     waybar.enable = true;
     brightnessctl.enable = true;
     # Rely on mkDefault for rest (no NVIDIA / OBS / XMRig)
-    gnome-keyring.enable = true;
+    kwallet.enable = true;
     battery.enable = true;
     stylix.enable = true;
-    blueberry.enable = true;
+    bluedevil.enable = true;
+    networkmanager-qt.enable = true;
     pinpam.enable = true;
-    pcmanfm.enable = true;
+    dolphin.enable = true;
     qflipper.enable = true;
   };
   networking.hostName = "suesslenovo";

@@ -5,7 +5,7 @@
   ...
 }:
 {
-  config = lib.mkIf config.my.gnome-keyring.enable {
+  config = lib.mkIf config.my.calibre.enable {
     home-manager.users.${config.my.user.name} = {
       home.packages = [ pkgs.calibre ];
     };

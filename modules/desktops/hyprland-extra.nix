@@ -4,11 +4,10 @@
     hyprland
     hyprlock
     hyprcursor
-    hyprpaper
+    swww
     uwsm
     waybar
     wayvnc
-    networkmanagerapplet
     pavucontrol
     hyprpicker
     wl-clipboard

@@ -180,6 +180,7 @@
             modules-right = [
               (lib.mkIf config.my.brightnessctl.enable "backlight")
               "pulseaudio"
+              "bluetooth"
               "network"
               (lib.mkIf config.my.battery.enable "battery")
               "idle_inhibitor"
@@ -242,14 +243,20 @@
 
             network = {
               interval = 1;
-              format-alt = "{ifname}: {ipaddr}/{cidr}";
               format-disconnected = "Disconnected ⚠";
-              format-ethernet = "{ifname}: {ipaddr}/{cidr}   up: {bandwidthUpBits} down: {bandwidthDownBits}";
-              format-linked = "{ifname} (No IP) ";
-              format-wifi = "{essid} ({signalStrength}%) ";
-              on-click = "nm-connection-editor";
+              format-ethernet = "󰈀";
+              format-linked = "{ifname} (No IP) ";
+              format-wifi = "{essid} ({signalStrength}%) 󰖩";
+              on-click = "kitty --class floating-terminal -e nmtui";
+            };
+bluetooth = {
+              format = "🦷🔵";
+              format-disabled = "";
+              format-off = "";
+              on-click = "bluedevil-wizard";
             };
 
+            
             pulseaudio = {
               format = "{volume}% {icon} {format_source}";
               format-bluetooth = "{volume}% {icon} {format_source}";
@@ -336,8 +343,9 @@
             modules-left = [
               "cpu"
               "memory"
-              "custom/bandwidth"
               "temperature"
+              "network#ip"
+              "custom/bandwidth"
             ];
             modules-right = [
               "disk"
@@ -386,6 +394,13 @@
                 warning = 15;
                 critical = 2;
               };
+            };
+
+            "network#ip" = {
+              interval = 5;
+              format = "{ipaddr} 🌐";
+              format-disconnected = "No IP";
+              tooltip-format = "{ifname}: {ipaddr}/{cidr}";
             };
           }
         ];

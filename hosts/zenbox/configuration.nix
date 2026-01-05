@@ -18,14 +18,15 @@
     xmrig.enable = false; # explicitly opt-in (default false)
     # All other common apps come from mkDefault in modules/default.nix
     ollama.enable = true; # optional AI app
-    gnome-keyring.enable = true;
-    blueberry.enable = true;
+    kwallet.enable = true;
+    bluedevil.enable = true;
+    networkmanager-qt.enable = true;
     stylix.enable = true; # for color scheme management
     wayvnc.enable = true; # for remote desktop access
     pinpam.enable = true; # for managing PINs
     customKernel.enable = false;
     firefox.enable = true;
-    pcmanfm.enable = true;
+    dolphin.enable = true;
     qflipper.enable = true;
   };
 

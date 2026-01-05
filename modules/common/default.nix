@@ -34,6 +34,8 @@
     python3
     nmap
     direnv
+    gnupg
+    pinentry-qt
   ];
   nix.settings.experimental-features = [
     "nix-command"

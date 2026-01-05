@@ -7,8 +7,7 @@
 {
   config = lib.mkIf config.my.libreoffice.enable {
     environment.systemPackages = [
-      (lib.mkIf config.my.kde.enable pkgs.libreoffice-qt6-fresh)
-      (lib.mkIf config.my.hyprland.enable pkgs.libreoffice-fresh)
+      pkgs.libreoffice-qt6-fresh
     ];
   };
 }

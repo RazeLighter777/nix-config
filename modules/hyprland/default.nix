@@ -15,9 +15,10 @@ let
 in
 {
   config = lib.mkIf config.my.hyprland.enable {
-    environment.systemPackages = [
-      pkgs.hyprpolkitagent
-      pkgs.rofi-power-menu
+    environment.systemPackages = with pkgs; [
+      hyprpolkitagent
+      rofi-power-menu
+      swww
     ];
     home-manager.users.${config.my.user.name} = {
       programs.hyprshot = {
@@ -66,7 +67,9 @@ in
       };
       wayland.windowManager.hyprland = {
         enable = true;
-        package = pkgs.hyprland;
+        package = null;
+        portalPackage = null;
+        systemd.enable = false;
         xwayland.enable = true;
         extraConfig = ''
           input {
@@ -76,16 +79,19 @@ in
           }
           source = ~/.config/hypr/workspaces.conf
           source = ~/.config/hypr/monitors.conf
-          experimental {
-            xx_color_management_v4 = true
-          }
         '';
         settings = {
           "$mod" = "SUPER";
+          env = [
+            "XDG_CURRENT_DESKTOP,Hyprland"
+          ];
           exec-once = [
+            "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP GTK_THEME"
+            "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+            "systemctl --user start graphical-session.target"
+            "systemctl --user start swww.service"
+            "systemctl --user start swww-wallpaper.service"
             "systemctl --user start hyprlock-login.service"
-            "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP GTK_THEME"
-            "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP GTK_THEME"
             "systemctl --user enable --now hypridle.service"
             "systemctl --user enable --now mako.service"
           ];
@@ -109,7 +115,7 @@ in
             "$mod, D, exec, rofi -show drun -replace -i -show-icons -icon-theme 'Tela-dark'"
             "$mod, L, exec, hyprlock"
             "$mod, P, exec, rofi -show p -modi p:rofi-power-menu -show-icons -icon-theme 'Tela-dark'"
-            (lib.mkIf config.my.blueberry.enable "$mod, B, exec, blueberry")
+            (lib.mkIf config.my.bluedevil.enable "$mod, B, exec, bluedevil-wizard")
             "CTRL ALT, Delete, exec, hyprctl dispatch exit 0"
             "$mod, Q, killactive,"
             "$mod CTRL, D, layoutmsg, removemaster"
@@ -189,16 +195,6 @@ in
       programs.rofi = {
         enable = true;
       };
-      services.hyprpaper = {
-        enable = true;
-        settings = {
-          ipc = "on";
-          splash = false;
-          splash_offset = 2.0;
-          preload = [ "${config.my.user.homeDir}/Images/wallpapers/big-sur.jpg" ];
-          wallpaper = [ ", ${config.my.user.homeDir}/Images/wallpapers/big-sur.jpg" ];
-        };
-      };
       home.pointerCursor = {
         gtk.enable = true;
         x11.enable = true;
@@ -211,6 +207,38 @@ in
 
       # Systemd user services for applets
       systemd.user.services = {
+        swww = {
+          Unit = {
+            Description = "swww wallpaper daemon";
+            PartOf = [ "graphical-session.target" ];
+            After = [ "graphical-session.target" ];
+          };
+          Service = {
+            ExecStart = "${pkgs.swww}/bin/swww-daemon";
+            Restart = "on-failure";
+          };
+          Install = {
+            WantedBy = [ "graphical-session.target" ];
+          };
+        };
+
+        swww-wallpaper = {
+          Unit = {
+            Description = "Set wallpaper via swww";
+            PartOf = [ "graphical-session.target" ];
+            After = [ "graphical-session.target" "swww.service" ];
+            Requires = [ "swww.service" ];
+          };
+          Service = {
+            Type = "oneshot";
+            ExecStartPre = "${pkgs.coreutils}/bin/sleep 1";
+            ExecStart = "${pkgs.swww}/bin/swww img %h/Images/wallpapers/big-sur.jpg";
+          };
+          Install = {
+            WantedBy = [ "graphical-session.target" ];
+          };
+        };
+
         hyprlock-login = {
           Unit = {
             Description = "Hyprlock login screen";
@@ -223,14 +251,29 @@ in
           };
         };
 
-        nm-applet = {
+        kwalletd = lib.mkIf config.my.kwallet.enable {
           Unit = {
-            Description = "Network Manager Applet";
+            Description = "KWallet daemon";
             PartOf = [ "graphical-session.target" ];
             After = [ "graphical-session.target" ];
           };
           Service = {
-            ExecStart = "${pkgs.networkmanagerapplet}/bin/nm-applet";
+            ExecStart = "${pkgs.kdePackages.kwallet}/bin/kwalletd6";
+            Restart = "on-failure";
+          };
+          Install = {
+            WantedBy = [ "graphical-session.target" ];
+          };
+        };
+
+        ksecretd = lib.mkIf config.my.kwallet.enable {
+          Unit = {
+            Description = "KWallet Secret Service";
+            PartOf = [ "graphical-session.target" ];
+            After = [ "graphical-session.target" ];
+          };
+          Service = {
+            ExecStart = "${pkgs.kdePackages.kwallet}/bin/ksecretd";
             Restart = "on-failure";
           };
           Install = {
@@ -246,21 +289,6 @@ in
           };
           Service = {
             ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
-            Restart = "on-failure";
-          };
-          Install = {
-            WantedBy = [ "graphical-session.target" ];
-          };
-        };
-
-        blueberry-tray = lib.mkIf config.my.blueberry.enable {
-          Unit = {
-            Description = "Blueberry System Tray";
-            PartOf = [ "graphical-session.target" ];
-            After = [ "graphical-session.target" ];
-          };
-          Service = {
-            ExecStart = "${pkgs.blueberry}/bin/blueberry-tray";
             Restart = "on-failure";
           };
           Install = {
