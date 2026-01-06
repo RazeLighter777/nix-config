@@ -12,7 +12,6 @@
     ripgrep
     htop
     git
-    zathura
     gnumake
     openssl
     pkg-config

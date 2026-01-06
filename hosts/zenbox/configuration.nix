@@ -28,6 +28,10 @@
     firefox.enable = true;
     dolphin.enable = true;
     qflipper.enable = true;
+    signal-desktop.enable = true;
+    opensnitch.enable = true;
+    clamav.enable = true;
+    tracee.enable = false;
   };
 
   networking.hostName = "zenbox";

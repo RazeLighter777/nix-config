@@ -43,8 +43,10 @@ in
     remmina.enable = mkEnableOption "Enable Remmina remote desktop client";
     freerdp.enable = mkEnableOption "Enable FreeRDP client";
     gnupg.enable = mkEnableOption "Enable gpg agent";
+    kleopatra.enable = mkEnableOption "Enable Kleopatra certificate manager";
     nwg-display.enable = mkEnableOption "Enable nwg-display";
     libreoffice.enable = mkEnableOption "Enable libreoffice";
+    okular.enable = mkEnableOption "Enable Okular PDF viewer";
     flatpak.enable = mkEnableOption "Enable flatpaks";
     screen.enable = mkEnableOption "Enable screen";
     brightnessctl.enable = mkEnableOption "Enable brightness";
@@ -64,6 +66,10 @@ in
     shattered-pixel-dungeon.enable = mkEnableOption "Enable Shattered Pixel Dungeon game";
     qflipper.enable = mkEnableOption "Enable qFlipper";
     spotify.enable = mkEnableOption "Enable Spotify";
+    opensnitch.enable = mkEnableOption "Enable OpenSnitch application firewall";
+    signal-desktop.enable = mkEnableOption "Enable Signal Desktop messaging app";
+    clamav.enable = mkEnableOption "Enable ClamAV antivirus";
+    tracee.enable = mkEnableOption "Enable Tracee eBPF runtime security";
   };
 
   imports = [
@@ -104,8 +110,10 @@ in
     ./remmina
     ./freerdp
     ./gnupg
+    ./kleopatra
     ./nwg-display
     ./libreoffice
+    ./okular
     ./flatpak
     ./screen
     ./brightnessctl
@@ -125,6 +133,10 @@ in
     ./qflipper
     ./scx
     ./spotify
+    ./opensnitch
+    ./signal-desktop
+    ./clamav
+    ./tracee
   ];
 
   config = {
@@ -156,8 +168,10 @@ in
       remmina.enable = lib.mkDefault true;
       freerdp.enable = lib.mkDefault true;
       gnupg.enable = lib.mkDefault true;
+      kleopatra.enable = lib.mkDefault true;
       nwg-display.enable = lib.mkDefault true;
       libreoffice.enable = lib.mkDefault true;
+      okular.enable = lib.mkDefault true;
       flatpak.enable = lib.mkDefault true;
       screen.enable = lib.mkDefault true;
       brightnessctl.enable = lib.mkDefault false;
@@ -179,6 +193,7 @@ in
       qflipper.enable = lib.mkDefault false;
       scx.enable = lib.mkDefault true;
       spotify.enable = lib.mkDefault true;
+      opensnitch.enable = lib.mkDefault false;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):

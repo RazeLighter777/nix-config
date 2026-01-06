@@ -23,6 +23,10 @@
     pinpam.enable = true;
     dolphin.enable = true;
     qflipper.enable = true;
+    signal-desktop.enable = true;
+    opensnitch.enable = true;
+    clamav.enable = true;
+    tracee.enable = false;
   };
   networking.hostName = "suesslenovo";
   boot.loader.systemd-boot.enable = true;
