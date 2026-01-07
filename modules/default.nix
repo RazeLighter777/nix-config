@@ -59,6 +59,8 @@ in
     bluedevil.enable = mkEnableOption "Enable BlueDevil Bluetooth manager";
     networkmanager-qt.enable = mkEnableOption "Enable NetworkManager Qt components";
     wayvnc.enable = mkEnableOption "Enable WayVNC server for Hyprland";
+    virt-manager.enable = mkEnableOption "Enable QEMU and Virtual Machine Manager";
+    xwayland.enable = mkEnableOption "Enable XWayland support";
     pinpam.enable = mkEnableOption "Enable PIN and PAM integration";
     discord.enable = mkEnableOption "Enable Discord configuration";
     customKernel.enable = mkEnableOption "Enable custom linux-landlock-no-inherit kernel";
@@ -124,6 +126,8 @@ in
     ./bluedevil
     ./networkmanager-qt
     ./wayvnc
+    ./virt-manager
+    ./xwayland
     ./pinpam
     ./print
     ./hyprlock
@@ -184,6 +188,8 @@ in
       bluedevil.enable = lib.mkDefault false;
       networkmanager-qt.enable = lib.mkDefault false;
       wayvnc.enable = lib.mkDefault false;
+      virt-manager.enable = lib.mkDefault false;
+      xwayland.enable = lib.mkDefault true;
       pinpam.enable = lib.mkDefault false;
       print.enable = lib.mkDefault true;
       discord.enable = lib.mkDefault true;

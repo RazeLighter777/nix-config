@@ -29,7 +29,7 @@
     dolphin.enable = true;
     qflipper.enable = true;
     signal-desktop.enable = true;
-    opensnitch.enable = true;
+    virt-manager.enable = true;
     clamav.enable = true;
     tracee.enable = false;
   };
