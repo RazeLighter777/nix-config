@@ -84,11 +84,10 @@ in
           "$mod" = "SUPER";
           env = [
             "XDG_CURRENT_DESKTOP,Hyprland"
-            "NIXOS_OZONE_WL,1"
           ];
           exec-once = [
-            "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP GTK_THEME"
-            "systemctl --user import-environment DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+            "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP GTK_THEME"
+            "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
             "systemctl --user start graphical-session.target"
             "systemctl --user start swww.service"
             "systemctl --user start swww-wallpaper.service"
@@ -227,10 +226,7 @@ in
           Unit = {
             Description = "Set wallpaper via swww";
             PartOf = [ "graphical-session.target" ];
-            After = [
-              "graphical-session.target"
-              "swww.service"
-            ];
+            After = [ "graphical-session.target" "swww.service" ];
             Requires = [ "swww.service" ];
           };
           Service = {
