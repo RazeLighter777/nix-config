@@ -1,6 +1,16 @@
-{ config, lib, ... }:
 {
-  networking.networkmanager.enable = true;
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  networking.networkmanager = {
+    enable = true;
+    plugins = with pkgs; [
+      networkmanager-openvpn
+    ];
+  };
   services.openssh.enable = true;
   # Provide a base firewall rule set; hosts can extend via ++ or override using mkForce.
   networking.firewall.allowedTCPPorts = lib.mkDefault [
