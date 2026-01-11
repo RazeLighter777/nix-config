@@ -131,6 +131,7 @@
             ublock-origin
             unpaywall
             old-reddit-redirect
+            user-agent-string-switcher
           ];
           settings = {
             "extensions.autoDisableScopes" = 0;
