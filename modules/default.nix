@@ -72,6 +72,7 @@ in
     signal-desktop.enable = mkEnableOption "Enable Signal Desktop messaging app";
     clamav.enable = mkEnableOption "Enable ClamAV antivirus";
     tracee.enable = mkEnableOption "Enable Tracee eBPF runtime security";
+    kav.enable = mkEnableOption "Enable kav kernel antivirus";
   };
 
   imports = [
@@ -141,6 +142,7 @@ in
     ./signal-desktop
     ./clamav
     ./tracee
+    ./kav
   ];
 
   config = {

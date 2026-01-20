@@ -32,6 +32,7 @@
     virt-manager.enable = true;
     clamav.enable = true;
     tracee.enable = false;
+    kav.enable = true;
   };
 
   networking.hostName = "zenbox";

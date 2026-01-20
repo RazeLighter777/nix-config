@@ -23,6 +23,10 @@
       url = "github:razelighter777/pinpam";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    kav = {
+      url = "git+ssh://git@gitlab.com/kav7205302/kav-client.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -48,7 +52,10 @@
       nixosConfigurations = {
         zenbox = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [ ./hosts/zenbox/configuration.nix ];
+          modules = [ 
+            ./hosts/zenbox/configuration.nix
+            inputs.kav.nixosModules.default
+          ];
           specialArgs = { inherit inputs; };
         };
         suesslenovo = nixpkgs.lib.nixosSystem {
