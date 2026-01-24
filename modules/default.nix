@@ -73,6 +73,8 @@ in
     clamav.enable = mkEnableOption "Enable ClamAV antivirus";
     tracee.enable = mkEnableOption "Enable Tracee eBPF runtime security";
     kav.enable = mkEnableOption "Enable kav kernel antivirus";
+    devtools.enable = mkEnableOption "Enable development tools";
+    zoom-us.enable = mkEnableOption "Enable Zoom video conferencing";
   };
 
   imports = [
@@ -143,6 +145,8 @@ in
     ./clamav
     ./tracee
     ./kav
+    ./devtools
+    ./zoom-us
   ];
 
   config = {
@@ -202,6 +206,8 @@ in
       scx.enable = lib.mkDefault true;
       spotify.enable = lib.mkDefault true;
       opensnitch.enable = lib.mkDefault false;
+      devtools.enable = lib.mkDefault false;
+      zoom-us.enable = lib.mkDefault true;
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):

@@ -27,6 +27,7 @@
     virt-manager.enable = true;
     clamav.enable = true;
     tracee.enable = false;
+    devtools.enable = true;
   };
   networking.hostName = "suesslenovo";
   boot.loader.systemd-boot.enable = true;

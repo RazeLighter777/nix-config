@@ -33,6 +33,7 @@
     clamav.enable = true;
     tracee.enable = false;
     kav.enable = true;
+    devtools.enable = true;
   };
 
   networking.hostName = "zenbox";
