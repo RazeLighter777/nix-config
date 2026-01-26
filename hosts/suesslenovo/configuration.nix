@@ -25,8 +25,6 @@
     qflipper.enable = true;
     signal-desktop.enable = true;
     virt-manager.enable = true;
-    clamav.enable = true;
-    tracee.enable = false;
     devtools.enable = true;
   };
   networking.hostName = "suesslenovo";

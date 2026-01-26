@@ -30,8 +30,6 @@
     qflipper.enable = true;
     signal-desktop.enable = true;
     virt-manager.enable = true;
-    clamav.enable = true;
-    tracee.enable = false;
     kav.enable = true;
     devtools.enable = true;
   };

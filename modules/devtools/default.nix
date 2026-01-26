@@ -12,6 +12,8 @@
       tokei
       btop
       iotop
+      lshw
+      dnsutils
     ];
   };
 }

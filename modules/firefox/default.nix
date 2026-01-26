@@ -235,5 +235,17 @@
         stylix.targets.firefox.profileNames = [ "default" ];
       };
     })
+    (lib.mkIf config.my.firefox.vanilla.enable {
+      home-manager.users.${config.my.user.name} = {
+        programs.firefox = {
+          enable = true;
+          profiles.vanilla = {
+            id = 1;
+            name = "Vanilla";
+            isDefault = false;
+          };
+        };
+      };
+    })
   ];
 }

@@ -14,6 +14,7 @@
     kde.enable = true; # choose KDE desktop
     nvidia.enable = true; # enable NVIDIA driver for this laptop
     pinpam.enable = true;
+    firefox.vanilla.enable = true; # enable vanilla Firefox profile
     # All standard applications pulled in via mkDefault
   };
   networking.hostName = "halloweentown";

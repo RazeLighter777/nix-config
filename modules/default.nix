@@ -32,6 +32,7 @@ in
     waybar.enable = mkEnableOption "Enable Waybar configuration";
     neovim.enable = mkEnableOption "Enable Neovim configuration";
     firefox.enable = mkEnableOption "Enable Firefox configuration";
+    firefox.vanilla.enable = mkEnableOption "Enable vanilla Firefox profile (no extensions/customizations)";
     thunderbird.enable = mkEnableOption "Enable Thunderbird email client";
     ark.enable = mkEnableOption "Enable Ark archive manager";
     hyprland.enable = mkEnableOption "Enable Hyprland home-manager configuration";
@@ -70,8 +71,6 @@ in
     spotify.enable = mkEnableOption "Enable Spotify";
     opensnitch.enable = mkEnableOption "Enable OpenSnitch application firewall";
     signal-desktop.enable = mkEnableOption "Enable Signal Desktop messaging app";
-    clamav.enable = mkEnableOption "Enable ClamAV antivirus";
-    tracee.enable = mkEnableOption "Enable Tracee eBPF runtime security";
     kav.enable = mkEnableOption "Enable kav kernel antivirus";
     devtools.enable = mkEnableOption "Enable development tools";
     zoom-us.enable = mkEnableOption "Enable Zoom video conferencing";
@@ -142,8 +141,6 @@ in
     ./spotify
     ./opensnitch
     ./signal-desktop
-    ./clamav
-    ./tracee
     ./kav
     ./devtools
     ./zoom-us
