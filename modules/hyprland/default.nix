@@ -8,11 +8,21 @@ let
   cfg = config.my.hyprland;
 
   hyprlockLoginScript = pkgs.writeShellScript "hyprlock-login" ''
-    ${pkgs.hyprlock}/bin/hyprlock --immediate --immediate-render
+    "$HOME/.config/hypr/hyprlock-run.sh" --immediate --immediate-render
     status=$?
     if [ "$status" -eq 1 ]; then
       ${pkgs.hyprland}/bin/hyprctl dispatch exit
     fi
+  '';
+
+  hyprlandEnvWrapper = pkgs.writeShellScript "hyprland-env-wrapper" ''
+    set -euo pipefail
+    if [ -z "''${WAYLAND_DISPLAY:-}" ]; then
+      if ${pkgs.hyprland}/bin/hyprctl instances -j >/dev/null 2>&1; then
+        export WAYLAND_DISPLAY="$(${pkgs.hyprland}/bin/hyprctl instances -j | ${pkgs.jq}/bin/jq -r '.[0]["wl_socket"]')"
+      fi
+    fi
+    exec "$@"
   '';
 
   # Helper to keep binds readable
@@ -67,8 +77,8 @@ in
           enable = true;
           settings = {
             general = {
-              lock_cmd = "hyprlock --immediate --immediate-render";
-              before_sleep_cmd = "hyprlock --immediate";
+              lock_cmd = "~/.config/hypr/hyprlock-run.sh --immediate --immediate-render";
+              before_sleep_cmd = "~/.config/hypr/hyprlock-run.sh --immediate";
               after_sleep_cmd = "hyprctl dispatch dpms on";
               ignore_dbus_inhibit = false;
             };
@@ -76,7 +86,7 @@ in
             listener = [
               {
                 timeout = 900;
-                on-timeout = "hyprlock";
+                on-timeout = "~/.config/hypr/hyprlock-run.sh";
               }
               {
                 timeout = 1200;
@@ -184,8 +194,9 @@ in
               "CTRL ALT, T, exec, kitty"
               "CTRL ALT, C, exec, hyprctl reload"
               "$mod, D, exec, rofi -show drun -replace -i -show-icons"
-              "$mod, L, exec, hyprlock"
+              "$mod, L, exec, ~/.config/hypr/hyprlock-run.sh"
               "$mod, P, exec, rofi -show p -modi p:rofi-power-menu"
+              "$mod, SPACE, exec, ~/.config/rofi/rofi-system-menu.sh"
               "CTRL ALT, Delete, exec, hyprctl dispatch exit 0"
               "$mod, Q, killactive,"
 
@@ -269,9 +280,22 @@ in
           };
           Service = {
             Type = "oneshot";
-            ExecStart = "${pkgs.swww}/bin/swww img %h/Images/wallpapers/big-sur.jpg";
+            ExecStart = "${pkgs.swww}/bin/swww img %h/.local/state/hyprlock-wallpaper";
           };
           Install.WantedBy = [ "graphical-session.target" ];
+        };
+
+        swww-sync = {
+          Unit = {
+            Description = "Sync swww wallpaper from symlink";
+            PartOf = [ "graphical-session.target" ];
+            After = [ "swww.service" ];
+            Requires = [ "swww.service" ];
+          };
+          Service = {
+            Type = "oneshot";
+            ExecStart = "${pkgs.swww}/bin/swww img %h/.local/state/hyprlock-wallpaper";
+          };
         };
 
         hyprlock-login = {
@@ -292,7 +316,7 @@ in
             PartOf = [ "graphical-session.target" ];
           };
           Service = {
-            ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
+            ExecStart = "${hyprlandEnvWrapper} ${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
             Restart = "on-failure";
           };
           Install.WantedBy = [ "graphical-session.target" ];
@@ -304,8 +328,20 @@ in
             PartOf = [ "graphical-session.target" ];
           };
           Service = {
-            ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store";
+            ExecStart = "${hyprlandEnvWrapper} ${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store";
             Restart = "on-failure";
+          };
+          Install.WantedBy = [ "graphical-session.target" ];
+        };
+      };
+
+      systemd.user.paths = {
+        swww-sync = {
+          Unit = {
+            Description = "Watch wallpaper symlink for swww";
+          };
+          Path = {
+            PathChanged = "%h/.local/state/hyprlock-wallpaper";
           };
           Install.WantedBy = [ "graphical-session.target" ];
         };

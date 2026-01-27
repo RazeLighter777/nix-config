@@ -36,6 +36,10 @@ bluetooth_menu() {
     rofi-bluetooth &
 }
 
+wallpaper_menu() {
+	"$HOME/.config/rofi/rofi-wallpaper.sh"
+}
+
 screenshot() {
 	# Match the Hyprland bind: `hyprshot -m region`
 	hyprshot -m region
@@ -50,6 +54,7 @@ main_menu() {
 	local systemd='⚙️  Systemd'
 	local rofimoji_opt='😀  Emoji picker'
     local bluetooth='󰂯  Bluetooth devices'
+	local wallpaper='🖼️  Wallpaper'
 
 	local chosen
 	chosen="$(printf '%s\n' \
@@ -60,7 +65,8 @@ main_menu() {
 		"$clipboard" \
 		"$systemd" \
 		"$rofimoji_opt" \
-        "$bluetooth" | rofi_dmenu 'System Menu')"
+		"$bluetooth" \
+		"$wallpaper" | rofi_dmenu 'System Menu')"
 
 	case "$chosen" in
 		"$power") power_menu ;;
@@ -71,6 +77,7 @@ main_menu() {
 		"$systemd") systemd_menu ;;
 		"$rofimoji_opt") rofimoji ;;
         "$bluetooth") bluetooth_menu ;;
+		"$wallpaper") wallpaper_menu ;;
 		*) exit 0 ;;
 	esac
 }
@@ -84,5 +91,6 @@ case "${1:-}" in
 	--systemd) systemd_menu ;;
 	--emoji) rofimoji ;;
     --bluetooth) bluetooth_menu ;;
+	--wallpaper) wallpaper_menu ;;
 	*) main_menu ;;
 esac

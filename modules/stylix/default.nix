@@ -23,7 +23,7 @@ in
     stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-mirage.yaml";
     stylix.opacity = {
       terminal = 0.7;
-      desktop = 0.9;
+      desktop = 0.7;
     };
     stylix.cursor = {
       package = pkgs.rose-pine-cursor;

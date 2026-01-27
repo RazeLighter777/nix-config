@@ -74,6 +74,7 @@ in
     devtools.enable = mkEnableOption "Enable development tools";
     zoom-us.enable = mkEnableOption "Enable Zoom video conferencing";
     bitwarden.enable = mkEnableOption "Enable Bitwarden (desktop + CLI)";
+    ssh-agent.enable = mkEnableOption "Enable SSH agent systemd user unit";
   };
 
   imports = [
@@ -87,6 +88,7 @@ in
     ./common-kernel
     ./custom-kernel
     ./pipewire
+    ./power-profiles-daemon
     ./home-manager
     ./display-manager
     ./dolphin
@@ -144,6 +146,7 @@ in
     ./devtools
     ./zoom-us
     ./bitwarden
+    ./ssh-agent
   ];
 
   config = {
@@ -205,6 +208,7 @@ in
       devtools.enable = lib.mkDefault false;
       zoom-us.enable = lib.mkDefault true;
       bitwarden.enable = lib.mkDefault true;
+      ssh-agent.enable = lib.mkDefault true;
 
       # Enable Rofi automatically when Hyprland is enabled.
       rofi.enable = lib.mkDefault config.my.hyprland.enable;

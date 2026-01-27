@@ -28,6 +28,7 @@ in
         waybar
         nerd-fonts.jetbrains-mono
         playerctl
+        cava
       ];
 
       # Place the script into ~/.config/waybar/scripts
@@ -129,7 +130,6 @@ in
               modules-left = [
                 "custom/system-menu"
                 "hyprland/workspaces"
-                "mpris"
               ];
 
               modules-right = [
@@ -138,7 +138,10 @@ in
                 "bluetooth"
                 "backlight"
               ]
-              ++ lib.optional batteryEnabled "battery"
+              ++ lib.optionals batteryEnabled [
+                "power-profiles-daemon"
+                "battery"
+              ]
               ++ [
                 "idle_inhibitor"
                 "tray"
@@ -152,7 +155,6 @@ in
                 format-wifi = "{essid} ({signalStrength}%) 󰖩";
                 on-click = "nm-connection-editor";
               };
-
               "custom/bandwidth" = {
                 exec = "~/.config/waybar/scripts/waybar-bandwidth";
                 interval = 1;
@@ -231,6 +233,17 @@ in
               };
             }
             // lib.optionalAttrs batteryEnabled {
+              "power-profiles-daemon" = {
+                "format" = "{icon}";
+                "tooltip-format" = "Power profile: {profile}\nDriver: {driver}";
+                "tooltip" = true;
+                "format-icons" = {
+                  "default" = "";
+                  "performance" = "";
+                  "balanced" = "";
+                  "power-saver" = "";
+                };
+              };
               "battery" = {
                 "states" = {
                   "good" = 95;
@@ -268,8 +281,54 @@ in
 
             modules-center = [ "clock" ];
             modules-right = [
+              "cava"
+              "mpris"
               "disk"
             ];
+
+            cava = {
+              # cava_config = "$XDG_CONFIG_HOME/cava/cava.conf";
+              framerate = 30;
+              autosens = 1;
+              #sensitivity = 25;
+              bars = 14;
+              lower_cutoff_freq = 50;
+              higher_cutoff_freq = 10000;
+              method = "pulse";
+              source = "auto";
+              stereo = true;
+              reverse = false;
+              bar_delimiter = 0;
+              monstercat = false;
+              waves = false;
+              noise_reduction = 0.77;
+              input_delay = 2;
+              format-icons = [
+                "▁"
+                "▂"
+                "▃"
+                "▄"
+                "▅"
+                "▆"
+                "▇"
+                "█"
+              ];
+              actions = {
+                "on-click-right" = "mode";
+              };
+            };
+
+            mpris = {
+              format = "{player_icon} {dynamic}";
+              format-paused = "{status_icon} <i>{dynamic}</i>";
+              dynamic-len = 30;
+              player-icons = {
+                default = "▶";
+              };
+              status-icons = {
+                paused = "⏸";
+              };
+            };
 
             "custom/bandwidth" = {
               exec = "~/.config/waybar/scripts/waybar-bandwidth";

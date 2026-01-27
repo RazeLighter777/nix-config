@@ -23,6 +23,11 @@ in
         executable = true;
       };
 
+      home.file.".config/rofi/rofi-wallpaper.sh" = {
+        source = ./rofi-wallpaper.sh;
+        executable = true;
+      };
+
       programs.rofi = {
         enable = true;
         package = pkgs.rofi;
