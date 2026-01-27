@@ -58,7 +58,6 @@ in
     stylix.enable = mkEnableOption "Enable Stylix tiling window manager";
     xdg-apps.enable = mkEnableOption "Enable custom XDG MIME applications";
     bluedevil.enable = mkEnableOption "Enable BlueDevil Bluetooth manager";
-    networkmanager-qt.enable = mkEnableOption "Enable NetworkManager Qt components";
     wayvnc.enable = mkEnableOption "Enable WayVNC server for Hyprland";
     virt-manager.enable = mkEnableOption "Enable QEMU and Virtual Machine Manager";
     xwayland.enable = mkEnableOption "Enable XWayland support";
@@ -126,7 +125,6 @@ in
     ./udiskie
     ./stylix
     ./bluedevil
-    ./networkmanager-qt
     ./wayvnc
     ./virt-manager
     ./xwayland
@@ -189,7 +187,6 @@ in
       stylix.enable = lib.mkDefault false;
       xdg-apps.enable = lib.mkDefault true;
       bluedevil.enable = lib.mkDefault false;
-      networkmanager-qt.enable = lib.mkDefault false;
       wayvnc.enable = lib.mkDefault false;
       virt-manager.enable = lib.mkDefault false;
       xwayland.enable = lib.mkDefault true;

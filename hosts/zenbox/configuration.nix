@@ -20,7 +20,6 @@
     ollama.enable = true; # optional AI app
     kwallet.enable = true;
     bluedevil.enable = true;
-    networkmanager-qt.enable = true;
     stylix.enable = true; # for color scheme management
     wayvnc.enable = true; # for remote desktop access
     pinpam.enable = true; # for managing PINs

@@ -14,6 +14,8 @@ let
     export PATH=${pkgs.bc}/bin:$PATH
     exec ${pkgs.bash}/bin/bash ${./waybar-bandwidth.sh} "$@"
   '';
+
+  batteryEnabled = config.my.battery.enable;
 in
 {
   config = lib.mkIf config.my.waybar.enable {
@@ -117,111 +119,129 @@ in
 
         settings = [
           # === Bottom Bar (workspace + media + sys info) ===
-          {
-            height = 30;
-            layer = "top";
-            position = "bottom";
+          (
+            {
+              height = 30;
+              layer = "top";
+              position = "bottom";
 
-            modules-left = [
-              "hyprland/workspaces"
-              "mpris"
-            ];
-
-            modules-right = [
-              "network"
-              "pulseaudio"
-              "bluetooth"
-              "backlight"
-              "battery"
-              "idle_inhibitor"
-              "tray"
-            ];
-
-            "battery" = {
-              "states" = {
-                "good" = 95;
-                "warning" = 30;
-                "critical" = 15;
-              };
-              "format" = "{icon} {capacity}%";
-              "format-charging" = " {capacity}%";
-              "format-plugged" = " {capacity}%";
-              "format-alt" = "{icon} {time}";
-              "format-icons" = [
-                ""
-                ""
-                ""
-                ""
-                ""
+              modules-left = [
+                "hyprland/workspaces"
+                "mpris"
               ];
-            };
-            network = {
-              interval = 1;
-              format-disconnected = "Disconnected ⚠";
-              format-ethernet = "󰈀";
-              format-linked = "{ifname} (No IP) ";
-              format-wifi = "{essid} ({signalStrength}%) 󰖩";
-              on-click = "nm-connection-editor";
-            };
 
-            "custom/bandwidth" = {
-              exec = "~/.config/waybar/scripts/waybar-bandwidth";
-              interval = 1;
-              tooltip = false;
-              id = "custom-bandwidth";
-            };
+              modules-right = [
+                "network"
+                "pulseaudio"
+                "bluetooth"
+                "backlight"
+              ]
+              ++ lib.optional batteryEnabled "battery"
+              ++ [
+                "idle_inhibitor"
+                "tray"
+              ];
 
-            "network#ip" = {
-              interval = 5;
-              format = "{ipaddr} 🌐";
-              format-disconnected = "No IP";
-              tooltip-format = "{ifname}: {ipaddr}/{cidr}";
-            };
-
-            idle_inhibitor = {
-              format = " {icon} ";
-              format-icons = {
-                activated = ""; # eye closed (blocking idle)
-                deactivated = ""; # eye open (allow idle)
+              network = {
+                interval = 1;
+                format-disconnected = "Disconnected ⚠";
+                format-ethernet = "󰈀";
+                format-linked = "{ifname} (No IP) ";
+                format-wifi = "{essid} ({signalStrength}%) 󰖩";
+                on-click = "nm-connection-editor";
               };
-            };
 
-            clock = {
-              tooltip-format = "<tt><small>{calendar}</small></tt>";
-              format = "{:%H:%M} ⏱️";
-              format-alt = "{:%Y-%m-%d %H:%M:%S}";
-            };
+              "custom/bandwidth" = {
+                exec = "~/.config/waybar/scripts/waybar-bandwidth";
+                interval = 1;
+                tooltip = false;
+                id = "custom-bandwidth";
+              };
 
-            cpu.format = "{usage}% 🖥️";
-            cpu.tooltip = false;
+              "hyprland/workspaces" = {
+                format = "{name} {windows}";
+                format-window-separator = " ";
+                "workspace-taskbar" = {
+                  enable = true;
+                  format = "{icon}";
+                  icon-size = 20;
+                  icon-theme = "Tela-dark";
+                  update-active-window = true;
+                };
+              };
 
-            memory.format = "{}% 🧠";
+              "network#ip" = {
+                interval = 5;
+                format = "{ipaddr} 🌐";
+                format-disconnected = "No IP";
+                tooltip-format = "{ifname}: {ipaddr}/{cidr}";
+              };
 
-            pulseaudio = {
-              format = "{volume}% {icon} {format_source}";
-              format-bluetooth = "{volume}% {icon} {format_source}";
-              format-bluetooth-muted = "🔇 {icon} {format_source}";
-              format-icons = {
-                car = "🚗";
-                default = [
-                  "🔈"
-                  "🔉"
-                  "🔊"
+              idle_inhibitor = {
+                format = " {icon} ";
+                format-icons = {
+                  activated = ""; # eye closed (blocking idle)
+                  deactivated = ""; # eye open (allow idle)
+                };
+              };
+
+              clock = {
+                tooltip-format = "<tt><small>{calendar}</small></tt>";
+                format = "{:%H:%M} ⏱️";
+                format-alt = "{:%Y-%m-%d %H:%M:%S}";
+              };
+
+              cpu.format = "{usage}% 🖥️";
+              cpu.tooltip = false;
+
+              memory.format = "{}% 🧠";
+
+              pulseaudio = {
+                format = "{volume}% {icon} {format_source}";
+                format-bluetooth = "{volume}% {icon} {format_source}";
+                format-bluetooth-muted = "🔇 {icon} {format_source}";
+                format-icons = {
+                  car = "🚗";
+                  default = [
+                    "🔈"
+                    "🔉"
+                    "🔊"
+                  ];
+                  handsfree = "🎧";
+                  headphones = "🎧";
+                  headset = "🎧";
+                  phone = "📱";
+                  portable = "📱";
+                };
+                format-muted = "🔇 {format_source}";
+                format-source = "{volume}% 🎤";
+                format-source-muted = "🎤✗";
+                scroll-step = 5;
+                on-click = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
+                on-click-right = "pavucontrol";
+              };
+            }
+            // lib.optionalAttrs batteryEnabled {
+              "battery" = {
+                "states" = {
+                  "good" = 95;
+                  "warning" = 30;
+                  "critical" = 15;
+                };
+                "format" = "{icon} {capacity}%";
+                "format-charging" = " {capacity}%";
+                "format-plugged" = " {capacity}%";
+                "format-alt" = "{icon} {time}";
+                "format-icons" = [
+                  ""
+                  ""
+                  ""
+                  ""
+                  ""
                 ];
-                handsfree = "🎧";
-                headphones = "🎧";
-                headset = "🎧";
-                phone = "📱";
-                portable = "📱";
               };
-              format-muted = "🔇 {format_source}";
-              format-source = "{volume}% 🎤";
-              format-source-muted = "🎤✗";
-              scroll-step = 5;
-              on-click = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
-              on-click-right = "pavucontrol";
-            };
-          }
+            }
+          )
 
           # === Top Bar (optional minimal system info) ===
           {

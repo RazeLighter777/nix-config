@@ -28,13 +28,13 @@
     fastfetch
     tcpdump
     perf
-    valgrind
     fzf
     python3
     nmap
     direnv
     gnupg
     pinentry-qt
+    p7zip
   ];
   nix.settings.experimental-features = [
     "nix-command"

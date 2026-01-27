@@ -19,7 +19,6 @@
     battery.enable = true;
     stylix.enable = true;
     bluedevil.enable = true;
-    networkmanager-qt.enable = true;
     pinpam.enable = true;
     dolphin.enable = true;
     qflipper.enable = true;

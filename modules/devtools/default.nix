@@ -14,6 +14,7 @@
       iotop
       lshw
       dnsutils
+      valgrind
     ];
   };
 }
