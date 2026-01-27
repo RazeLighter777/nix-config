@@ -14,6 +14,7 @@ in
       home.packages = with pkgs; [
         rofi
         rofi-power-menu
+        rofimoji
       ];
 
       home.file.".config/rofi/rofi-system-menu.sh" = {
@@ -27,7 +28,7 @@ in
         extraConfig = {
           show-icons = true;
           drun-display-format = "{name}";
-          modi = "drun,run,window";
+          modi = "drun,run,window,emoji:rofimoji";
         };
       };
     };
