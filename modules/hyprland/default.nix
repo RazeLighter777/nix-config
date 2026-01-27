@@ -24,7 +24,6 @@ in
 
     environment.systemPackages = with pkgs; [
       hyprpolkitagent
-      rofi-power-menu
       swww
     ];
 
@@ -40,7 +39,6 @@ in
       ############################
 
       programs = {
-        rofi.enable = true;
         hyprshot.enable = true;
         kitty = {
           enable = true;

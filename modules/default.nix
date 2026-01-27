@@ -36,6 +36,7 @@ in
     thunderbird.enable = mkEnableOption "Enable Thunderbird email client";
     ark.enable = mkEnableOption "Enable Ark archive manager";
     hyprland.enable = mkEnableOption "Enable Hyprland home-manager configuration";
+    rofi.enable = mkEnableOption "Enable Rofi launcher configuration";
     bash.enable = mkEnableOption "Enable Bash configuration";
     dconf.enable = mkEnableOption "Enable dconf settings";
     vscode.enable = mkEnableOption "Enable VSCode configuration";
@@ -101,6 +102,7 @@ in
     ./ark
     ./xdg-apps
     ./hyprland
+    ./rofi
     ./desktops/hyprland-extra.nix
     ./bash
     ./dconf
@@ -202,6 +204,10 @@ in
       opensnitch.enable = lib.mkDefault false;
       devtools.enable = lib.mkDefault false;
       zoom-us.enable = lib.mkDefault true;
+
+      # Enable Rofi automatically when Hyprland is enabled.
+      rofi.enable = lib.mkDefault config.my.hyprland.enable;
+
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
       # Leave these OFF by default (explicit opt-in):

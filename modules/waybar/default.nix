@@ -52,6 +52,7 @@ in
           * { font-family: "JetBrainsMono Nerd Font", monospace; font-size: 13px; color: #ddd; }
 
           #custom-bandwidth,
+          #custom-system-menu,
           #clock,
           #cpu,
           #memory,
@@ -126,6 +127,7 @@ in
               position = "bottom";
 
               modules-left = [
+                "custom/system-menu"
                 "hyprland/workspaces"
                 "mpris"
               ];
@@ -156,6 +158,13 @@ in
                 interval = 1;
                 tooltip = false;
                 id = "custom-bandwidth";
+              };
+
+              "custom/system-menu" = {
+                exec = "echo \"󰣇\"";
+                interval = 3600;
+                tooltip = false;
+                on-click = "~/.config/rofi/rofi-system-menu.sh";
               };
 
               "hyprland/workspaces" = {
