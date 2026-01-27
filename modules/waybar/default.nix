@@ -5,99 +5,51 @@
   ...
 }:
 
+let
+  # Include the script from repo, exposed as an executable
+  waybar-bandwidth = pkgs.writeShellScript "waybar-bandwidth" ''
+    export IPROUTE_BIN=${pkgs.iproute2}/bin/ip
+    export AWK_BIN=${pkgs.gawk}/bin/awk
+    export DATE_BIN=${pkgs.coreutils}/bin/date
+    export PATH=${pkgs.bc}/bin:$PATH
+    exec ${pkgs.bash}/bin/bash ${./waybar-bandwidth.sh} "$@"
+  '';
+in
 {
   config = lib.mkIf config.my.waybar.enable {
+    environment.systemPackages = with pkgs; [
+      networkmanagerapplet
+      pulseaudio
+    ];
     home-manager.users.${config.my.user.name} = {
-      home.packages =
-        let
-          waybar-bandwidth = pkgs.writeShellScriptBin "waybar-bandwidth" ''
-            set -euo pipefail
+      home.packages = with pkgs; [
+        waybar
+        nerd-fonts.jetbrains-mono
+        playerctl
+      ];
 
-            ip="${pkgs.iproute2}/bin/ip"
-            awk="${pkgs.gawk}/bin/awk"
-            date="${pkgs.coreutils}/bin/date"
-
-            iface="$($ip route show default 2>/dev/null | $awk 'NR==1{for(i=1;i<=NF;i++) if($i=="dev") {print $(i+1); exit}}')"
-            if [[ -z "''${iface:-}" || ! -d "/sys/class/net/$iface/statistics" ]]; then
-              echo "🢃 0.00 Mbps 🢁 0.00 Mbps"
-              exit 0
-            fi
-
-            rx_file="/sys/class/net/$iface/statistics/rx_bytes"
-            tx_file="/sys/class/net/$iface/statistics/tx_bytes"
-            rx_now="$(cat "$rx_file" 2>/dev/null || echo 0)"
-            tx_now="$(cat "$tx_file" 2>/dev/null || echo 0)"
-            t_now_ns="$($date +%s%N)"
-
-            state_file="/tmp/waybar-bandwidth-$iface.state"
-
-            if [[ -f "$state_file" ]]; then
-              read -r rx_prev tx_prev t_prev_ns < "$state_file" || true
-            else
-              rx_prev="$rx_now"
-              tx_prev="$tx_now"
-              t_prev_ns="$t_now_ns"
-            fi
-
-            printf '%s %s %s\n' "$rx_now" "$tx_now" "$t_now_ns" > "$state_file"
-
-            $awk \
-              -v rx_now="$rx_now" -v tx_now="$tx_now" \
-              -v rx_prev="''${rx_prev:-$rx_now}" -v tx_prev="''${tx_prev:-$tx_now}" \
-              -v t_now_ns="$t_now_ns" -v t_prev_ns="''${t_prev_ns:-$t_now_ns}" \
-              'BEGIN {
-                dt = (t_now_ns - t_prev_ns) / 1000000000.0;
-                if (dt <= 0) dt = 1.0;
-
-                drx = rx_now - rx_prev;
-                dtx = tx_now - tx_prev;
-                if (drx < 0) drx = 0;
-                if (dtx < 0) dtx = 0;
-
-                down_mbps = (drx * 8.0) / (dt * 1000000.0);
-                up_mbps = (dtx * 8.0) / (dt * 1000000.0);
-
-                down_icon = "🢃";
-                up_icon = "🢁";
-                if (down_mbps > 1.0) down_icon = down_icon "🚀";
-                if (up_mbps > 1.0) up_icon = up_icon "🚀";
-
-                printf "%s %.2f Mbps %s %.2f Mbps\n", down_icon, down_mbps, up_icon, up_mbps;
-              }'
-          '';
-        in
-        (with pkgs; [
-          waybar
-          nerd-fonts.jetbrains-mono
-          waybar-bandwidth
-          playerctl
-        ]);
+      # Place the script into ~/.config/waybar/scripts
+      home.file.".config/waybar/scripts/waybar-bandwidth" = {
+        source = waybar-bandwidth;
+        executable = true;
+      };
 
       programs.waybar = {
         enable = true;
-        systemd.enable = true;
 
         style = ''
-          /* Transparent dark theme with a subtle glow */
           window#waybar {
             background-color: rgba(30, 30, 30, 0.40);
             border-radius: 12px;
-            border-style: solid;
-            border-width: 1px;
-            border-color: rgba(255, 255, 255, 0.06);
-            box-shadow: 0 0 10px rgba(255, 100, 0, 0.20);
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 0 10px rgba(255,100,0,0.20);
             padding: 4px 10px;
             margin: 6px 10px;
           }
 
-          /* Typography */
-          * {
-            font-family: "JetBrainsMono Nerd Font", monospace;
-            font-size: 13px;
-            color: #ddd;
-          }
+          * { font-family: "JetBrainsMono Nerd Font", monospace; font-size: 13px; color: #ddd; }
 
-          /* Common pill style for modules */
+          #custom-bandwidth,
           #clock,
           #cpu,
           #memory,
@@ -105,26 +57,28 @@
           #temperature,
           #pulseaudio,
           #network,
-          #custom-bandwidth,
           #battery,
           #idle_inhibitor,
           #backlight,
           #bluetooth,
           #tray,
           #mpris {
-            background-color: rgba(40, 40, 40, 0.50);
+            background-color: rgba(40,40,40,0.5);
             border-radius: 8px;
             padding: 2px 8px;
             margin: 0 5px;
           }
 
-          /* Bandwidth glyphs sit slightly high vs other modules */
-          #custom-bandwidth {
-            padding-top: 6px;
-            padding-bottom: .5px;
-          }
+          #workspaces button { background-color: transparent; border-radius: 8px; padding: 2px 8px; margin: 0 3px; }
+          #workspaces button:hover { background-color: rgba(255,255,255,0.06); }
+          #workspaces button.active { background-color: rgba(255,140,0,0.25); box-shadow: 0 0 6px rgba(255,140,0,0.35); }
+          #workspaces button.urgent { background-color: rgba(220,53,69,0.35); box-shadow: 0 0 6px rgba(220,53,69,0.45); }
 
-          /* Subtle hover feedback */
+          #network.disconnected { color: #ff7a90; }
+          #battery.warning { color: #ffcc66; }
+          #battery.critical { color: #ff7a90; }
+          #bluetooth.connected { color: #73DACA; }
+
           #clock:hover,
           #pulseaudio:hover,
           #network:hover,
@@ -143,6 +97,10 @@
             padding: 2px 8px;
             margin: 0 3px;
           }
+
+          /* State colors */
+          #pulseaudio.muted { color: #b3b3b3; }
+          #network.disconnected { color: #ff7a90; }
           #workspaces button:hover {
             background-color: rgba(255, 255, 255, 0.06);
           }
@@ -155,91 +113,29 @@
             box-shadow: 0 0 6px rgba(220, 53, 69, 0.45);
           }
 
-          /* State colors */
-          #pulseaudio.muted { color: #b3b3b3; }
-          #network.disconnected { color: #ff7a90; }
-          #battery.warning { color: #ffcc66; }
-          #battery.critical { color: #ff7a90; }
-          #bluetooth.connected { color: #73DACA; }
         '';
+
         settings = [
+          # === Bottom Bar (workspace + media + sys info) ===
           {
             height = 30;
             layer = "top";
             position = "bottom";
-            tray = {
-              spacing = 10;
-              icon-size = 16;
-            };
 
-            modules-center = [ "hyprland/window" ];
             modules-left = [
               "hyprland/workspaces"
               "mpris"
             ];
+
             modules-right = [
-              (lib.mkIf config.my.brightnessctl.enable "backlight")
+              "network"
               "pulseaudio"
               "bluetooth"
-              "network"
-              (lib.mkIf config.my.battery.enable "battery")
+              "backlight"
+              "battery"
               "idle_inhibitor"
               "tray"
             ];
-
-            battery = {
-              format = "{capacity}% {icon}";
-              format-alt = "{time} {icon}";
-              format-charging = "{capacity}% ";
-              format-icons = [
-                ""
-                ""
-                ""
-                ""
-                ""
-              ];
-              format-plugged = "{capacity}% ";
-              states = {
-                critical = 15;
-                warning = 30;
-              };
-            };
-            idle_inhibitor = {
-              format = " {icon} ";
-              format-icons = {
-                activated = "";
-                deactivated = "";
-              };
-            };
-
-            clock = {
-              tooltip-format = "<tt><small>{calendar}</small></tt>";
-              format = "{:%H:%M} ⏱️ ";
-              format-alt = "{:%Y-%m-%d  %H:%M:%S}";
-              calendar = {
-                mode = "year";
-                mode-mon-col = 3;
-                on-scroll = 1;
-                format = {
-                  months = "<span color='#73DACA'><b>{}</b></span>";
-                  weekdays = "<span color='#73DACA'><b>{}</b></span>";
-                  days = "<span color='#9ECE6A'>{}</span>";
-                  today = "<span color='#D5D5D6'><b><u>{}</u></b></span>";
-                };
-                actions = {
-                  on-click-right = "mode";
-                  on-scroll-up = "shift-up";
-                  on-scroll-down = "shift-down";
-                };
-              };
-            };
-
-            cpu = {
-              format = "{usage}% ";
-              tooltip = false;
-            };
-
-            memory.format = "{}% ";
 
             network = {
               interval = 1;
@@ -247,16 +143,42 @@
               format-ethernet = "󰈀";
               format-linked = "{ifname} (No IP) ";
               format-wifi = "{essid} ({signalStrength}%) 󰖩";
-              on-click = "kitty --class floating-terminal -e nmtui";
-            };
-bluetooth = {
-              format = "🦷🔵";
-              format-disabled = "";
-              format-off = "";
-              on-click = "bluedevil-wizard";
+              on-click = "nm-connection-editor";
             };
 
-            
+            "custom/bandwidth" = {
+              exec = "~/.config/waybar/scripts/waybar-bandwidth";
+              interval = 1;
+              tooltip = false;
+              id = "custom-bandwidth";
+            };
+
+            "network#ip" = {
+              interval = 5;
+              format = "{ipaddr} 🌐";
+              format-disconnected = "No IP";
+              tooltip-format = "{ifname}: {ipaddr}/{cidr}";
+            };
+
+            idle_inhibitor = {
+              format = " {icon} ";
+              format-icons = {
+                activated = ""; # eye closed (blocking idle)
+                deactivated = ""; # eye open (allow idle)
+              };
+            };
+
+            clock = {
+              tooltip-format = "<tt><small>{calendar}</small></tt>";
+              format = "{:%H:%M} ⏱️";
+              format-alt = "{:%Y-%m-%d %H:%M:%S}";
+            };
+
+            cpu.format = "{usage}% 🖥️";
+            cpu.tooltip = false;
+
+            memory.format = "{}% 🧠";
+
             pulseaudio = {
               format = "{volume}% {icon} {format_source}";
               format-bluetooth = "{volume}% {icon} {format_source}";
@@ -281,65 +203,14 @@ bluetooth = {
               on-click = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
               on-click-right = "pavucontrol";
             };
-
-            "hyprland/mode".format = ''<span style="italic">{}</span>'';
-            temperature = {
-              critical-threshold = 122;
-              format = "{temperatureF}°F 🌡️ ";
-            };
-            disk = {
-              interval = 30;
-              format = "{percentage_used}% ({specific_used:0.1f}/{specific_total:0.1f}GB) 🖴";
-              unit = "GB";
-              states = {
-                warning = 15;
-                critical = 2;
-              };
-            };
-            "hyprland/workspaces" = {
-              format = "{name} {windows}";
-              format-window-separator = " ";
-              "workspace-taskbar" = {
-                enable = true;
-                format = "{icon}";
-                icon-size = 20;
-                icon-theme = "Tela-dark";
-                update-active-window = true;
-              };
-            };
-
-            "hyprland/window" = {
-              max-length = 80;
-              separate-outputs = false;
-            };
-
-            backlight = {
-              format = "{percent}% ☀";
-              on-scroll-up = "brightnessctl set +5%";
-              on-scroll-down = "brightnessctl set 5%-";
-            };
-
-            mpris = {
-              format = "{player_icon} {dynamic}";
-              format-paused = "{status_icon} <i>{dynamic}</i>";
-              interval = 1;
-              player-icons = {
-                default = "▶";
-                mpv = "🎵";
-                firefox = "🦊";
-              };
-              status-icons = {
-                paused = "⏸";
-              };
-              ignored-players = [ ];
-            };
           }
+
+          # === Top Bar (optional minimal system info) ===
           {
             height = 30;
             layer = "top";
             position = "top";
 
-            modules-center = [ "clock" ];
             modules-left = [
               "cpu"
               "memory"
@@ -347,43 +218,30 @@ bluetooth = {
               "network#ip"
               "custom/bandwidth"
             ];
+
+            modules-center = [ "clock" ];
             modules-right = [
               "disk"
             ];
 
+            "custom/bandwidth" = {
+              exec = "~/.config/waybar/scripts/waybar-bandwidth";
+              interval = 1;
+              tooltip = false;
+              id = "custom-bandwidth";
+            };
+
+            "network#ip" = {
+              interval = 5;
+              format = "{ipaddr} 🌐";
+              format-disconnected = "No IP";
+              tooltip-format = "{ifname}: {ipaddr}/{cidr}";
+            };
+
             clock = {
               tooltip-format = "<tt><small>{calendar}</small></tt>";
               format = "{:%H:%M} ⏱️";
-              format-alt = "{:%Y-%m-%d  %H:%M:%S}";
-              calendar = {
-                mode = "year";
-                mode-mon-col = 3;
-                on-scroll = 1;
-                format = {
-                  months = "<span color='#73DACA'><b>{}</b></span>";
-                  weekdays = "<span color='#73DACA'><b>{}</b></span>";
-                  days = "<span color='#9ECE6A'>{}</span>";
-                  today = "<span color='#D5D5D6'><b><u>{}</u></b></span>";
-                };
-                actions = {
-                  on-click-right = "mode";
-                  on-scroll-up = "shift-up";
-                  on-scroll-down = "shift-down";
-                };
-              };
-            };
-
-            cpu = {
-              format = "{usage}% 🖥️";
-              tooltip = false;
-            };
-
-            memory.format = "{}% 🧠";
-
-            "custom/bandwidth" = {
-              exec = "waybar-bandwidth";
-              interval = 1;
-              tooltip = false;
+              format-alt = "{:%Y-%m-%d %H:%M:%S}";
             };
 
             disk = {
@@ -396,11 +254,15 @@ bluetooth = {
               };
             };
 
-            "network#ip" = {
-              interval = 5;
-              format = "{ipaddr} 🌐";
-              format-disconnected = "No IP";
-              tooltip-format = "{ifname}: {ipaddr}/{cidr}";
+            cpu.format = "{usage}% 🖥️";
+            cpu.tooltip = false;
+
+            memory.format = "{}% 🧠";
+
+            "hyprland/mode".format = ''<span style="italic">{}</span>'';
+            temperature = {
+              critical-threshold = 122;
+              format = "{temperatureF}°F 🌡️ ";
             };
           }
         ];

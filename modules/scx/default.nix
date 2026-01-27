@@ -11,13 +11,13 @@ in
     ];
 
     systemd.services.scx-lavd = {
-      description = "scx_lavd sched_ext scheduler";
+      description = "bpfland sched_ext scheduler";
       wantedBy = [ "multi-user.target" ];
       after = [ "systemd-modules-load.service" ];
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.scx.full}/bin/scx_lavd";
+        ExecStart = "${pkgs.scx.full}/bin/scx_bpfland";
         Restart = "on-failure";
         RestartSec = "2s";
       };

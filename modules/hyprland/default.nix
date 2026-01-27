@@ -5,208 +5,250 @@
   ...
 }:
 let
+  cfg = config.my.hyprland;
+
   hyprlockLoginScript = pkgs.writeShellScript "hyprlock-login" ''
     ${pkgs.hyprlock}/bin/hyprlock --immediate --immediate-render
     status=$?
-    if [ $status -ne 0 ]; then
+    if [ "$status" -eq 1 ]; then
       ${pkgs.hyprland}/bin/hyprctl dispatch exit
     fi
   '';
+
+  # Helper to keep binds readable
+  binds = xs: xs;
+
 in
 {
-  config = lib.mkIf config.my.hyprland.enable {
+  config = lib.mkIf cfg.enable {
+
     environment.systemPackages = with pkgs; [
       hyprpolkitagent
       rofi-power-menu
       swww
     ];
-    home-manager.users.${config.my.user.name} = {
-      programs.hyprshot = {
-        enable = true;
-      };
-      services.mako = {
-        enable = true;
-        settings = {
-          "actionable=true" = {
-            anchor = "top-left";
-          };
-          actions = true;
-          anchor = "top-right";
-          border-radius = 0;
-          default-timeout = 10000;
-          height = 100;
-          icons = true;
-          ignore-timeout = false;
-          layer = "top";
-          margin = 10;
-          markup = true;
-          width = 300;
-        };
-      };
-      services.hypridle = {
-        enable = true;
-        settings = {
-          general = {
-            after_sleep_cmd = "hyprctl dispatch dpms on";
-            ignore_dbus_inhibit = false;
-            lock_cmd = "hyprlock";
-          };
 
-          listener = [
-            {
-              timeout = 900;
-              on-timeout = "hyprlock";
-            }
-            {
-              timeout = 1200;
-              on-timeout = "hyprctl dispatch dpms off";
-              on-resume = "hyprctl dispatch dpms on";
-            }
-          ];
+    xdg.portal = {
+      enable = true;
+      extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+    };
+
+    home-manager.users.${config.my.user.name} = {
+
+      ############################
+      # Programs & Services
+      ############################
+
+      programs = {
+        rofi.enable = true;
+        hyprshot.enable = true;
+        kitty = {
+          enable = true;
+          settings.confirm_os_window_close = 0;
         };
       };
+
+      services = {
+        mako = {
+          enable = true;
+          settings = {
+            actions = true;
+            anchor = "top-right";
+            border-radius = 0;
+            default-timeout = 10000;
+            height = 100;
+            icons = true;
+            layer = "top";
+            margin = 10;
+            markup = true;
+            width = 300;
+          };
+        };
+
+        hypridle = {
+          enable = true;
+          settings = {
+            general = {
+              lock_cmd = "hyprlock --immediate --immediate-render";
+              before_sleep_cmd = "hyprlock --immediate";
+              after_sleep_cmd = "hyprctl dispatch dpms on";
+              ignore_dbus_inhibit = false;
+            };
+
+            listener = [
+              {
+                timeout = 900;
+                on-timeout = "hyprlock";
+              }
+              {
+                timeout = 1200;
+                on-timeout = "hyprctl dispatch dpms off";
+                on-resume = "hyprctl dispatch dpms on";
+              }
+            ];
+          };
+        };
+      };
+
+      ############################
+      # Cursor
+      ############################
+
+      home.pointerCursor = {
+        gtk.enable = true;
+        x11.enable = true;
+        hyprcursor.enable = true;
+      };
+
+      ############################
+      # Hyprland
+      ############################
+
       wayland.windowManager.hyprland = {
         enable = true;
         package = null;
         portalPackage = null;
         systemd.enable = false;
         xwayland.enable = true;
+
         extraConfig = ''
-          input {
-            touchpad {
-              natural_scroll = yes
-            }
-          }
           source = ~/.config/hypr/workspaces.conf
           source = ~/.config/hypr/monitors.conf
         '';
+
         settings = {
           "$mod" = "SUPER";
+
           env = [
             "XDG_CURRENT_DESKTOP,Hyprland"
           ];
+
           exec-once = [
             "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP GTK_THEME"
             "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
             "systemctl --user start graphical-session.target"
-            "systemctl --user start swww.service"
-            "systemctl --user start swww-wallpaper.service"
-            "systemctl --user start hyprlock-login.service"
-            "systemctl --user enable --now hypridle.service"
-            "systemctl --user enable --now mako.service"
           ];
-          bindm = [
+
+          input = {
+            follow_mouse = 1;
+            sensitivity = 0;
+            touchpad.natural_scroll = true;
+          };
+
+          general = {
+            gaps_in = 4;
+            gaps_out = 8;
+            border_size = 2;
+            allow_tearing = false;
+          };
+
+          decoration = {
+            rounding = 6;
+            blur = {
+              enabled = true;
+              size = 3;
+              passes = 2;
+              new_optimizations = true;
+            };
+          };
+
+          misc = {
+            disable_hyprland_logo = true;
+            disable_splash_rendering = true;
+            focus_on_activate = true;
+            animate_manual_resizes = false;
+            animate_mouse_windowdragging = false;
+          };
+
+          ############################
+          # Binds
+          ############################
+
+          bindm = binds [
             "$mod, mouse:272, movewindow"
             "$mod, mouse:273, resizewindow"
             "$mod ALT, mouse:272, resizewindow"
           ];
-          bindl = [
+
+          bindl = binds [
             ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"
           ];
-          binde = [
+
+          binde = binds [
             ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
           ];
-          bind = [
-            "$mod SHIFT, C, exec, hyprpicker --autocopy"
-            "$mod CTRL, C, exec, cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"
-            "$mod CTRL, S, exec, hyprshot -m region"
-            "CTRL ALT, T, exec, kitty"
-            "CTRL ALT, C, exec, hyprctl reload"
-            "$mod, D, exec, rofi -show drun -replace -i -show-icons -icon-theme 'Tela-dark'"
-            "$mod, L, exec, hyprlock"
-            "$mod, P, exec, rofi -show p -modi p:rofi-power-menu -show-icons -icon-theme 'Tela-dark'"
-            (lib.mkIf config.my.bluedevil.enable "$mod, B, exec, bluedevil-wizard")
-            "CTRL ALT, Delete, exec, hyprctl dispatch exit 0"
-            "$mod, Q, killactive,"
-            "$mod CTRL, D, layoutmsg, removemaster"
-            "$mod, I, layoutmsg, addmaster"
-            "$mod, J, layoutmsg, cyclenext"
-            "$mod, K, layoutmsg, cycleprev"
-            "$mod CTRL, Return, layoutmsg, swapwithmaster"
-            "$mod SHIFT, I, togglesplit"
-            "$mod SHIFT, P, pseudo,"
-            "$mod SHIFT, F, togglefloating"
-            "$mod, M, exec, hyprctl dispatch splitratio 0.3"
-            "$mod, G, togglegroup"
-            "$mod CTRL, tab, changegroupactive"
-            "ALT, tab, cyclenext"
+
+          bind = binds (
+            [
+              "$mod SHIFT, C, exec, hyprpicker --autocopy"
+              "$mod CTRL, C, exec, cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"
+              "$mod CTRL, S, exec, hyprshot -m region"
+              "CTRL ALT, T, exec, kitty"
+              "CTRL ALT, C, exec, hyprctl reload"
+              "$mod, D, exec, rofi -show drun -replace -i -show-icons"
+              "$mod, L, exec, hyprlock"
+              "$mod, P, exec, rofi -show p -modi p:rofi-power-menu"
+              "CTRL ALT, Delete, exec, hyprctl dispatch exit 0"
+              "$mod, Q, killactive,"
+
+              # Layout
+              "$mod CTRL, D, layoutmsg, removemaster"
+              "$mod, I, layoutmsg, addmaster"
+              "$mod, J, layoutmsg, cyclenext"
+              "$mod, K, layoutmsg, cycleprev"
+              "$mod CTRL, Return, layoutmsg, swapwithmaster"
+              "$mod SHIFT, I, togglesplit"
+              "$mod SHIFT, F, togglefloating"
+              "$mod SHIFT, P, pseudo,"
+
+              # Focus / Move
+              "$mod, left, movefocus, l"
+              "$mod, right, movefocus, r"
+              "$mod, up, movefocus, u"
+              "$mod, down, movefocus, d"
+              "$mod CTRL, left, movewindow, l"
+              "$mod CTRL, right, movewindow, r"
+              "$mod CTRL, up, movewindow, u"
+              "$mod CTRL, down, movewindow, d"
+              "$mod ALT, left, swapwindow, l"
+              "$mod ALT, right, swapwindow, r"
+              "$mod ALT, up, swapwindow, u"
+              "$mod ALT, down, swapwindow, d"
+
+              # Workspaces
+              "$mod, tab, workspace, m+1"
+              "$mod SHIFT, tab, workspace, m-1"
+              "$mod, period, workspace, e+1"
+              "$mod, comma, workspace, e-1"
+              "$mod, U, togglespecialworkspace,"
+              "$mod SHIFT, U, movetoworkspace, special"
+            ]
+            ++ (map (n: "$mod, code:${toString (9 + n)}, workspace, ${toString n}") (lib.range 1 10))
+            ++ (map (n: "$mod SHIFT, code:${toString (9 + n)}, movetoworkspace, ${toString n}") (
+              lib.range 1 10
+            ))
+            ++ (map (n: "$mod CTRL, code:${toString (9 + n)}, movetoworkspacesilent, ${toString n}") (
+              lib.range 1 10
+            ))
+            ++ lib.optionals config.my.brightnessctl.enable [
+              ", XF86MonBrightnessUp, exec, brightnessctl s +5%"
+              ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
+            ]
+          );
+
+          # Proper Alt-Tab behavior
+          bindr = binds [
             "ALT, tab, bringactivetotop"
-            "$mod SHIFT, left, resizeactive,-50 0"
-            "$mod SHIFT, right, resizeactive,50 0"
-            "$mod SHIFT, up, resizeactive,0 -50"
-            "$mod SHIFT, down, resizeactive,0 50"
-            "$mod CTRL, left, movewindow, l"
-            "$mod CTRL, right, movewindow, r"
-            "$mod CTRL, up, movewindow, u"
-            "$mod CTRL, down, movewindow, d"
-            "$mod ALT, left, swapwindow, l"
-            "$mod ALT, right, swapwindow, r"
-            "$mod ALT, up, swapwindow, u"
-            "$mod ALT, down, swapwindow, d"
-            "$mod, left, movefocus, l"
-            "$mod, right, movefocus, r"
-            "$mod, up, movefocus, u"
-            "$mod, down, movefocus, d"
-            "$mod, tab, workspace, m+1"
-            "$mod SHIFT, tab, workspace, m-1"
-            "$mod SHIFT, U, movetoworkspace, special"
-            "$mod, U, togglespecialworkspace,"
-            "$mod, code:10, workspace, 1"
-            "$mod, code:11, workspace, 2"
-            "$mod, code:12, workspace, 3"
-            "$mod, code:13, workspace, 4"
-            "$mod, code:14, workspace, 5"
-            "$mod, code:15, workspace, 6"
-            "$mod, code:16, workspace, 7"
-            "$mod, code:17, workspace, 8"
-            "$mod, code:18, workspace, 9"
-            "$mod, code:19, workspace, 10"
-            "$mod SHIFT, code:10, movetoworkspace, 1"
-            "$mod SHIFT, code:11, movetoworkspace, 2"
-            "$mod SHIFT, code:12, movetoworkspace, 3"
-            "$mod SHIFT, code:13, movetoworkspace, 4"
-            "$mod SHIFT, code:14, movetoworkspace, 5"
-            "$mod SHIFT, code:15, movetoworkspace, 6"
-            "$mod SHIFT, code:16, movetoworkspace, 7"
-            "$mod SHIFT, code:17, movetoworkspace, 8"
-            "$mod SHIFT, code:18, movetoworkspace, 9"
-            "$mod SHIFT, code:19, movetoworkspace, 10"
-            "$mod SHIFT, bracketleft, movetoworkspace, -1"
-            "$mod SHIFT, bracketright, movetoworkspace, +1"
-            "$mod CTRL, code:10, movetoworkspacesilent, 1"
-            "$mod CTRL, code:11, movetoworkspacesilent, 2"
-            "$mod CTRL, code:12, movetoworkspacesilent, 3"
-            "$mod CTRL, code:13, movetoworkspacesilent, 4"
-            "$mod CTRL, code:14, movetoworkspacesilent, 5"
-            "$mod CTRL, code:15, movetoworkspacesilent, 6"
-            "$mod CTRL, code:16, movetoworkspacesilent, 7"
-            "$mod CTRL, code:17, movetoworkspacesilent, 8"
-            "$mod CTRL, code:18, movetoworkspacesilent, 9"
-            "$mod CTRL, code:19, movetoworkspacesilent, 10"
-            "$mod CTRL, bracketleft, movetoworkspacesilent, -1"
-            "$mod CTRL, bracketright, movetoworkspacesilent, +1"
-            "$mod, period, workspace, e+1"
-            "$mod, comma, workspace, e-1"
-            (lib.mkIf config.my.brightnessctl.enable ", XF86MonBrightnessUp, exec, brightnessctl s +5%")
-            (lib.mkIf config.my.brightnessctl.enable ", XF86MonBrightnessDown, exec, brightnessctl s 5%-")
           ];
         };
       };
-      programs.rofi = {
-        enable = true;
-      };
-      home.pointerCursor = {
-        gtk.enable = true;
-        x11.enable = true;
-        hyprcursor.enable = true;
-      };
-      programs.kitty = {
-        enable = true;
-        settings.confirm_os_window_close = 0;
-      };
 
-      # Systemd user services for applets
+      ############################
+      # systemd --user services
+      ############################
+
       systemd.user.services = {
+
         swww = {
           Unit = {
             Description = "swww wallpaper daemon";
@@ -217,113 +259,57 @@ in
             ExecStart = "${pkgs.swww}/bin/swww-daemon";
             Restart = "on-failure";
           };
-          Install = {
-            WantedBy = [ "graphical-session.target" ];
-          };
+          Install.WantedBy = [ "graphical-session.target" ];
         };
 
         swww-wallpaper = {
           Unit = {
-            Description = "Set wallpaper via swww";
+            Description = "Set wallpaper";
             PartOf = [ "graphical-session.target" ];
-            After = [ "graphical-session.target" "swww.service" ];
+            After = [ "swww.service" ];
             Requires = [ "swww.service" ];
           };
           Service = {
             Type = "oneshot";
-            ExecStartPre = "${pkgs.coreutils}/bin/sleep 1";
             ExecStart = "${pkgs.swww}/bin/swww img %h/Images/wallpapers/big-sur.jpg";
           };
-          Install = {
-            WantedBy = [ "graphical-session.target" ];
-          };
+          Install.WantedBy = [ "graphical-session.target" ];
         };
 
         hyprlock-login = {
           Unit = {
             Description = "Hyprlock login screen";
             PartOf = [ "graphical-session.target" ];
-            After = [ "graphical-session.target" ];
           };
           Service = {
             Type = "oneshot";
             ExecStart = hyprlockLoginScript;
           };
-        };
-
-        kwalletd = lib.mkIf config.my.kwallet.enable {
-          Unit = {
-            Description = "KWallet daemon";
-            PartOf = [ "graphical-session.target" ];
-            After = [ "graphical-session.target" ];
-          };
-          Service = {
-            ExecStart = "${pkgs.kdePackages.kwallet}/bin/kwalletd6";
-            Restart = "on-failure";
-          };
-          Install = {
-            WantedBy = [ "graphical-session.target" ];
-          };
-        };
-
-        ksecretd = lib.mkIf config.my.kwallet.enable {
-          Unit = {
-            Description = "KWallet Secret Service";
-            PartOf = [ "graphical-session.target" ];
-            After = [ "graphical-session.target" ];
-          };
-          Service = {
-            ExecStart = "${pkgs.kdePackages.kwallet}/bin/ksecretd";
-            Restart = "on-failure";
-          };
-          Install = {
-            WantedBy = [ "graphical-session.target" ];
-          };
+          Install.WantedBy = [ "graphical-session.target" ];
         };
 
         hyprpolkitagent = {
           Unit = {
             Description = "Hyprland Polkit Agent";
             PartOf = [ "graphical-session.target" ];
-            After = [ "graphical-session.target" ];
           };
           Service = {
             ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
             Restart = "on-failure";
           };
-          Install = {
-            WantedBy = [ "graphical-session.target" ];
-          };
+          Install.WantedBy = [ "graphical-session.target" ];
         };
 
         cliphist-store = {
           Unit = {
-            Description = "Clipboard History Store";
+            Description = "Clipboard history";
             PartOf = [ "graphical-session.target" ];
-            After = [ "graphical-session.target" ];
           };
           Service = {
             ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store";
             Restart = "on-failure";
           };
-          Install = {
-            WantedBy = [ "graphical-session.target" ];
-          };
-        };
-
-        wl-clip-persist = {
-          Unit = {
-            Description = "Wayland Clipboard Persist";
-            PartOf = [ "graphical-session.target" ];
-            After = [ "graphical-session.target" ];
-          };
-          Service = {
-            ExecStart = "${pkgs.wl-clip-persist}/bin/wl-clip-persist --clipboard regular";
-            Restart = "on-failure";
-          };
-          Install = {
-            WantedBy = [ "graphical-session.target" ];
-          };
+          Install.WantedBy = [ "graphical-session.target" ];
         };
       };
     };

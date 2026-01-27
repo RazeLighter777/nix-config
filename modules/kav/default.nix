@@ -1,30 +1,38 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.my.kav;
   inherit (lib) mkIf;
-  
-  yaraRulesFromRepos = repos: pkgs.linkFarm "yara-rules" (
-    lib.mapAttrsToList (name: repo:
-      let
-        fetched = builtins.fetchGit {
-          url = repo.url;
-          ref = if repo.ref != null then repo.ref else "HEAD";
-        };
-      in
-      {
-        name = name;
-        path = fetched;
-      }
-    ) repos
-  );
+
+  yaraRulesFromRepos =
+    repos:
+    pkgs.linkFarm "yara-rules" (
+      lib.mapAttrsToList (
+        name: repo:
+        let
+          fetched = builtins.fetchGit {
+            url = repo.url;
+            ref = if repo.ref != null then repo.ref else "HEAD";
+          };
+        in
+        {
+          name = name;
+          path = fetched;
+        }
+      ) repos
+    );
 in
 {
   config = mkIf cfg.enable {
     # Enable the kav security module
     security.kav = {
-      enable = true;
-      
+      enable = false;
+
       # Use the current kernel
       kernel = config.boot.kernelPackages.kernel;
 
