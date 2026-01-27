@@ -25,7 +25,6 @@ in
     displayManager.enable = mkEnableOption "Enable SDDM autologin for Hyprland (Hyprlock becomes the only login screen)";
     dolphin.enable = mkEnableOption "Enable Dolphin file manager";
     wine.enable = mkEnableOption "Enable Wine packages";
-    xmrig.enable = mkEnableOption "Enable XMRig mining service";
     ollama.enable = mkEnableOption "Enable Ollama service (CUDA)";
     protonup.enable = mkEnableOption "Enable protonup-ng tool";
     obs.enable = mkEnableOption "Enable OBS Studio with plugins";
@@ -74,6 +73,7 @@ in
     kav.enable = mkEnableOption "Enable kav kernel antivirus";
     devtools.enable = mkEnableOption "Enable development tools";
     zoom-us.enable = mkEnableOption "Enable Zoom video conferencing";
+    bitwarden.enable = mkEnableOption "Enable Bitwarden (desktop + CLI)";
   };
 
   imports = [
@@ -91,7 +91,6 @@ in
     ./display-manager
     ./dolphin
     ./wine
-    ./xmrig
     ./ollama
     ./protonup
     ./obs
@@ -144,6 +143,7 @@ in
     ./kav
     ./devtools
     ./zoom-us
+    ./bitwarden
   ];
 
   config = {
@@ -204,6 +204,7 @@ in
       opensnitch.enable = lib.mkDefault false;
       devtools.enable = lib.mkDefault false;
       zoom-us.enable = lib.mkDefault true;
+      bitwarden.enable = lib.mkDefault true;
 
       # Enable Rofi automatically when Hyprland is enabled.
       rofi.enable = lib.mkDefault config.my.hyprland.enable;
@@ -215,7 +216,6 @@ in
       # nvidia (GPU driver)
       # displayManager (only meaningful with Hyprland)
       # waybar (only meaningful with Hyprland; host can enable alongside hyprland)
-      # xmrig (resource intensive)
       # ollama (large download / GPU intensive)
       # obs (often GPU-specific / optional)
     };

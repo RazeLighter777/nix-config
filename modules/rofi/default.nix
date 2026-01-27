@@ -12,9 +12,10 @@ in
   config = lib.mkIf cfg.enable {
     home-manager.users.${config.my.user.name} = {
       home.packages = with pkgs; [
-        rofi
         rofi-power-menu
+        rofi-systemd
         rofimoji
+        rofi-bluetooth
       ];
 
       home.file.".config/rofi/rofi-system-menu.sh" = {
@@ -24,7 +25,7 @@ in
 
       programs.rofi = {
         enable = true;
-
+        package = pkgs.rofi;
         extraConfig = {
           show-icons = true;
           drun-display-format = "{name}";

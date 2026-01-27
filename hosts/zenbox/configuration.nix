@@ -15,7 +15,6 @@
     waybar.enable = true; # paired with Hyprland
     nvidia.enable = true; # Disabled - incompatible with custom kernel
     obs.enable = true; # optional GPU-accelerated app
-    xmrig.enable = false; # explicitly opt-in (default false)
     # All other common apps come from mkDefault in modules/default.nix
     ollama.enable = true; # optional AI app
     kwallet.enable = true;

@@ -161,7 +161,7 @@ in
               };
 
               "custom/system-menu" = {
-                exec = "echo \"󰣇\"";
+                exec = "echo \"⚙️\"";
                 interval = 3600;
                 tooltip = false;
                 on-click = "~/.config/rofi/rofi-system-menu.sh";
