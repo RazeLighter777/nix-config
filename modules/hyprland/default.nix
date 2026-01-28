@@ -264,7 +264,7 @@ in
             PartOf = [ "graphical-session.target" ];
             After = [ "graphical-session.target" ];
           };
-          Service = {
+          Service = config.my.systemd-sandboxing.user-desktop // {
             ExecStart = "${pkgs.swww}/bin/swww-daemon";
             Restart = "on-failure";
           };
@@ -315,9 +315,11 @@ in
             Description = "Hyprland Polkit Agent";
             PartOf = [ "graphical-session.target" ];
           };
-          Service = {
+          Service = config.my.systemd-sandboxing.user-desktop // {
             ExecStart = "${hyprlandEnvWrapper} ${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
             Restart = "on-failure";
+            NoNewPrivileges = false;
+            RestrictSUIDSGID = false;
           };
           Install.WantedBy = [ "graphical-session.target" ];
         };
@@ -327,11 +329,15 @@ in
             Description = "Clipboard history";
             PartOf = [ "graphical-session.target" ];
           };
-          Service = {
+          Service = config.my.systemd-sandboxing.user-desktop // {
             ExecStart = "${hyprlandEnvWrapper} ${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store";
             Restart = "on-failure";
           };
           Install.WantedBy = [ "graphical-session.target" ];
+        };
+
+        mako = {
+          Service = config.my.systemd-sandboxing.user-desktop;
         };
       };
 

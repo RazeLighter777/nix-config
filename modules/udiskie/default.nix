@@ -19,6 +19,9 @@
           icon_names.media = [ "media-optical" ];
         };
       };
+      systemd.user.services.udiskie = {
+        Service = config.my.systemd-sandboxing.user-desktop;
+      };
     };
   };
 }

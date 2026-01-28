@@ -23,7 +23,7 @@
         Unit = {
           Description = "Sync Hyprlock wallpaper from swww";
         };
-        Service = {
+        Service = config.my.systemd-sandboxing.user-desktop // {
           Type = "oneshot";
           ExecStart = "%h/.config/hypr/hyprlock-wallpaper-sync.sh";
         };

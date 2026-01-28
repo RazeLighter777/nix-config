@@ -18,7 +18,7 @@
             After = [ "wayvnc.service" ];
             BindsTo = [ "wayvnc.service" ];
         };
-        Service = {
+        Service = config.my.systemd-sandboxing.user-desktop // {
             ExecStartPre = lib.mkIf config.my.hyprland.enable "${pkgs.writeShellScript "wayvnc-pre-start" ''
                ${pkgs.hyprland}/bin/hyprctl --instance 0 keyword animations:enabled false
             ''}";
@@ -33,7 +33,7 @@
           After = [ "graphical-session.target" ];
           Wants = [ "graphical-session.target" ];
         };
-        Service = {
+        Service = config.my.systemd-sandboxing.user-desktop // {
           ExecStartPre = lib.mkIf config.my.hyprland.enable "${pkgs.writeShellScript "wayvnc-pre-start" ''
             export WAYLAND_DISPLAY=$(${pkgs.hyprland}/bin/hyprctl instances -j | ${pkgs.jq}/bin/jq -r '.[0]["wl_socket"]')
           ''}";

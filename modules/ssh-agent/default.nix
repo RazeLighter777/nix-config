@@ -12,7 +12,7 @@
         Unit = {
           Description = "SSH Agent";
         };
-        Service = {
+        Service = config.my.systemd-sandboxing.basic // {
           ExecStart = "${pkgs.openssh}/bin/ssh-agent -D -a %t/ssh-agent";
         };
         Install = {

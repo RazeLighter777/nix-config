@@ -147,6 +147,7 @@ in
     ./zoom-us
     ./bitwarden
     ./ssh-agent
+    ./systemd-sandboxing
   ];
 
   config = {
