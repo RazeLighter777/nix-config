@@ -24,6 +24,8 @@ in
     stylix.opacity = {
       terminal = 0.7;
       desktop = 0.7;
+      applications = 0.7;
+      popups = 0.8;
     };
     stylix.cursor = {
       package = pkgs.rose-pine-cursor;

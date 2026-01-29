@@ -36,6 +36,7 @@ in
     ark.enable = mkEnableOption "Enable Ark archive manager";
     hyprland.enable = mkEnableOption "Enable Hyprland home-manager configuration";
     rofi.enable = mkEnableOption "Enable Rofi launcher configuration";
+    mako.enable = mkEnableOption "Enable Mako notification daemon";
     bash.enable = mkEnableOption "Enable Bash configuration";
     dconf.enable = mkEnableOption "Enable dconf settings";
     vscode.enable = mkEnableOption "Enable VSCode configuration";
@@ -104,6 +105,7 @@ in
     ./xdg-apps
     ./hyprland
     ./rofi
+    ./mako
     ./desktops/hyprland-extra.nix
     ./bash
     ./dconf
@@ -168,6 +170,7 @@ in
       bash.enable = lib.mkDefault true;
       dconf.enable = lib.mkDefault true;
       vscode.enable = lib.mkDefault true;
+      mako.enable = lib.mkDefault config.my.hyprland.enable;
       fontsLocale.enable = lib.mkDefault true;
       bluetooth.enable = lib.mkDefault true;
       steam.enable = lib.mkDefault true;

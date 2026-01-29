@@ -5,6 +5,7 @@
 }:
 {
   config = lib.mkIf config.my.xdg-apps.enable {
+    xdg.menus.enable = true;
     home-manager.users.${config.my.user.name} = {
       xdg.mimeApps = {
         enable = true;

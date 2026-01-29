@@ -17,6 +17,7 @@ in
       nerd-fonts.jetbrains-mono
       font-awesome
       noto-fonts
+      nerd-fonts.noto
       noto-fonts-color-emoji
     ];
     i18n.extraLocaleSettings = {

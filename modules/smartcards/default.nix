@@ -17,12 +17,17 @@ in
       pkgs.opensc
       pkgs.nss_latest.tools
       pkgs.gnupg-pkcs11-scd
+      pkgs.ccid
     ];
-    security.pam.p11.enable = true;
 
     programs.gnupg.agent = {
       enable = true;
     };
+    environment.etc."opensc.conf".text = ''
+      # OpenSC configuration file
+      enable_pinpad = false
+      card_drivers = cac
+      force_card_driver = cac
+    '';
   };
 }
-

@@ -57,21 +57,6 @@ in
       };
 
       services = {
-        mako = {
-          enable = true;
-          settings = {
-            actions = true;
-            anchor = "top-right";
-            border-radius = 0;
-            default-timeout = 10000;
-            height = 100;
-            icons = true;
-            layer = "top";
-            margin = 10;
-            markup = true;
-            width = 300;
-          };
-        };
 
         hypridle = {
           enable = true;
@@ -152,12 +137,44 @@ in
 
           decoration = {
             rounding = 6;
+            active_opacity = 1.0;
+            inactive_opacity = 0.9;
             blur = {
               enabled = true;
               size = 3;
               passes = 2;
               new_optimizations = true;
+              vibrancy = 0.1696;
             };
+          };
+
+          animations = {
+            enabled = true;
+            bezier = [
+              "easeOutQuint,0.23,1,0.32,1"
+              "popin,0.175,0.885,0.32,1.275"
+              "linear,0,0,1,1"
+              "almostLinear,0.5,0.5,0.75,1"
+              "quick,0.15,0,0.1,1"
+            ];
+            animation = [
+              "global, 1, 10, default"
+              "border, 1, 5.39, easeOutQuint"
+              "windows, 1, 4.79, easeOutQuint"
+              "windowsIn, 1, 4.1, easeOutQuint, popin 87%"
+              "windowsOut, 1, 1.49, linear, popin 87%"
+              "fadeIn, 1, 1.73, almostLinear"
+              "fadeOut, 1, 1.46, almostLinear"
+              "fade, 1, 3.03, quick"
+              "layers, 1, 3.81, easeOutQuint"
+              "layersIn, 1, 4, easeOutQuint, fade"
+              "layersOut, 1, 1.5, linear, fade"
+              "fadeLayersIn, 1, 1.79, almostLinear"
+              "fadeLayersOut, 1, 1.39, almostLinear"
+              "workspaces, 1, 1.94, almostLinear, fade"
+              "workspacesIn, 1, 1.21, almostLinear, fade"
+              "workspacesOut, 1, 1.94, almostLinear, fade"
+            ];
           };
 
           misc = {
@@ -179,11 +196,11 @@ in
           ];
 
           bindl = binds [
-            ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"
+            ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+ && ~/.local/bin/mako-volume-notify"
           ];
 
           binde = binds [
-            ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+            ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && ~/.local/bin/mako-volume-notify"
           ];
 
           bind = binds (
@@ -240,8 +257,8 @@ in
               lib.range 1 10
             ))
             ++ lib.optionals config.my.brightnessctl.enable [
-              ", XF86MonBrightnessUp, exec, brightnessctl s +5%"
-              ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
+              ", XF86MonBrightnessUp, exec, brightnessctl s +5% && ~/.local/bin/mako-brightness-notify"
+              ", XF86MonBrightnessDown, exec, brightnessctl s 5%- && ~/.local/bin/mako-brightness-notify"
             ]
           );
 
@@ -269,6 +286,11 @@ in
             Restart = "on-failure";
           };
           Install.WantedBy = [ "graphical-session.target" ];
+        };
+
+        hypridle = {
+          Service = config.my.systemd-sandboxing.user-desktop // {
+          };
         };
 
         swww-wallpaper = {

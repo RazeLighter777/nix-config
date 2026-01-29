@@ -50,7 +50,15 @@ in
             margin: 6px 10px;
           }
 
-          * { font-family: "JetBrainsMono Nerd Font", monospace; font-size: 13px; color: #ddd; }
+          * {
+              all: unset;
+              font-size: 13px;
+              font-family: 'JetBrainsMono Nerd Font', monospace;
+              font-feature-settings: '"zero", "tnum", "ss01", "ss02", "ss03", "cv01"';
+              animation-timing-function: steps(12);
+              animation-duration: 0.3s;
+              transition: all 0.3s cubic-bezier(0.79, 0.33, 0.14, 0.53);
+          }
 
           #custom-bandwidth,
           #custom-system-menu,
@@ -71,6 +79,12 @@ in
             border-radius: 8px;
             padding: 2px 8px;
             margin: 0 5px;
+          }
+
+          #pulseaudio,
+          #custom-bandwidth
+          {
+            margin-top: 6px;
           }
 
           #workspaces button { background-color: transparent; border-radius: 8px; padding: 2px 8px; margin: 0 3px; }
@@ -147,6 +161,10 @@ in
                 "tray"
               ];
 
+              backlight = {
+                format = "☼ {percent}%";
+              };
+
               network = {
                 interval = 1;
                 format-disconnected = "Disconnected ⚠";
@@ -210,23 +228,23 @@ in
               pulseaudio = {
                 format = "{volume}% {icon} {format_source}";
                 format-bluetooth = "{volume}% {icon} {format_source}";
-                format-bluetooth-muted = "🔇 {icon} {format_source}";
+                format-bluetooth-muted = "✗🕨 {icon} {format_source}";
                 format-icons = {
                   car = "🚗";
                   default = [
-                    "🔈"
-                    "🔉"
-                    "🔊"
+                    "🕨"
+                    "🕩"
+                    "🕪"
                   ];
-                  handsfree = "🎧";
-                  headphones = "🎧";
-                  headset = "🎧";
-                  phone = "📱";
-                  portable = "📱";
+                  handsfree = "🕻";
+                  headphones = "🕻";
+                  headset = "🕻";
+                  phone = "☏";
+                  portable = "☏";
                 };
-                format-muted = "🔇 {format_source}";
-                format-source = "{volume}% 🎤";
-                format-source-muted = "🎤✗";
+                format-muted = "✗🕨 {format_source}";
+                format-source = "{volume}% 🎙";
+                format-source-muted = "🎙✗";
                 scroll-step = 5;
                 on-click = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
                 on-click-right = "pavucontrol";
