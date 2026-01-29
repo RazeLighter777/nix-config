@@ -35,6 +35,7 @@
     gnupg
     pinentry-qt
     p7zip
+    killall
   ];
   nix.settings.experimental-features = [
     "nix-command"

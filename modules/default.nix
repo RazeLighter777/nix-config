@@ -69,7 +69,6 @@ in
     shattered-pixel-dungeon.enable = mkEnableOption "Enable Shattered Pixel Dungeon game";
     qflipper.enable = mkEnableOption "Enable qFlipper";
     spotify.enable = mkEnableOption "Enable Spotify";
-    opensnitch.enable = mkEnableOption "Enable OpenSnitch application firewall";
     signal-desktop.enable = mkEnableOption "Enable Signal Desktop messaging app";
     kav.enable = mkEnableOption "Enable kav kernel antivirus";
     devtools.enable = mkEnableOption "Enable development tools";
@@ -142,7 +141,6 @@ in
     ./qflipper
     ./scx
     ./spotify
-    ./opensnitch
     ./signal-desktop
     ./kav
     ./devtools
@@ -208,7 +206,6 @@ in
       qflipper.enable = lib.mkDefault false;
       scx.enable = lib.mkDefault true;
       spotify.enable = lib.mkDefault true;
-      opensnitch.enable = lib.mkDefault false;
       devtools.enable = lib.mkDefault false;
       zoom-us.enable = lib.mkDefault true;
       bitwarden.enable = lib.mkDefault true;
