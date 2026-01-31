@@ -339,7 +339,8 @@ in
           };
           Service = config.my.systemd-sandboxing.user-desktop // {
             ExecStart = "${hyprlandEnvWrapper} ${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
-            Restart = "on-failure";
+            Restart = "always";
+            RestartSec = 2;
             NoNewPrivileges = false;
             RestrictSUIDSGID = false;
           };
@@ -353,7 +354,8 @@ in
           };
           Service = config.my.systemd-sandboxing.user-desktop // {
             ExecStart = "${hyprlandEnvWrapper} ${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store";
-            Restart = "on-failure";
+            Restart = "always";
+            RestartSec = 2;
           };
           Install.WantedBy = [ "graphical-session.target" ];
         };
