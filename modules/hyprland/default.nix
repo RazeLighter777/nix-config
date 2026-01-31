@@ -63,7 +63,7 @@ in
           settings = {
             general = {
               lock_cmd = "~/.config/hypr/hyprlock-run.sh --immediate --immediate-render";
-              before_sleep_cmd = "~/.config/hypr/hyprlock-run.sh --immediate";
+              before_sleep_cmd = "loginctl lock-session";
               after_sleep_cmd = "hyprctl dispatch dpms on";
               ignore_dbus_inhibit = false;
             };
