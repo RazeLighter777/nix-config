@@ -1,5 +1,9 @@
 #!/bin/sh
 
+lockfile="$XDG_RUNTIME_DIR/mako-volume.lock"
+exec 9>"$lockfile"
+flock -n 9 || exit 0
+
 # Get the volume level and convert it to a percentage
 volume=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
 volume=$(echo "$volume" | awk '{print $2}')

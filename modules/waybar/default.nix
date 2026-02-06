@@ -74,6 +74,7 @@ in
           #backlight,
           #bluetooth,
           #tray,
+          #power-profiles-daemon,
           #mpris {
             background-color: rgba(40,40,40,0.5);
             border-radius: 8px;
@@ -163,6 +164,7 @@ in
 
               backlight = {
                 format = "☼ {percent}%";
+                on-update = "~/.local/bin/mako-brightness-notify";
               };
 
               network = {
@@ -217,7 +219,7 @@ in
               clock = {
                 tooltip-format = "<tt><small>{calendar}</small></tt>";
                 format = "{:%H:%M} ⏱️";
-                format-alt = "{:%Y-%m-%d %H:%M:%S}";
+                format-alt = "{:%Y-%m-%d %H:%M:%S} ⏱️";
               };
 
               cpu.format = "{usage}% 🖥️";
@@ -248,6 +250,7 @@ in
                 scroll-step = 5;
                 on-click = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
                 on-click-right = "pavucontrol";
+                on-update = "~/.local/bin/mako-volume-notify";
               };
             }
             // lib.optionalAttrs batteryEnabled {
