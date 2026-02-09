@@ -91,6 +91,7 @@
     8080
     9999
     5173
+    2222
   ];
   networking.firewall.allowedUDPPorts = [ 51820 ];
   system.stateVersion = "25.11";

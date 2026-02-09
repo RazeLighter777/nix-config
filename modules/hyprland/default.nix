@@ -287,12 +287,6 @@ in
           };
           Install.WantedBy = [ "graphical-session.target" ];
         };
-
-        hypridle = {
-          Service = config.my.systemd-sandboxing.user-desktop // {
-          };
-        };
-
         swww-wallpaper = {
           Unit = {
             Description = "Set wallpaper";

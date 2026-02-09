@@ -16,6 +16,7 @@
   networking.firewall.allowedTCPPorts = lib.mkDefault [
     22
     8080
+    2222
   ];
   networking.firewall.allowedUDPPorts = lib.mkDefault [ 51820 ];
 }
