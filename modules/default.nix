@@ -75,6 +75,8 @@ in
     zoom-us.enable = mkEnableOption "Enable Zoom video conferencing";
     bitwarden.enable = mkEnableOption "Enable Bitwarden (desktop + CLI)";
     ssh-agent.enable = mkEnableOption "Enable SSH agent systemd user unit";
+    ghidra-bin.enable = mkEnableOption "Enable Ghidra (binary distribution)";
+    okteta.enable = mkEnableOption "Enable Okteta hex editor";
   };
 
   imports = [
@@ -148,6 +150,8 @@ in
     ./bitwarden
     ./ssh-agent
     ./systemd-sandboxing
+    ./ghidra-bin
+    ./okteta
   ];
 
   config = {
@@ -210,6 +214,8 @@ in
       zoom-us.enable = lib.mkDefault true;
       bitwarden.enable = lib.mkDefault true;
       ssh-agent.enable = lib.mkDefault true;
+      ghidra-bin.enable = lib.mkDefault false;
+      okteta.enable = lib.mkDefault false;
 
       # Enable Rofi automatically when Hyprland is enabled.
       rofi.enable = lib.mkDefault config.my.hyprland.enable;

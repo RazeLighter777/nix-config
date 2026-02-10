@@ -30,6 +30,8 @@
     kav.enable = true;
     customKernel.enable = true; # disabled due to incompatibility with nvidia driver
     devtools.enable = true;
+    ghidra-bin.enable = true;
+    okteta.enable = true;
   };
 
   networking.hostName = "zenbox";

@@ -25,6 +25,8 @@
     signal-desktop.enable = true;
     virt-manager.enable = true;
     devtools.enable = true;
+    ghidra-bin.enable = true;
+    okteta.enable = true;
   };
   networking.hostName = "suesslenovo";
   boot.loader.systemd-boot.enable = true;

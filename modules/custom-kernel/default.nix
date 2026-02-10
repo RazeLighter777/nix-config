@@ -25,7 +25,7 @@ in
                   owner = "torvalds";
                   repo = "linux";
                   rev = "master";
-                  hash = "sha256-Mq1NVGL7Y7NtEEPdVvskGhG6CeIscTA6YYXdwtEqFG0=";
+                  hash = "sha256-t9XYJObwSStTkMkU5tP66Orx5rrgwEuAtWbwrDyi/go=";
                 };
 
                 kernelPatches = [ ];
