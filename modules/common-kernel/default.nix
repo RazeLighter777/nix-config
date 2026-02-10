@@ -11,7 +11,7 @@ in
   options.my.commonKernel.enable = lib.mkEnableOption "Enable shared kernel defaults";
 
   config = lib.mkIf cfg.enable {
-    boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_6_18;
+    boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
     boot.kernelParams = [
       "quiet"
       "splash"

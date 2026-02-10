@@ -22,13 +22,13 @@
     stylix.enable = true; # for color scheme management
     wayvnc.enable = true; # for remote desktop access
     pinpam.enable = true; # for managing PINs
-    customKernel.enable = false;
     firefox.enable = true;
     dolphin.enable = true;
     qflipper.enable = true;
     signal-desktop.enable = true;
     virt-manager.enable = true;
     kav.enable = true;
+    customKernel.enable = true; # disabled due to incompatibility with nvidia driver
     devtools.enable = true;
   };
 
