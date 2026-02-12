@@ -23,6 +23,10 @@
       url = "github:razelighter777/pinpam";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     kav = {
       url = "git+ssh://git@gitlab.com/kav7205302/kav-client.git";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,6 +41,7 @@
       nur,
       stylix,
       pinpam,
+      sops-nix,
       ...
     }@inputs:
     let
@@ -52,8 +57,9 @@
       nixosConfigurations = {
         zenbox = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [ 
+          modules = [
             ./hosts/zenbox/configuration.nix
+            sops-nix.nixosModules.sops
             inputs.kav.nixosModules.default
           ];
           specialArgs = { inherit inputs; };

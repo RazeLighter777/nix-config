@@ -4,12 +4,26 @@
   pkgs,
   ...
 }:
+
+let
+  vscode1092 = pkgs.vscode.overrideAttrs (old: {
+    version = "1.109.2";
+    src = pkgs.fetchurl {
+      name = "vscode.tar.gz";
+      url = "https://code.visualstudio.com/sha/download?os=linux-x64";
+      sha256 = "sha256-ST5i8gvNtAaBbmcpcg9GJipr8e5d0A0qbdG1P9QViek=";
+    };
+  });
+in
 {
   config = lib.mkIf config.my.vscode.enable {
     programs.nix-ld.enable = true;
+
     home-manager.users.${config.my.user.name}.programs = {
       vscode = {
         enable = true;
+        package = vscode1092;
+
         profiles.default = {
           extensions = with pkgs.vscode-extensions; [
             github.copilot
@@ -25,19 +39,16 @@
             redhat.vscode-yaml
             jnoortheen.nix-ide
           ];
+
           userSettings = {
-            # Don't open definition in peek view by default
             "editor.definitionLinkOpensInPeek" = false;
             "editor.gotoLocation.multipleDefinitions" = "goto";
             "editor.gotoLocation.multipleImplementations" = "goto";
             "editor.gotoLocation.multipleTypeDefinitions" = "goto";
             "editor.gotoLocation.multipleReferences" = "goto";
-            # Enable format on save
             "editor.formatOnSave" = true;
-            # Disable preview
             "workbench.editor.enablePreview" = false;
             "workbench.editor.enablePreviewFromQuickOpen" = false;
-
           };
         };
       };

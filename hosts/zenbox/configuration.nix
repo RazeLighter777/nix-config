@@ -28,7 +28,6 @@
     signal-desktop.enable = true;
     virt-manager.enable = true;
     kav.enable = true;
-    customKernel.enable = true; # disabled due to incompatibility with nvidia driver
     devtools.enable = true;
     ghidra-bin.enable = true;
     okteta.enable = true;
@@ -64,6 +63,24 @@
     abrmd.enable = true;
   };
 
+  sops = {
+    defaultSopsFile = ./secrets.yaml;
+    age.keyFile = "/var/lib/sops-nix/key.txt";
+    age.sshKeyPaths = [ "/home/justin/.ssh/id_ed25519" ];
+  };
+  sops.secrets = {
+    "nix/builder_ssh_key" = {
+      owner = "root";
+      group = "root";
+      mode = "0400";
+    };
+    "nix/cache_signing_key" = {
+      owner = "root";
+      group = "root";
+      mode = "0400";
+    };
+  };
+
   boot.kernelModules = [
     "ntsync"
     # my wifi driver
@@ -71,6 +88,23 @@
   ];
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate = (_: true);
+  # nix.distributedBuilds = true;
+  # nix.buildMachines = [
+  #   {
+  #     hostName = "192.168.88.15";
+  #     sshUser = "root";
+  #     sshKey = config.sops.secrets."nix/builder_ssh_key".path;
+  #     system = "x86_64-linux";
+  #     maxJobs = 8;
+  #     speedFactor = 2;
+  #     supportedFeatures = [
+  #       "nixos-test"
+  #       "benchmark"
+  #       "big-parallel"
+  #       "kvm"
+  #     ];
+  #   }
+  # ];
   # Host-specific packages layered on top of common + hyprland extras
   environment.systemPackages = with pkgs; [
     cloudflared
@@ -78,6 +112,8 @@
     arion
     mpv
     protonplus
+    age
+    sops
   ];
   hardware.graphics = {
     enable = true;
