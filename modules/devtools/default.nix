@@ -15,6 +15,9 @@
       lshw
       dnsutils
       valgrind
+      talosctl
+      terraform
+      mutt
     ];
   };
 }

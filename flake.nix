@@ -66,7 +66,10 @@
         };
         suesslenovo = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [ ./hosts/suesslenovo/configuration.nix ];
+          modules = [
+            ./hosts/suesslenovo/configuration.nix
+            sops-nix.nixosModules.sops
+          ];
           specialArgs = { inherit inputs; };
         };
         halloweentown = nixpkgs.lib.nixosSystem {

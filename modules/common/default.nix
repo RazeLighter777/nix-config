@@ -36,19 +36,15 @@
     pinentry-qt
     p7zip
     killall
+    sops
+    ssh-to-age
+    emacs
   ];
   nix.settings = {
     experimental-features = [
       "nix-command"
       "flakes"
     ];
-    substituters = lib.mkAfter [
-      "https://nix.prizrak.me"
-    ];
-    trusted-public-keys = lib.mkAfter [
-      "prizrak.me:Hk9hSoa/uKOc4cEu8Tu7a4XRkkG08HBs8fQC6nhcuds="
-    ];
-    builders-use-substitutes = true;
   };
   time.timeZone = lib.mkDefault "America/New_York";
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
