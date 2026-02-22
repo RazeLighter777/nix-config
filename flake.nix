@@ -27,8 +27,8 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    kav = {
-      url = "git+ssh://git@gitlab.com/kav7205302/kav-client.git";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -42,6 +42,7 @@
       stylix,
       pinpam,
       sops-nix,
+      nixos-hardware,
       ...
     }@inputs:
     let
@@ -60,7 +61,7 @@
           modules = [
             ./hosts/zenbox/configuration.nix
             sops-nix.nixosModules.sops
-            inputs.kav.nixosModules.default
+            nixos-hardware.nixosModules.gigabyte-b650
           ];
           specialArgs = { inherit inputs; };
         };

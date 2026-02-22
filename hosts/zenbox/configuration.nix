@@ -27,8 +27,7 @@
     qflipper.enable = true;
     signal-desktop.enable = true;
     virt-manager.enable = true;
-    kav.enable = true;
-    customKernel.enable = true; # disabled due to incompatibility with nvidia driver
+    customKernel.enable = false; # disabled due to incompatibility with nvidia driver
     devtools.enable = true;
     ghidra-bin.enable = true;
     okteta.enable = true;
