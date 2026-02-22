@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,49 +35,13 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      home-manager,
-      nur,
-      stylix,
-      pinpam,
-      sops-nix,
-      ...
-    }@inputs:
-    let
-      # Import nur, passing nixpkgs to it
-      nurPkgs = import nur { inherit nixpkgs; };
-    in
-    {
-      nixpkgs.config.packageOverrides = pkgs: {
-        # Make nur available under pkgs.nur
-        nur = nurPkgs;
-      };
-
-      nixosConfigurations = {
-        zenbox = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./hosts/zenbox/configuration.nix
-            sops-nix.nixosModules.sops
-            inputs.kav.nixosModules.default
-          ];
-          specialArgs = { inherit inputs; };
-        };
-        suesslenovo = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./hosts/suesslenovo/configuration.nix
-            sops-nix.nixosModules.sops
-          ];
-          specialArgs = { inherit inputs; };
-        };
-        halloweentown = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = { inherit inputs; };
-          modules = [ ./hosts/halloweentown/configuration.nix ];
-        };
-      };
+    inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        ./modules/hosts/zenbox.nix
+        ./modules/hosts/suesslenovo.nix
+        ./modules/hosts/halloweentown.nix
+      ];
+      systems = [ "x86_64-linux" ];
     };
 }

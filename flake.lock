@@ -325,6 +325,7 @@
     "root": {
       "inputs": {
         "firefox-addons": "firefox-addons",
+        "flake-parts": "flake-parts_2",
         "home-manager": "home-manager",
         "kav": "kav",
         "nixpkgs": "nixpkgs",

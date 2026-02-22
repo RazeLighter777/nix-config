@@ -7,7 +7,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules
+    ../../modules/nixos
   ];
   my = {
     user.name = "michelle"; # host-specific primary user
