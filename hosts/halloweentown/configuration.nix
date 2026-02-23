@@ -5,10 +5,6 @@
   ...
 }:
 {
-  imports = [
-    ./hardware-configuration.nix
-    ../../modules/nixos
-  ];
   my = {
     user.name = "michelle"; # host-specific primary user
     kde.enable = true; # choose KDE desktop

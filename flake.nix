@@ -38,6 +38,11 @@
     inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
+        # Provides `configurations.nixos` option + nixosConfigurations wiring.
+        ./modules/nixos.nix
+        # Registers all NixOS feature modules as flake.nixosModules.*.
+        ./modules/nixos/default.nix
+        # Host declarations — each sets configurations.nixos.<name>.module.
         ./modules/hosts/zenbox.nix
         ./modules/hosts/suesslenovo.nix
         ./modules/hosts/halloweentown.nix
