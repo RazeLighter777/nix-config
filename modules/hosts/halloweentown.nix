@@ -83,10 +83,86 @@ in
       nixos.systemd-sandboxing
       nixos.ghidra-bin
       nixos.okteta
-      # Hardware-specific module.
-      ../../hosts/halloweentown/hardware-configuration.nix
-      # Host-specific NixOS configuration.
-      ../../hosts/halloweentown/configuration.nix
+      # Hardware-specific module (previously hosts/halloweentown/hardware-configuration.nix).
+      (
+        { config, lib, pkgs, modulesPath, ... }:
+        {
+          imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+
+          boot.initrd.availableKernelModules = [
+            "xhci_pci"
+            "ahci"
+            "usb_storage"
+            "sd_mod"
+          ];
+          boot.initrd.kernelModules = [ ];
+          boot.kernelModules = [ "kvm-intel" ];
+          boot.extraModulePackages = [ ];
+
+          fileSystems."/" = {
+            device = "/dev/disk/by-uuid/7135dd1d-5cfd-4fb8-ba7b-cb0032fe8725";
+            fsType = "ext4";
+          };
+
+          fileSystems."/boot" = {
+            device = "/dev/disk/by-uuid/2D36-4B22";
+            fsType = "vfat";
+            options = [
+              "fmask=0077"
+              "dmask=0077"
+            ];
+          };
+
+          swapDevices = [ ];
+
+          networking.useDHCP = lib.mkDefault true;
+
+          nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+          hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+        }
+      )
+
+      # Host-specific NixOS configuration (previously hosts/halloweentown/configuration.nix).
+      (
+        { config, pkgs, lib, ... }:
+        {
+          my = {
+            user.name = "michelle";
+            kde.enable = true;
+            nvidia.enable = true;
+            pinpam.enable = true;
+            firefox.vanilla.enable = true;
+          };
+
+          networking.hostName = "halloweentown";
+
+          boot.loader.systemd-boot.enable = true;
+          boot.loader.efi.canTouchEfiVariables = true;
+
+          users.users.${config.my.user.name} = {
+            isNormalUser = true;
+            description = config.my.user.name;
+            extraGroups = [
+              "networkmanager"
+              "wheel"
+              "docker"
+              "video"
+            ];
+          };
+
+          security.sudo.wheelNeedsPassword = false;
+
+          environment.systemPackages = with pkgs; [ mpv ];
+
+          networking.firewall.allowedTCPPorts = [
+            22
+            8080
+          ];
+          networking.firewall.allowedUDPPorts = [ 51820 ];
+
+          system.stateVersion = "25.11";
+        }
+      )
     ];
   };
 }
