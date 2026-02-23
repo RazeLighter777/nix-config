@@ -1,11 +1,10 @@
+# Shared NixOS options and default values consumed by all host configurations.
+# Registered as `flake.nixosModules.options` by `modules/nixos/default.nix`.
 { config, lib, ... }:
 
 let
   inherit (lib)
     mkEnableOption
-    mkIf
-    optional
-    any
     mkOption
     types
     ;
@@ -14,7 +13,7 @@ in
   options.my = {
     user.name = mkOption {
       type = types.str;
-      default = "justin"; # default primary user
+      default = "justin";
       description = "Primary (single) user account name used by home-manager modules.";
     };
     user.homeDir = mkOption {
@@ -78,81 +77,6 @@ in
     ghidra-bin.enable = mkEnableOption "Enable Ghidra (binary distribution)";
     okteta.enable = mkEnableOption "Enable Okteta hex editor";
   };
-
-  imports = [
-    ./common
-    ./networking
-    ./podman
-    ./fonts-locale
-    ./bluetooth
-    ./steam
-    ./plymouth
-    ./common-kernel
-    ./custom-kernel
-    ./pipewire
-    ./power-profiles-daemon
-    ./home-manager
-    ./display-manager
-    ./dolphin
-    ./wine
-    ./ollama
-    ./protonup
-    ./obs
-    ./waybar
-    ./neovim
-    ./firefox
-    ./thunderbird
-    ./ark
-    ./xdg-apps
-    ./hyprland
-    ./rofi
-    ./mako
-    ./desktops/hyprland-extra.nix
-    ./bash
-    ./dconf
-    ./vscode
-    ./kde
-    ./desktops/kde-extra.nix
-    ./nvidia
-    ./smartcards
-    ./dod-certs
-    ./remmina
-    ./freerdp
-    ./gnupg
-    ./kleopatra
-    ./nwg-display
-    ./libreoffice
-    ./okular
-    ./flatpak
-    ./screen
-    ./brightnessctl
-    ./kwallet
-    ./kitty
-    ./udiskie
-    ./stylix
-    ./bluedevil
-    ./wayvnc
-    ./virt-manager
-    ./xwayland
-    ./pinpam
-    ./print
-    ./hyprlock
-    ./discord
-    ./calibre
-    ./shattered-pixel-dungeon
-    ./qflipper
-    ./scx
-    ./spotify
-    ./signal-desktop
-    ./kav
-    ./devtools
-    ./zoom-us
-    ./bitwarden
-    ./ssh-agent
-    ./systemd-sandboxing
-    ./ghidra-bin
-    ./okteta
-  ];
 
   config = {
     nix.settings.experimental-features = [
@@ -222,13 +146,6 @@ in
 
       # Derived values (not options): convenience for other modules.
       user.homeDir = "/home/${config.my.user.name}";
-      # Leave these OFF by default (explicit opt-in):
-      # hyprland, kde (desktop environments)
-      # nvidia (GPU driver)
-      # displayManager (only meaningful with Hyprland)
-      # waybar (only meaningful with Hyprland; host can enable alongside hyprland)
-      # ollama (large download / GPU intensive)
-      # obs (often GPU-specific / optional)
     };
     assertions = [
       {

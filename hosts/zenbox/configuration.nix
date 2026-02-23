@@ -5,10 +5,6 @@
   ...
 }:
 {
-  imports = [
-    ./hardware-configuration.nix
-    ../../modules
-  ];
   my = {
     hyprland.enable = true;
     displayManager.enable = true;
