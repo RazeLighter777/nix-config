@@ -7,7 +7,7 @@
 }:
 let
   cfg = config.my.pinpam;
-  pinpamPkg = inputs.pinpam.packages.${pkgs.system}.default;
+  pinpamPkg = inputs.pinpam.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 {
   imports = [ inputs.pinpam.nixosModules.default ];

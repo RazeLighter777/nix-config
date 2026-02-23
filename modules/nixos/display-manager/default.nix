@@ -11,10 +11,11 @@
     services.displayManager.sddm = {
       enable = true;
       wayland.enable = true;
-      autoLogin = {
-        enable = true;
-        user = config.my.user.name;
-      };
+    };
+
+    services.displayManager.autoLogin = {
+      enable = true;
+      user = config.my.user.name;
     };
 
     services.displayManager.defaultSession = "hyprland-uwsm";
@@ -27,6 +28,6 @@
       binPath = "/run/current-system/sw/bin/start-hyprland";
     };
     services.xserver.desktopManager.runXdgAutostartIfNone = true;
-    
+
   };
 }

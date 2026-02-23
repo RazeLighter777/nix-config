@@ -186,12 +186,11 @@ in
             substituters = [ "s3://nix?endpoint=s3.prizrak.me&region=us-east-1&profile=default" ];
             trusted-public-keys = [ "prizrak.me:Hk9hSoa/uKOc4cEu8Tu7a4XRkkG08HBs8fQC6nhcuds=" ];
             builders-use-substitutes = true;
+            trusted-users = [
+              config.my.user.name
+              "root"
+            ];
           };
-
-          nix.trustedUsers = [
-            config.my.user.name
-            "root"
-          ];
 
           sops = {
             defaultSopsFile = ./suesslenovo.secrets.yaml;

@@ -1,4 +1,4 @@
-HOST ?= zenbox
+HOST ?= $(shell hostname -s)
 FLAKE ?= .#$(HOST)
 FLAGS ?=
 
@@ -37,5 +37,5 @@ help:
 	echo "  HOST=<name> make diff      # Show closure diff after build"; \
 	echo "  make list-hosts            # Parse host names from flake.nix"; \
 	echo "Variables:"; \
-	echo "  HOST (default: zenbox)"; \
+	echo "  HOST (default: current hostname)"; \
 	echo "  FLAGS='--impure' (if you really need impure eval)";

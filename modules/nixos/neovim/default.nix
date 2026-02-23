@@ -44,10 +44,10 @@
         nodePackages.prettier
         black
         pyright
-        nixfmt-rfc-style
+        nixfmt
         stylua
       ];
-      extraLuaConfig = builtins.readFile ./nvim-lua-config.lua;
+      initLua = builtins.readFile ./nvim-lua-config.lua;
     };
   };
 }

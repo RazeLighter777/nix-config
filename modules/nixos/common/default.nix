@@ -18,7 +18,7 @@
     kubectl
     fluxcd
     k9s
-    nixfmt-rfc-style
+    nixfmt
     nfs-utils
     lsof
     unzip
@@ -46,6 +46,12 @@
       "flakes"
     ];
   };
+
+  nixpkgs.overlays = lib.mkAfter [
+    (final: _prev: {
+      system = final.stdenv.hostPlatform.system;
+    })
+  ];
   time.timeZone = lib.mkDefault "America/New_York";
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
   programs.direnv.enable = lib.mkDefault true;
