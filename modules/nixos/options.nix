@@ -69,7 +69,6 @@ in
     qflipper.enable = mkEnableOption "Enable qFlipper";
     spotify.enable = mkEnableOption "Enable Spotify";
     signal-desktop.enable = mkEnableOption "Enable Signal Desktop messaging app";
-    kav.enable = mkEnableOption "Enable kav kernel antivirus";
     devtools.enable = mkEnableOption "Enable development tools";
     zoom-us.enable = mkEnableOption "Enable Zoom video conferencing";
     bitwarden.enable = mkEnableOption "Enable Bitwarden (desktop + CLI)";

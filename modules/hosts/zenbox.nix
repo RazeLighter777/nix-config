@@ -75,7 +75,6 @@ in
       nixos.scx
       nixos.spotify
       nixos.signal-desktop
-      nixos.kav
       nixos.devtools
       nixos.zoom-us
       nixos.bitwarden
@@ -131,10 +130,14 @@ in
         }
       )
       inputs.sops-nix.nixosModules.sops
-      inputs.kav.nixosModules.default
       # Host-specific NixOS configuration.
       (
-        { config, pkgs, lib, ... }:
+        {
+          config,
+          pkgs,
+          lib,
+          ...
+        }:
         {
           my = {
             hyprland.enable = true;

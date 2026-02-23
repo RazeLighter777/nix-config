@@ -75,7 +75,6 @@ in
       nixos.scx
       nixos.spotify
       nixos.signal-desktop
-      nixos.kav
       nixos.devtools
       nixos.zoom-us
       nixos.bitwarden
@@ -85,7 +84,13 @@ in
       nixos.okteta
       # Hardware-specific and external modules.
       (
-        { config, lib, pkgs, modulesPath, ... }:
+        {
+          config,
+          lib,
+          pkgs,
+          modulesPath,
+          ...
+        }:
         {
           imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
@@ -129,7 +134,12 @@ in
       inputs.sops-nix.nixosModules.sops
       # Host-specific NixOS configuration.
       (
-        { config, pkgs, lib, ... }:
+        {
+          config,
+          pkgs,
+          lib,
+          ...
+        }:
         {
           my = {
             hyprland.enable = true;
@@ -240,8 +250,8 @@ in
           nix.distributedBuilds = true;
 
           nix.extraOptions = ''
-	  builders-use-substitutes = true
-	'';
+            	  builders-use-substitutes = true
+            	'';
 
           programs.ssh.extraConfig = ''
             Host princessbelongsto.me

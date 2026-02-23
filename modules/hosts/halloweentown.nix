@@ -75,7 +75,6 @@ in
       nixos.scx
       nixos.spotify
       nixos.signal-desktop
-      nixos.kav
       nixos.devtools
       nixos.zoom-us
       nixos.bitwarden
@@ -85,7 +84,13 @@ in
       nixos.okteta
       # Hardware-specific module (previously hosts/halloweentown/hardware-configuration.nix).
       (
-        { config, lib, pkgs, modulesPath, ... }:
+        {
+          config,
+          lib,
+          pkgs,
+          modulesPath,
+          ...
+        }:
         {
           imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
@@ -124,7 +129,12 @@ in
 
       # Host-specific NixOS configuration (previously hosts/halloweentown/configuration.nix).
       (
-        { config, pkgs, lib, ... }:
+        {
+          config,
+          pkgs,
+          lib,
+          ...
+        }:
         {
           my = {
             user.name = "michelle";

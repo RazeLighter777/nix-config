@@ -74,7 +74,6 @@
     scx = import ./scx/default.nix;
     spotify = import ./spotify/default.nix;
     signal-desktop = import ./signal-desktop/default.nix;
-    kav = import ./kav/default.nix;
     devtools = import ./devtools/default.nix;
     zoom-us = import ./zoom-us/default.nix;
     bitwarden = import ./bitwarden/default.nix;
