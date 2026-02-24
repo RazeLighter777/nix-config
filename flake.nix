@@ -21,7 +21,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     pinpam = {
-      url = "github:razelighter777/pinpam";
+      url = "github:razelighter777/pinpam/dev";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
