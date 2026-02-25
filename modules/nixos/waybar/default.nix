@@ -26,7 +26,7 @@ in
     home-manager.users.${config.my.user.name} = {
       home.packages = with pkgs; [
         waybar
-        nerd-fonts.jetbrains-mono
+        nerd-fonts.fira-code
         playerctl
         cava
       ];
@@ -53,7 +53,7 @@ in
           * {
               all: unset;
               font-size: 13px;
-              font-family: 'JetBrainsMono Nerd Font', monospace;
+              font-family: 'FiraCode Nerd Font', monospace;
               font-feature-settings: '"zero", "tnum", "ss01", "ss02", "ss03", "cv01"';
               animation-timing-function: steps(12);
               animation-duration: 0.3s;

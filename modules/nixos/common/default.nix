@@ -51,6 +51,12 @@
     (final: _prev: {
       system = final.stdenv.hostPlatform.system;
     })
+    (final: prev: {
+      # Avoid output reference cycles in kcmutils by forcing a single output.
+      kcmutils = prev.kcmutils.overrideAttrs (_old: {
+        outputs = [ "out" ];
+      });
+    })
   ];
   time.timeZone = lib.mkDefault "America/New_York";
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";

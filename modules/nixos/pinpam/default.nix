@@ -20,16 +20,25 @@ in
       enableHyprlockPin = true;
       enableSystemAuthPin = true;
       enablePolkitPin = true;
+      enableMasterKeySubstitution = true;
+      substituteMasterKeyAuth.hyprlock = {
+        enable = true;
+
+        # New option (preferred)
+        rewriteSuccessJumps = {
+          unix = 1;
+          pinpam = 5;
+        };
+
+        # Optional if you want explicit placement (defaults already 13000/13010)
+        denyOrder = 13000;
+        masterKeyOrder = 13010;
+      };
       pinPolicy = {
         minLength = 4;
         maxLength = 6;
         maxAttempts = 5;
       };
-    };
-    security.pam.services.polkit-1.rules.auth.pinpam = {
-      control = "sufficient";
-      modulePath = "${pinpamPkg}/lib/security/libpinpam.so";
-      order = config.security.pam.services.polkit-1.rules.auth.unix.order - 10;
     };
   };
 }

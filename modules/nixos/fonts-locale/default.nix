@@ -13,8 +13,8 @@ in
     fonts.packages = with pkgs; [
       dejavu_fonts
       emacs-all-the-icons-fonts
-      jetbrains-mono
-      nerd-fonts.jetbrains-mono
+      fira-code
+      nerd-fonts.fira-code
       font-awesome
       noto-fonts
       nerd-fonts.noto

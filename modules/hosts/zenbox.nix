@@ -159,7 +159,7 @@ in
             customKernel.enable = false;
             devtools.enable = true;
             ghidra-bin.enable = true;
-            okteta.enable = true;
+            okteta.enable = false;
           };
 
           networking.hostName = "zenbox";

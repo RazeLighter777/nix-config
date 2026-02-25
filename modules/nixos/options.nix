@@ -128,7 +128,7 @@ in
       print.enable = lib.mkDefault true;
       discord.enable = lib.mkDefault true;
       customKernel.enable = lib.mkDefault false;
-      calibre.enable = lib.mkDefault true;
+      calibre.enable = lib.mkDefault false;
       shattered-pixel-dungeon.enable = lib.mkDefault true;
       qflipper.enable = lib.mkDefault false;
       scx.enable = lib.mkDefault true;
