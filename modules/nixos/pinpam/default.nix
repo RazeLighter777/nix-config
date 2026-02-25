@@ -1,13 +1,11 @@
 {
   lib,
-  pkgs,
   inputs,
   config,
   ...
 }:
 let
   cfg = config.my.pinpam;
-  pinpamPkg = inputs.pinpam.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 {
   imports = [ inputs.pinpam.nixosModules.default ];
@@ -23,7 +21,6 @@ in
       enableMasterKeySubstitution = true;
       substituteMasterKeyAuth.hyprlock = {
         enable = true;
-
         # New option (preferred)
         rewriteSuccessJumps = {
           unix = 1;
