@@ -2,8 +2,17 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
+let
+  stablePkgs = import inputs.nixpkgs-stable {
+    system = pkgs.stdenv.hostPlatform.system;
+    config = {
+      allowUnfree = true;
+    };
+  };
+in
 {
   # Common baseline packages across all hosts (can be overridden/extended per host).
   environment.systemPackages = with pkgs; [
@@ -39,6 +48,11 @@
     sops
     ssh-to-age
     emacs
+    kdePackages.qtstyleplugin-kvantum
+    kdePackages.kcmutils
+    libsForQt5.qt5ct
+    libsForQt5.qtstyleplugin-kvantum
+    stablePkgs.libsForQt5.kcmutils
   ];
   nix.settings = {
     experimental-features = [
@@ -47,17 +61,6 @@
     ];
   };
 
-  nixpkgs.overlays = lib.mkAfter [
-    (final: _prev: {
-      system = final.stdenv.hostPlatform.system;
-    })
-    (final: prev: {
-      # Avoid output reference cycles in kcmutils by forcing a single output.
-      kcmutils = prev.kcmutils.overrideAttrs (_old: {
-        outputs = [ "out" ];
-      });
-    })
-  ];
   time.timeZone = lib.mkDefault "America/New_York";
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
   programs.direnv.enable = lib.mkDefault true;

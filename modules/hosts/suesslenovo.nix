@@ -157,7 +157,7 @@ in
             virt-manager.enable = true;
             devtools.enable = true;
             ghidra-bin.enable = true;
-            okteta.enable = true;
+            okteta.enable = false;
           };
 
           networking.hostName = "suesslenovo";

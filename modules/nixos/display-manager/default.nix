@@ -12,6 +12,21 @@
       enable = true;
       wayland.enable = true;
     };
+    security.pam.services = {
+      sddm-autologin.text = lib.mkForce ''
+        auth     requisite pam_nologin.so
+        auth     optional  ${config.security.pinpam.package}/lib/security/libpinpam_master_key.so
+        auth     required  pam_succeed_if.so uid >= ${toString config.services.displayManager.sddm.autoLogin.minimumUid} quiet
+        auth     optional  ${pkgs.kdePackages.kwallet-pam}/lib/security/pam_kwallet5.so kdehome=.local/share
+        auth     required  pam_permit.so
+
+        account  include   sddm
+
+        password include   sddm
+
+        session  include   sddm
+      '';
+    };
 
     services.displayManager.autoLogin = {
       enable = true;

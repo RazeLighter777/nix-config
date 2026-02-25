@@ -21,11 +21,14 @@
   };
   security.pam.services = lib.mkMerge [
     (lib.mkIf config.my.hyprland.enable {
-      hyprlock.gnupg.enable = true;
+      sddm-autologin.gnupg.enable = true;
     })
     (lib.mkIf config.services.displayManager.sddm.enable {
-      sddm.gnupg.enable = true;
+      sddm-autologin.gnupg.enable = true;
     })
+    {
+      login.gnupg.enable = true;
+    }
   ];
 
 }

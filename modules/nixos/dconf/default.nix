@@ -22,6 +22,7 @@
       configPackages = with pkgs; [
         xdg-desktop-portal-hyprland
         xdg-desktop-portal-wlr
+        kdePackages.xdg-desktop-portal-kde
       ];
     };
     services.dbus = {
