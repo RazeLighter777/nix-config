@@ -17,11 +17,34 @@ let
 
   hyprlandEnvWrapper = pkgs.writeShellScript "hyprland-env-wrapper" ''
     set -euo pipefail
-    if [ -z "''${WAYLAND_DISPLAY:-}" ]; then
-      if ${pkgs.hyprland}/bin/hyprctl instances -j >/dev/null 2>&1; then
-        export WAYLAND_DISPLAY="$(${pkgs.hyprland}/bin/hyprctl instances -j | ${pkgs.jq}/bin/jq -r '.[0]["wl_socket"]')"
-      fi
+
+    runtime_dir="''${XDG_RUNTIME_DIR:-/run/user/$(${pkgs.coreutils}/bin/id -u)}"
+
+    if [ -n "''${WAYLAND_DISPLAY:-}" ] && [ ! -S "$runtime_dir/$WAYLAND_DISPLAY" ]; then
+      unset WAYLAND_DISPLAY
     fi
+
+    if [ -z "''${WAYLAND_DISPLAY:-}" ]; then
+      for _ in $(seq 1 50); do
+        if ${pkgs.hyprland}/bin/hyprctl instances -j >/dev/null 2>&1; then
+          socket="$(${pkgs.hyprland}/bin/hyprctl instances -j | ${pkgs.jq}/bin/jq -r '.[0]["wl_socket"] // empty')"
+          if [ -n "$socket" ] && [ -S "$runtime_dir/$socket" ]; then
+            export WAYLAND_DISPLAY="$socket"
+            break
+          fi
+        fi
+        sleep 0.2
+      done
+    fi
+
+    export XDG_CURRENT_DESKTOP="''${XDG_CURRENT_DESKTOP:-Hyprland}"
+    export QT_QPA_PLATFORM="''${QT_QPA_PLATFORM:-wayland}"
+
+    if [ -z "''${WAYLAND_DISPLAY:-}" ]; then
+      echo "hyprland-env-wrapper: WAYLAND_DISPLAY not available yet" >&2
+      exit 1
+    fi
+
     exec "$@"
   '';
 
@@ -279,11 +302,11 @@ in
           Unit = {
             Description = "swww wallpaper daemon";
             PartOf = [ "graphical-session.target" ];
-            After = [ "graphical-session.target" ];
           };
           Service = config.my.systemd-sandboxing.user-desktop // {
-            ExecStart = "${pkgs.swww}/bin/swww-daemon";
+            ExecStart = "${hyprlandEnvWrapper} ${pkgs.swww}/bin/swww-daemon";
             Restart = "on-failure";
+            RestartSec = 2;
           };
           Install.WantedBy = [ "graphical-session.target" ];
         };
@@ -296,7 +319,7 @@ in
           };
           Service = {
             Type = "oneshot";
-            ExecStart = "${pkgs.swww}/bin/swww img %h/.local/state/hyprlock-wallpaper";
+            ExecStart = "${hyprlandEnvWrapper} ${pkgs.swww}/bin/swww img %h/.local/state/hyprlock-wallpaper";
           };
           Install.WantedBy = [ "graphical-session.target" ];
         };
@@ -310,7 +333,7 @@ in
           };
           Service = {
             Type = "oneshot";
-            ExecStart = "${pkgs.swww}/bin/swww img %h/.local/state/hyprlock-wallpaper";
+            ExecStart = "${hyprlandEnvWrapper} ${pkgs.swww}/bin/swww img %h/.local/state/hyprlock-wallpaper";
           };
         };
 
@@ -330,6 +353,7 @@ in
           Unit = {
             Description = "Hyprland Polkit Agent";
             PartOf = [ "graphical-session.target" ];
+            After = [ "graphical-session.target" ];
           };
           Service = config.my.systemd-sandboxing.user-desktop // {
             ExecStart = "${hyprlandEnvWrapper} ${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
@@ -345,6 +369,7 @@ in
           Unit = {
             Description = "Clipboard history";
             PartOf = [ "graphical-session.target" ];
+            After = [ "graphical-session.target" ];
           };
           Service = config.my.systemd-sandboxing.user-desktop // {
             ExecStart = "${hyprlandEnvWrapper} ${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store";
@@ -352,10 +377,6 @@ in
             RestartSec = 2;
           };
           Install.WantedBy = [ "graphical-session.target" ];
-        };
-
-        mako = {
-          Service = config.my.systemd-sandboxing.user-desktop;
         };
       };
 

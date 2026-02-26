@@ -31,6 +31,13 @@ in
         cava
       ];
 
+      xdg.configFile."autostart/nm-applet.desktop".text = ''
+        [Desktop Entry]
+        Type=Application
+        Name=NetworkManager Applet
+        Hidden=true
+      '';
+
       # Place the script into ~/.config/waybar/scripts
       home.file.".config/waybar/scripts/waybar-bandwidth" = {
         source = waybar-bandwidth;
@@ -404,6 +411,21 @@ in
         Service = config.my.systemd-sandboxing.user-desktop // {
           ExecStart = "${pkgs.waybar}/bin/waybar";
           Restart = "on-failure";
+        };
+        Install.WantedBy = [ "graphical-session.target" ];
+      };
+
+      systemd.user.services.nm-applet = {
+        Unit = {
+          Description = "NetworkManager Applet";
+          PartOf = [ "graphical-session.target" ];
+          After = [ "graphical-session.target" ] ++ lib.optional config.my.kwallet.enable "pam-kwallet-init.service";
+          Wants = lib.optional config.my.kwallet.enable "pam-kwallet-init.service";
+        };
+        Service = config.my.systemd-sandboxing.user-desktop // {
+          ExecStart = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator";
+          Restart = "on-failure";
+          RestartSec = 2;
         };
         Install.WantedBy = [ "graphical-session.target" ];
       };

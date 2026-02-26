@@ -87,9 +87,6 @@ in
       CPUWeight = 200;
       IOWeight = 200;
     };
-    systemd.user.extraConfig = ''
-      DefaultSlice=app.slice
-    '';
     services.udev.extraRules = ''
       ACTION=="add|change", KERNEL=="nvme?n?", ATTR{bdi/read_ahead_kb}="4096"
       ACTION=="add|change", KERNEL=="nvme?n?", ATTR{queue/nr_requests}="64"

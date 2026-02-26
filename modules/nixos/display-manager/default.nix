@@ -17,13 +17,14 @@
         auth     requisite pam_nologin.so
         auth     optional  ${config.security.pinpam.package}/lib/security/libpinpam_master_key.so
         auth     required  pam_succeed_if.so uid >= ${toString config.services.displayManager.sddm.autoLogin.minimumUid} quiet
-        auth     optional  ${pkgs.kdePackages.kwallet-pam}/lib/security/pam_kwallet5.so kdehome=.local/share
+        ${lib.optionalString config.my.kwallet.enable "auth     optional  ${pkgs.kdePackages.kwallet-pam}/lib/security/pam_kwallet5.so kdehome=.local/share"}
         auth     required  pam_permit.so
 
         account  include   sddm
 
         password include   sddm
 
+        ${lib.optionalString config.my.kwallet.enable "session  optional  ${pkgs.kdePackages.kwallet-pam}/lib/security/pam_kwallet5.so auto_start kdehome=.local/share"}
         session  include   sddm
       '';
     };

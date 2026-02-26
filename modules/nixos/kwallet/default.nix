@@ -58,41 +58,43 @@ in
         SSH_ASKPASS = "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
         SSH_ASKPASS_REQUIRE = "prefer";
       };
-
-      systemd.user.services.pam-kwallet-init = {
+      systemd.user.services.pam-kwallet-init = lib.mkIf config.services.displayManager.sddm.enable {
         Unit = {
-          Description = "Kwallet";
-          PartOf = [ "graphical-session-pre.target" ];
+          Description = "Initialize KWallet PAM session";
+          PartOf = [ "graphical-session.target" ];
+          After = [ "graphical-session.target" ];
         };
         Service = {
-          ExecStart =
-            "${pkgs.kdePackages.kwallet-pam}/libexec/pam_kwallet_init";
-          Restart = "on-abort";
+          Type = "oneshot";
+          ExecStart = "${pkgs.kdePackages.kwallet-pam}/libexec/pam_kwallet_init";
         };
-        Install.WantedBy = [ "graphical-session-pre.target" ];
+        Install.WantedBy = [ "graphical-session.target" ];
       };
     };
 
     security.pam.services = lib.mkMerge [
-      (lib.mkIf config.my.hyprland.enable {
-        sddm-autologin.kwallet = {
-          enable = true;
-          package = pkgs.kdePackages.kwallet-pam;
-          forceRun = true;
-        };
-        sddm-autologin.rules.session.kwallet.settings = {
-          auto_start = true;
-          force_run = true;
-          kwalletd = "${pkgs.kdePackages.kwallet}/bin/ksecretd";
-        };
-      })
-      (lib.mkIf config.services.displayManager.sddm.enable {
+      (lib.mkIf (
+        config.services.displayManager.sddm.enable
+        && config.services.displayManager.autoLogin.enable
+        && !config.my.displayManager.enable
+      ) {
         sddm-autologin.kwallet = {
           enable = true;
           package = pkgs.kdePackages.kwallet-pam;
           forceRun = true;
         };
         sddm-autologin.rules.session.kwallet.settings.auto_start = true;
+      })
+      (lib.mkIf (
+        config.services.displayManager.sddm.enable
+        && !config.services.displayManager.autoLogin.enable
+      ) {
+        sddm.kwallet = {
+          enable = true;
+          package = pkgs.kdePackages.kwallet-pam;
+          forceRun = true;
+        };
+        sddm.rules.session.kwallet.settings.auto_start = true;
       })
       {
         login.kwallet = {
