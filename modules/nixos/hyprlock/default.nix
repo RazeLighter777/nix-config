@@ -29,7 +29,7 @@
 
       systemd.user.services.hyprlock-wallpaper-sync = {
         Unit = {
-          Description = "Sync Hyprlock wallpaper from swww";
+          Description = "Sync Hyprlock wallpaper from awww";
         };
         Service = config.my.systemd-sandboxing.user-desktop // {
           Type = "oneshot";

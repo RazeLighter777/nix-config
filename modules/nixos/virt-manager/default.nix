@@ -11,7 +11,7 @@
       qemu
       virt-manager
     ];
-    
+
     # Enable libvirtd service for virtual machine management
     virtualisation.libvirtd.enable = true;
     virtualisation.spiceUSBRedirection.enable = true;

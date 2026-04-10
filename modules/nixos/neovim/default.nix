@@ -41,7 +41,6 @@
         nil
         gcc
         tree-sitter
-        nodePackages.prettier
         black
         pyright
         nixfmt

@@ -5,7 +5,7 @@
       hyprland
       hyprlock
       hyprcursor
-      swww
+      awww
       uwsm
       waybar
       wayvnc

@@ -57,7 +57,7 @@ in
 
     environment.systemPackages = with pkgs; [
       hyprpolkitagent
-      swww
+      awww
     ];
 
     xdg.portal = {
@@ -298,42 +298,42 @@ in
 
       systemd.user.services = {
 
-        swww = {
+        awww = {
           Unit = {
-            Description = "swww wallpaper daemon";
+            Description = "awww wallpaper daemon";
             PartOf = [ "graphical-session.target" ];
           };
           Service = config.my.systemd-sandboxing.user-desktop // {
-            ExecStart = "${hyprlandEnvWrapper} ${pkgs.swww}/bin/swww-daemon";
+            ExecStart = "${hyprlandEnvWrapper} ${pkgs.awww}/bin/awww-daemon";
             Restart = "on-failure";
             RestartSec = 2;
           };
           Install.WantedBy = [ "graphical-session.target" ];
         };
-        swww-wallpaper = {
+        awww-wallpaper = {
           Unit = {
             Description = "Set wallpaper";
             PartOf = [ "graphical-session.target" ];
-            After = [ "swww.service" ];
-            Requires = [ "swww.service" ];
+            After = [ "awww.service" ];
+            Requires = [ "awww.service" ];
           };
           Service = {
             Type = "oneshot";
-            ExecStart = "${hyprlandEnvWrapper} ${pkgs.swww}/bin/swww img %h/.local/state/hyprlock-wallpaper";
+            ExecStart = "${hyprlandEnvWrapper} ${pkgs.awww}/bin/awww img %h/.local/state/hyprlock-wallpaper";
           };
           Install.WantedBy = [ "graphical-session.target" ];
         };
 
-        swww-sync = {
+        awww-sync = {
           Unit = {
-            Description = "Sync swww wallpaper from symlink";
+            Description = "Sync awww wallpaper from symlink";
             PartOf = [ "graphical-session.target" ];
-            After = [ "swww.service" ];
-            Requires = [ "swww.service" ];
+            After = [ "awww.service" ];
+            Requires = [ "awww.service" ];
           };
           Service = {
             Type = "oneshot";
-            ExecStart = "${hyprlandEnvWrapper} ${pkgs.swww}/bin/swww img %h/.local/state/hyprlock-wallpaper";
+            ExecStart = "${hyprlandEnvWrapper} ${pkgs.awww}/bin/awww img %h/.local/state/hyprlock-wallpaper";
           };
         };
 
@@ -381,9 +381,9 @@ in
       };
 
       systemd.user.paths = {
-        swww-sync = {
+        awww-sync = {
           Unit = {
-            Description = "Watch wallpaper symlink for swww";
+            Description = "Watch wallpaper symlink for awww";
           };
           Path = {
             PathChanged = "%h/.local/state/hyprlock-wallpaper";

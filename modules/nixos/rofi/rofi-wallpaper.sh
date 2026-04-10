@@ -41,4 +41,4 @@ fi
 mkdir -p "$STATE_DIR"
 ln -sf "$chosen" "$LINK_PATH"
 
-systemctl --user start swww-sync.service >/dev/null 2>&1 || true
+systemctl --user start awww-sync.service >/dev/null 2>&1 || true
