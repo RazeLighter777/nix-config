@@ -18,6 +18,7 @@ in
       nixos.bluetooth
       nixos.steam
       nixos.plymouth
+      nixos.kernel-opts
       nixos.common-kernel
       nixos.custom-kernel
       nixos.pipewire

@@ -17,6 +17,7 @@
     bluetooth = import ./bluetooth/default.nix;
     steam = import ./steam/default.nix;
     plymouth = import ./plymouth/default.nix;
+    kernel-opts = import ./kernel-opts/default.nix;
     common-kernel = import ./common-kernel/default.nix;
     custom-kernel = import ./custom-kernel/default.nix;
     pipewire = import ./pipewire/default.nix;

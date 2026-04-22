@@ -17,7 +17,8 @@
       valgrind
       talosctl
       terraform
-      mutt
+      neomutt
+      public-inbox
     ];
   };
 }
