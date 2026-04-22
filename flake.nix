@@ -32,9 +32,9 @@
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
     };
-    llama-cpp = {
-      url = "github:ggml-org/llama.cpp";
-      inputs.nixpkgs.follows = "nixpkgs";
+    linux-next = {
+      url = "git+https://kernel.googlesource.com/pub/scm/linux/kernel/git/next/linux-next.git?ref=master";
+      flake = false;
     };
   };
 

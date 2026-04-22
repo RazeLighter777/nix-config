@@ -1,54 +1,70 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
 }:
 let
   cfg = config.my.customKernel;
+  linuxNextSrc = inputs.linux-next;
+  linuxNextMakeVars =
+    let
+      lines = lib.splitString "\n" (builtins.readFile "${linuxNextSrc}/Makefile");
+      parseVarLine = line:
+        let
+          match = builtins.match "([A-Z0-9_]+)[[:space:]]*=[[:space:]]*(.*)" line;
+        in
+        if match == null then
+          null
+        else
+          {
+            name = builtins.elemAt match 0;
+            value = builtins.elemAt match 1;
+          };
+      vars = lib.filter (v: v != null) (map parseVarLine lines);
+    in
+    builtins.listToAttrs vars;
+  linuxNextLocalVersion =
+    let
+      suffixPath = "${linuxNextSrc}/localversion-next";
+    in
+    if builtins.pathExists suffixPath then
+      lib.removeSuffix "\n" (builtins.readFile suffixPath)
+    else
+      "";
+  linuxNextKernel =
+    let
+      linux-next-pkg =
+        { buildLinux, ... }@args:
+        buildLinux (
+          args
+          // rec {
+            src = linuxNextSrc;
+            version = "${linuxNextMakeVars.VERSION}.${linuxNextMakeVars.PATCHLEVEL}.${linuxNextMakeVars.SUBLEVEL}${linuxNextLocalVersion}";
+            modDirVersion = version;
+            kernelPatches = [ ];
+
+            # Use defconfig as base, then override with our options.
+            autoModules = true;
+            ignoreConfigErrors = true;
+
+            extraMeta.branch = "master";
+          }
+          // (args.argsOverride or { })
+        );
+    in
+    pkgs.callPackage linux-next-pkg { };
+  linuxNextPackages = (pkgs.linuxPackagesFor linuxNextKernel).extend (
+    _: _: {
+      # cpupower from linux-next currently fails to apply randstruct patch in nixpkgs.
+      # Reuse cpupower from the default package set so cpuFreqGovernor service can build.
+      cpupower = pkgs.linuxPackages.cpupower;
+    }
+  );
 in
 {
-
-  config = lib.mkMerge [
-    (lib.mkIf cfg.enable {
-      boot.kernelPackages = lib.mkForce (
-        let
-          linux_landlock_pkg =
-            { fetchFromGitHub, buildLinux, ... }@args:
-            buildLinux (
-              args
-              // rec {
-                version = "6.19.0";
-                modDirVersion = "6.19.0";
-
-                src = fetchFromGitHub {
-                  owner = "torvalds";
-                  repo = "linux";
-                  rev = "master";
-                  hash = "sha256-38I6/HWia5wOHfE21wLwErbIRFlWB9tc2G415eS5Thk=";
-                };
-
-                kernelPatches = [ ];
-
-                # Use defconfig as base, then override with our options
-                # This avoids interactive configuration questions
-                autoModules = true;
-                ignoreConfigErrors = true;
-
-                extraMeta.branch = "master";
-              }
-              // (args.argsOverride or { })
-            );
-
-          linux_landlock = pkgs.callPackage linux_landlock_pkg { };
-        in
-        lib.recurseIntoAttrs (pkgs.linuxPackagesFor linux_landlock)
-      );
-
-      # Inherit kernel parameters from common-kernel if it's enabled
-      boot.kernelParams = lib.mkIf config.my.commonKernel.enable [
-        "lsm=landlock,lockdown,yama,integrity,apparmor,bpf"
-      ];
-    })
-  ];
+  config = lib.mkIf cfg.enable {
+    boot.kernelPackages = lib.mkForce (lib.recurseIntoAttrs linuxNextPackages);
+  };
 }

@@ -18,6 +18,7 @@ in
       nixos.bluetooth
       nixos.steam
       nixos.plymouth
+      nixos.kernel-opts
       nixos.common-kernel
       nixos.custom-kernel
       nixos.pipewire
@@ -155,6 +156,7 @@ in
             qflipper.enable = true;
             signal-desktop.enable = true;
             virt-manager.enable = true;
+            customKernel.enable = true;
             devtools.enable = true;
             ghidra-bin.enable = true;
             okteta.enable = false;

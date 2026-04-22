@@ -9,6 +9,7 @@
           la = "ls -la";
           k = "kubectl";
           gr = "gitroot";
+          mutt = "neomutt";
         };
         bashrcExtra = ''
           # fzf

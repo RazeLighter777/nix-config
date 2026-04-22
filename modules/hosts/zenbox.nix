@@ -18,7 +18,7 @@ in
       nixos.bluetooth
       nixos.steam
       nixos.plymouth
-      nixos.common-kernel
+      nixos.kernel-opts
       nixos.custom-kernel
       nixos.pipewire
       nixos.power-profiles-daemon

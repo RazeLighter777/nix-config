@@ -63,7 +63,7 @@ in
     xwayland.enable = mkEnableOption "Enable XWayland support";
     pinpam.enable = mkEnableOption "Enable PIN and PAM integration";
     discord.enable = mkEnableOption "Enable Discord configuration";
-    customKernel.enable = mkEnableOption "Enable custom linux-landlock-no-inherit kernel";
+    customKernel.enable = mkEnableOption "Enable custom linux-next kernel";
     calibre.enable = mkEnableOption "Enable Calibre eBook manager";
     shattered-pixel-dungeon.enable = mkEnableOption "Enable Shattered Pixel Dungeon game";
     qflipper.enable = mkEnableOption "Enable qFlipper";
