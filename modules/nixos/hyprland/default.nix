@@ -203,7 +203,7 @@ in
           misc = {
             disable_hyprland_logo = true;
             disable_splash_rendering = true;
-            focus_on_activate = true;
+            focus_on_activate = false;
             animate_manual_resizes = false;
             animate_mouse_windowdragging = false;
           };
