@@ -8,11 +8,8 @@
   config = lib.mkIf config.my.kde.enable {
     services.xserver.enable = true;
     services.desktopManager.plasma6.enable = true;
-    services.displayManager.sddm = {
+    services.displayManager.plasma-login-manager = {
       enable = true;
-      theme = "elarun";
-      autoNumlock = true;
-      wayland.enable = true;
     };
     environment.systemPackages = with pkgs; [
       kdePackages.discover # Optional: Install if you use Flatpak or fwupd firmware update sevice

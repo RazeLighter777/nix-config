@@ -27,20 +27,6 @@ in
         ];
       };
 
-      masterKey = {
-        enable = true;
-        services.sddm-autologin = {
-          enable = true;
-          successRules = [
-            "nologin"
-          ];
-          postAuthRules = [
-            "kwallet"
-            "gnupg"
-          ];
-        };
-      };
-
       pin.policy = {
         minLength = 4;
         maxLength = 6;
