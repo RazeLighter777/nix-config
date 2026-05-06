@@ -19,7 +19,7 @@ in
       nixos.steam
       nixos.plymouth
       nixos.kernel-opts
-      nixos.custom-kernel
+      nixos.common-kernel
       nixos.pipewire
       nixos.power-profiles-daemon
       nixos.home-manager
@@ -103,7 +103,10 @@ in
             "sd_mod"
           ];
           boot.initrd.kernelModules = [ ];
-          boot.kernelModules = [ "kvm-amd" ];
+          boot.kernelModules = [
+            "kvm-amd"
+            "ntsync"
+          ];
           boot.extraModulePackages = [ ];
 
           fileSystems."/" = {
@@ -227,7 +230,7 @@ in
           ];
           networking.firewall.allowedUDPPorts = [ 51820 ];
 
-          system.stateVersion = "25.11";
+          system.stateVersion = "26.05";
 
           networking.wireguard.interfaces.wg0 = {
             ips = [ "192.168.87.5/32" ];

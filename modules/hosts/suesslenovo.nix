@@ -20,7 +20,6 @@ in
       nixos.plymouth
       nixos.kernel-opts
       nixos.common-kernel
-      nixos.custom-kernel
       nixos.pipewire
       nixos.power-profiles-daemon
       nixos.home-manager
@@ -184,16 +183,6 @@ in
 
           hardware.graphics.enable = true;
 
-          nix.settings = {
-            substituters = [ "s3://nix?endpoint=s3.prizrak.me&region=us-east-1&profile=default" ];
-            trusted-public-keys = [ "prizrak.me:Hk9hSoa/uKOc4cEu8Tu7a4XRkkG08HBs8fQC6nhcuds=" ];
-            builders-use-substitutes = true;
-            trusted-users = [
-              config.my.user.name
-              "root"
-            ];
-          };
-
           sops = {
             defaultSopsFile = ./suesslenovo.secrets.yaml;
             age.keyFile = "/etc/age/key.txt";
@@ -225,35 +214,6 @@ in
             };
           };
 
-          systemd.services.nix-daemon.serviceConfig.EnvironmentFile = lib.mkAfter [
-            config.sops.templates."nix-aws.env".path
-          ];
-
-          nix.buildMachines = [
-            {
-              hostName = "princessbelongsto.me";
-              system = "x86_64-linux";
-              protocol = "ssh-ng";
-              sshUser = "root";
-              sshKey = "/root/.ssh/remote-builder-id_ed25519";
-              maxJobs = 4;
-              speedFactor = 2;
-              supportedFeatures = [
-                "big-parallel"
-                "kvm"
-                "nixos-test"
-                "benchmark"
-              ];
-              mandatoryFeatures = [ ];
-            }
-          ];
-
-          nix.distributedBuilds = true;
-
-          nix.extraOptions = ''
-            	  builders-use-substitutes = true
-            	'';
-
           programs.ssh.extraConfig = ''
             Host princessbelongsto.me
               Port 22223
@@ -264,7 +224,7 @@ in
           networking.firewall.allowedTCPPorts = [ 22 ];
           networking.firewall.allowedUDPPorts = [ 51820 ];
 
-          system.stateVersion = "25.11";
+          system.stateVersion = "26.05";
         }
       )
     ];

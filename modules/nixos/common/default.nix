@@ -20,7 +20,7 @@ in
     wget
     ripgrep
     htop
-    git
+    gitFull
     gnumake
     openssl
     pkg-config
@@ -60,6 +60,13 @@ in
       "flakes"
     ];
   };
+  environment.etc."polkit-1/rules.d/10-run0-auth-keep.rules".text = ''
+    polkit.addRule(function(action, subject) {
+        if (action.id == "org.freedesktop.systemd1.run" && subject.isInGroup("wheel")) {
+            return polkit.Result.AUTH_KEEP;
+        }
+    });
+  '';
 
   time.timeZone = lib.mkDefault "America/New_York";
   i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";

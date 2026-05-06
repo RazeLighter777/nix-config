@@ -16,7 +16,6 @@
       dnsutils
       valgrind
       talosctl
-      terraform
       neomutt
       public-inbox
     ];
