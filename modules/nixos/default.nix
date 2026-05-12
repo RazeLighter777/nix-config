@@ -82,5 +82,6 @@
     systemd-sandboxing = import ./systemd-sandboxing/default.nix;
     ghidra-bin = import ./ghidra-bin/default.nix;
     okteta = import ./okteta/default.nix;
+    tmux = import ./tmux/default.nix;
   };
 }

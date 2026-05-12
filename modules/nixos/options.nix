@@ -75,6 +75,7 @@ in
     ssh-agent.enable = mkEnableOption "Enable SSH agent systemd user unit";
     ghidra-bin.enable = mkEnableOption "Enable Ghidra (binary distribution)";
     okteta.enable = mkEnableOption "Enable Okteta hex editor";
+    tmux.enable = mkEnableOption "Enable tmux multiplexer";
   };
 
   config = {
@@ -139,7 +140,7 @@ in
       ssh-agent.enable = lib.mkDefault true;
       ghidra-bin.enable = lib.mkDefault false;
       okteta.enable = lib.mkDefault false;
-
+      tmux.enable = lib.mkDefault true;
       # Enable Rofi automatically when Hyprland is enabled.
       rofi.enable = lib.mkDefault config.my.hyprland.enable;
 
