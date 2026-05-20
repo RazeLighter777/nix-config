@@ -5,16 +5,14 @@
   ...
 }:
 {
-  config = lib.mkIf config.my.tmux.enable {
+  programs.tmux = lib.mkIf config.my.tmux.enable {
     enable = true;
-    shell = "${pkgs.bash}/bin/bash";
     shortcut = "a";
     # aggressiveResize = true; -- Disabled to be iTerm-friendly
     baseIndex = 1;
     newSession = true;
     # Stop tmux+escape craziness.
     escapeTime = 0;
-    mouse = true;
     clock24 = true;
     historyLimit = 50000;
 
