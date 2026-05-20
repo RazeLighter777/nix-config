@@ -83,6 +83,7 @@ in
       nixos.systemd-sandboxing
       nixos.ghidra-bin
       nixos.okteta
+      nixos.tmux
       # Hardware-specific and external modules.
       (
         {
