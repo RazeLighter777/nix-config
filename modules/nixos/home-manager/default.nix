@@ -31,7 +31,7 @@ in
             "${
               fetchTarball {
                 url = "https://github.com/nix-community/nixos-vscode-server/tarball/master";
-                sha256 = "1rdn70jrg5mxmkkrpy2xk8lydmlc707sk0zb35426v1yxxka10by";
+                sha256 = "0xjal4zcbmdjdaspfkjbpx1680q7390wfzmj7iad04kp3pc9syf8";
               }
             }/modules/vscode-server/home.nix"
           ];

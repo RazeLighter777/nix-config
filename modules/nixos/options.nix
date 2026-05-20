@@ -64,6 +64,7 @@ in
     pinpam.enable = mkEnableOption "Enable PIN and PAM integration";
     discord.enable = mkEnableOption "Enable Discord configuration";
     customKernel.enable = mkEnableOption "Enable custom linux-next kernel";
+    tomoyo.enable = mkEnableOption "Enable TOMOYO kernel patching and userspace tools";
     calibre.enable = mkEnableOption "Enable Calibre eBook manager";
     shattered-pixel-dungeon.enable = mkEnableOption "Enable Shattered Pixel Dungeon game";
     qflipper.enable = mkEnableOption "Enable qFlipper";
@@ -128,6 +129,7 @@ in
       print.enable = lib.mkDefault true;
       discord.enable = lib.mkDefault true;
       customKernel.enable = lib.mkDefault false;
+      tomoyo.enable = lib.mkDefault false;
       calibre.enable = lib.mkDefault false;
       shattered-pixel-dungeon.enable = lib.mkDefault true;
       qflipper.enable = lib.mkDefault false;

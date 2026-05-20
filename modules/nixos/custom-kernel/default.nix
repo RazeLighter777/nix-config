@@ -33,6 +33,7 @@ let
       lib.removeSuffix "\n" (builtins.readFile suffixPath)
     else
       "";
+  linuxNextBaseVersion = "${linuxNextMakeVars.VERSION}.${linuxNextMakeVars.PATCHLEVEL}.${linuxNextMakeVars.SUBLEVEL}${linuxNextMakeVars.EXTRAVERSION or ""}";
   linuxNextKernel =
     let
       linux-next-pkg =
@@ -41,7 +42,7 @@ let
           args
           // rec {
             src = linuxNextSrc;
-            version = "${linuxNextMakeVars.VERSION}.${linuxNextMakeVars.PATCHLEVEL}.${linuxNextMakeVars.SUBLEVEL}${linuxNextLocalVersion}";
+            version = "${linuxNextBaseVersion}${linuxNextLocalVersion}";
             modDirVersion = version;
             kernelPatches = [ ];
 

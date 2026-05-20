@@ -20,6 +20,7 @@
     kernel-opts = import ./kernel-opts/default.nix;
     common-kernel = import ./common-kernel/default.nix;
     custom-kernel = import ./custom-kernel/default.nix;
+    tomoyo = import ./tomoyo/default.nix;
     pipewire = import ./pipewire/default.nix;
     power-profiles-daemon = import ./power-profiles-daemon/default.nix;
     home-manager = import ./home-manager/default.nix;

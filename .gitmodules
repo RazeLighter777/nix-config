@@ -1,0 +1,6 @@
+[submodule "tomoyo-tools"]
+	path = tomoyo-tools
+	url = https://codeberg.org/RazeLighter777/tomoyo-tools.git
+[submodule "tomoyo-experiments"]
+	path = tomoyo-experiments
+	url = https://codeberg.org/RazeLighter777/tomoyo-experiments.git

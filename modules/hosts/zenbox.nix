@@ -20,6 +20,7 @@ in
       nixos.plymouth
       nixos.kernel-opts
       nixos.common-kernel
+      nixos.tomoyo
       nixos.pipewire
       nixos.power-profiles-daemon
       nixos.home-manager
@@ -160,6 +161,7 @@ in
             signal-desktop.enable = true;
             virt-manager.enable = true;
             customKernel.enable = false;
+            tomoyo.enable = true;
             devtools.enable = true;
             ghidra-bin.enable = true;
             okteta.enable = false;
