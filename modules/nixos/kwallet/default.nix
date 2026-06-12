@@ -14,22 +14,18 @@ in
       pkgs.kdePackages.kwalletmanager
       pkgs.kdePackages.kwallet-pam
       pkgs.kdePackages.ksshaskpass
-      pkgs.kwalletcli
     ];
 
     xdg.portal.extraPortals = [ pkgs.kdePackages.kwallet ];
     xdg.portal.config = {
       common."org.freedesktop.impl.portal.Secret" = [ "kwallet" ];
-      Hyprland."org.freedesktop.impl.portal.Secret" =
-        lib.mkIf config.my.hyprland.enable [ "kwallet" ];
+      Hyprland."org.freedesktop.impl.portal.Secret" = lib.mkIf config.my.hyprland.enable [ "kwallet" ];
     };
 
-    programs.ssh.askPassword =
-      "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
+    programs.ssh.askPassword = "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
 
     systemd.user.services."dbus-org.freedesktop.secrets.kwallet" = {
-      description =
-        "Allow KWallet to be D-Bus activated for the generic org.freedesktop.secrets API";
+      description = "Allow KWallet to be D-Bus activated for the generic org.freedesktop.secrets API";
       serviceConfig = {
         Type = "dbus";
         ExecStart = "${pkgs.kdePackages.kwallet}/bin/kwalletd6";
@@ -73,29 +69,32 @@ in
     };
 
     security.pam.services = lib.mkMerge [
-      (lib.mkIf (
-        config.services.displayManager.sddm.enable
-        && config.services.displayManager.autoLogin.enable
-        && !config.my.displayManager.enable
-      ) {
-        sddm-autologin.kwallet = {
-          enable = true;
-          package = pkgs.kdePackages.kwallet-pam;
-          forceRun = true;
-        };
-        sddm-autologin.rules.session.kwallet.settings.auto_start = true;
-      })
-      (lib.mkIf (
-        config.services.displayManager.sddm.enable
-        && !config.services.displayManager.autoLogin.enable
-      ) {
-        sddm.kwallet = {
-          enable = true;
-          package = pkgs.kdePackages.kwallet-pam;
-          forceRun = true;
-        };
-        sddm.rules.session.kwallet.settings.auto_start = true;
-      })
+      (lib.mkIf
+        (
+          config.services.displayManager.sddm.enable
+          && config.services.displayManager.autoLogin.enable
+          && !config.my.displayManager.enable
+        )
+        {
+          sddm-autologin.kwallet = {
+            enable = true;
+            package = pkgs.kdePackages.kwallet-pam;
+            forceRun = true;
+          };
+          sddm-autologin.rules.session.kwallet.settings.auto_start = true;
+        }
+      )
+      (lib.mkIf
+        (config.services.displayManager.sddm.enable && !config.services.displayManager.autoLogin.enable)
+        {
+          sddm.kwallet = {
+            enable = true;
+            package = pkgs.kdePackages.kwallet-pam;
+            forceRun = true;
+          };
+          sddm.rules.session.kwallet.settings.auto_start = true;
+        }
+      )
       {
         login.kwallet = {
           enable = true;

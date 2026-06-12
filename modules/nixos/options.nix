@@ -77,6 +77,7 @@ in
     ghidra-bin.enable = mkEnableOption "Enable Ghidra (binary distribution)";
     okteta.enable = mkEnableOption "Enable Okteta hex editor";
     tmux.enable = mkEnableOption "Enable tmux multiplexer";
+    claude-code.enable = mkEnableOption "Enable Claude Code CLI (unfree)";
   };
 
   config = {

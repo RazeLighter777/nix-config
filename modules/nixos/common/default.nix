@@ -15,6 +15,15 @@ let
 in
 {
   # Common baseline packages across all hosts (can be overridden/extended per host).
+  systemd.services.nix-daemon.environment.OPENSSL_CONF = pkgs.writeText "no-mlkem.cnf" ''
+    openssl_conf = default_conf
+    [default_conf]
+    ssl_conf = ssl_sect
+    [ssl_sect]
+    system_default = system_default_sect
+    [system_default_sect]
+    Groups = X25519:secp256r1:secp384r1:secp521r1:X448:ffdhe2048:ffdhe3072
+  '';
   environment.systemPackages = with pkgs; [
     vim
     wget

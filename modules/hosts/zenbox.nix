@@ -69,7 +69,6 @@ in
       nixos.pinpam
       nixos.print
       nixos.hyprlock
-      nixos.discord
       nixos.calibre
       nixos.shattered-pixel-dungeon
       nixos.qflipper
@@ -84,6 +83,7 @@ in
       nixos.ghidra-bin
       nixos.okteta
       nixos.tmux
+      nixos.claude-code
       # Hardware-specific and external modules.
       (
         {
@@ -166,6 +166,7 @@ in
             devtools.enable = true;
             ghidra-bin.enable = true;
             okteta.enable = false;
+            claude-code.enable = true;
           };
 
           networking.hostName = "zenbox";
@@ -211,6 +212,8 @@ in
             cloudflared
             screen
             arion
+
+            cacert
             mpv
             protonplus
           ];
@@ -235,20 +238,6 @@ in
 
           system.stateVersion = "26.05";
 
-          networking.wireguard.interfaces.wg0 = {
-            ips = [ "192.168.87.5/32" ];
-            listenPort = 51820;
-            privateKeyFile = "${config.my.user.homeDir}/Keys/peer_zenbox.key";
-            peers = [
-              {
-                publicKey = "VzQMzZcTBQYrARnefqraQJuc6CVFf15ifUNsDuTV2wY=";
-                presharedKeyFile = "${config.my.user.homeDir}/Keys/peer_A-peer_zenbox.psk";
-                allowedIPs = [ "192.168.87.0/24" ];
-                endpoint = "edge.prizrak.me:51820";
-                persistentKeepalive = 25;
-              }
-            ];
-          };
         }
       )
     ];

@@ -85,6 +85,7 @@ in
       nixos.ghidra-bin
       nixos.okteta
       nixos.tmux
+      nixos.claude-code
       # Hardware-specific and external modules.
       (
         {
@@ -163,6 +164,7 @@ in
             devtools.enable = true;
             ghidra-bin.enable = true;
             okteta.enable = false;
+            claude-code.enable = true;
           };
 
           networking.hostName = "suesslenovo";

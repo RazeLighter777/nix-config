@@ -84,5 +84,6 @@
     ghidra-bin = import ./ghidra-bin/default.nix;
     okteta = import ./okteta/default.nix;
     tmux = import ./tmux/default.nix;
+    claude-code = import ./claude-code/default.nix;
   };
 }
