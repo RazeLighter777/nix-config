@@ -38,7 +38,6 @@ in
     mako.enable = mkEnableOption "Enable Mako notification daemon";
     bash.enable = mkEnableOption "Enable Bash configuration";
     dconf.enable = mkEnableOption "Enable dconf settings";
-    vscode.enable = mkEnableOption "Enable VSCode configuration";
     kde.enable = mkEnableOption "Enable KDE Plasma desktop";
     nvidia.enable = mkEnableOption "Enable NVIDIA drivers and related settings";
     remmina.enable = mkEnableOption "Enable Remmina remote desktop client";
@@ -64,7 +63,6 @@ in
     pinpam.enable = mkEnableOption "Enable PIN and PAM integration";
     discord.enable = mkEnableOption "Enable Discord configuration";
     customKernel.enable = mkEnableOption "Enable custom linux-next kernel";
-    tomoyo.enable = mkEnableOption "Enable TOMOYO kernel patching and userspace tools";
     calibre.enable = mkEnableOption "Enable Calibre eBook manager";
     shattered-pixel-dungeon.enable = mkEnableOption "Enable Shattered Pixel Dungeon game";
     qflipper.enable = mkEnableOption "Enable qFlipper";
@@ -97,7 +95,6 @@ in
       ark.enable = lib.mkDefault true;
       bash.enable = lib.mkDefault true;
       dconf.enable = lib.mkDefault true;
-      vscode.enable = lib.mkDefault true;
       mako.enable = lib.mkDefault config.my.hyprland.enable;
       fontsLocale.enable = lib.mkDefault true;
       bluetooth.enable = lib.mkDefault true;
@@ -131,7 +128,6 @@ in
       print.enable = lib.mkDefault true;
       discord.enable = lib.mkDefault true;
       customKernel.enable = lib.mkDefault false;
-      tomoyo.enable = lib.mkDefault false;
       calibre.enable = lib.mkDefault false;
       shattered-pixel-dungeon.enable = lib.mkDefault true;
       qflipper.enable = lib.mkDefault false;

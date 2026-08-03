@@ -21,7 +21,6 @@ in
       nixos.kernel-opts
       nixos.common-kernel
       nixos.custom-kernel
-      nixos.tomoyo
       nixos.pipewire
       nixos.power-profiles-daemon
       nixos.home-manager
@@ -43,7 +42,6 @@ in
       nixos.mako
       nixos.bash
       nixos.dconf
-      nixos.vscode
       nixos.kde
       nixos.kde-extra
       nixos.nvidia
@@ -159,8 +157,7 @@ in
             qflipper.enable = true;
             signal-desktop.enable = true;
             virt-manager.enable = true;
-            customKernel.enable = true;
-            tomoyo.enable = true;
+            customKernel.enable = false;
             devtools.enable = true;
             ghidra-bin.enable = true;
             okteta.enable = false;

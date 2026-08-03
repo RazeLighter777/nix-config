@@ -20,7 +20,6 @@
     kernel-opts = import ./kernel-opts/default.nix;
     common-kernel = import ./common-kernel/default.nix;
     custom-kernel = import ./custom-kernel/default.nix;
-    tomoyo = import ./tomoyo/default.nix;
     pipewire = import ./pipewire/default.nix;
     power-profiles-daemon = import ./power-profiles-daemon/default.nix;
     home-manager = import ./home-manager/default.nix;
@@ -42,7 +41,6 @@
     hyprland-extra = import ./desktops/hyprland-extra.nix;
     bash = import ./bash/default.nix;
     dconf = import ./dconf/default.nix;
-    vscode = import ./vscode/default.nix;
     kde = import ./kde/default.nix;
     kde-extra = import ./desktops/kde-extra.nix;
     nvidia = import ./nvidia/default.nix;

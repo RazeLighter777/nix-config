@@ -27,14 +27,6 @@ in
       home-manager.users.${config.my.user.name} =
         { pkgs, ... }:
         {
-          imports = [
-            "${
-              fetchTarball {
-                url = "https://github.com/nix-community/nixos-vscode-server/tarball/master";
-                sha256 = "0xjal4zcbmdjdaspfkjbpx1680q7390wfzmj7iad04kp3pc9syf8";
-              }
-            }/modules/vscode-server/home.nix"
-          ];
           home.username = config.my.user.name;
           home.packages = [
             pkgs.atool

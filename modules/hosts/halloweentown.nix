@@ -42,7 +42,6 @@ in
       nixos.mako
       nixos.bash
       nixos.dconf
-      nixos.vscode
       nixos.kde
       nixos.kde-extra
       nixos.nvidia

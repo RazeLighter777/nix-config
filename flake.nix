@@ -35,14 +35,6 @@
     llama-cpp = {
       url = "github:ggml-org/llama.cpp/master";
     };
-    tomoyo-tools = {
-      url = "git+file:./tomoyo-tools";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    tomoyo-experiments = {
-      url = "git+file:./tomoyo-experiments";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     linux-next = {
       url = "git+https://kernel.googlesource.com/pub/scm/linux/kernel/git/next/linux-next.git?ref=master";
       flake = false;

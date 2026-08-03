@@ -7,7 +7,7 @@
 {
   programs.tmux = lib.mkIf config.my.tmux.enable {
     enable = true;
-    shortcut = "a";
+    shortcut = "b";
     # aggressiveResize = true; -- Disabled to be iTerm-friendly
     baseIndex = 1;
     newSession = true;
